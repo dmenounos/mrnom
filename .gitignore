@@ -1,0 +1,10 @@
+bin
+gen
+obj
+libs
+
+# eclipse
+.settings
+
+# mac
+.DS_Store
