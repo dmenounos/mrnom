@@ -4,7 +4,10 @@ obj
 libs
 
 # eclipse
+.externalToolBuilders
 .settings
+.cproject
+.project
 
 # mac
 .DS_Store
