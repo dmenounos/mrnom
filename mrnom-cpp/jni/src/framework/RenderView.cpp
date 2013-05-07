@@ -10,7 +10,11 @@ RenderView::RenderView(GameContext* gameContext) :
 	mEglDisplay(EGL_NO_DISPLAY),
 	mEglSurface(EGL_NO_SURFACE),
 	mEglContext(EGL_NO_CONTEXT) {
-	LOG_D("RenderView::RenderView");
+	LOG_D("RenderView::RenderView()");
+}
+
+RenderView::~RenderView() {
+	LOG_D("RenderView::~RenderView()");
 }
 
 void RenderView::setUp()

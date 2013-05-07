@@ -1,18 +1,22 @@
 #include "LoadingScreen.hpp"
+#include "MainMenuScreen.hpp"
 
 LoadingScreen::LoadingScreen(GameContext* context) :
-	GameScreen(context),
-	mWorld(new World()) {
-	LOG_D("LoadingScreen::LoadingScreen");
+	GameScreen(context) {
+	LOG_D("LoadingScreen::LoadingScreen()");
 }
 
 LoadingScreen::~LoadingScreen() {
-	LOG_D("LoadingScreen::~LoadingScreen");
-	delete mWorld;
+	LOG_D("LoadingScreen::~LoadingScreen()");
 }
 
 void LoadingScreen::update(float deltaTime) {
-	mWorld->update(deltaTime);
+	ResourceFactory* resourceFactory = mContext->getResourceFactory();
+
+	resourceFactory->createTexture("background.png");
+	resourceFactory->createTexture("logo.png");
+
+	mContext->setScreen(new MainMenuScreen(mContext));
 }
 
 void LoadingScreen::render(float deltaTime) {

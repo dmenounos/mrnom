@@ -2,42 +2,37 @@
 #define TEXTURE_HPP
 
 #include "../common.h"
-#include "Resource.hpp"
-
-#include <GLES/gl.h>
-#include <png.h>
 
 class Texture {
 
 public:
 
-	Texture(Resource resource);
+	Texture();
 
 	virtual ~Texture();
 
-	int32_t getWidth();
+	int32_t getWidth() const;
 
-	int32_t getHeight();
+	int32_t getHeight() const;
 
-	void load();
+	int32_t getFormat() const;
+
+	void load(
+		int32_t  width,
+		int32_t  height,
+		int32_t  format,
+		uint8_t* pixels);
 
 	void unload();
 
 	void apply();
 
-protected:
-
-	uint8_t* loadImage();
-
-	static void callback_read(png_structp pngStruct, png_bytep pngData, png_size_t pngSize);
-
 private:
 
-	Resource mResource;
-	GLuint mTextureId;
 	int32_t mWidth;
 	int32_t mHeight;
-	GLint mFormat;
+	int32_t mFormat;
+	uint32_t mTextureId;
 };
 
 #endif

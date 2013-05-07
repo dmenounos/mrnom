@@ -24,10 +24,12 @@ LOCAL_SRC_FILES := src/framework/EventLoop.cpp \
                    src/framework/GameContext.cpp \
                    src/framework/GameScreen.cpp \
                    src/framework/RenderView.cpp \
-                   src/framework/Resource.cpp \
+                   src/framework/ResourceFactory.cpp \
+                   src/framework/ResourceReader.cpp \
                    src/framework/Texture.cpp \
                    src/framework/Timer.cpp \
                    src/mrnom/LoadingScreen.cpp \
+                   src/mrnom/MainMenuScreen.cpp \
                    src/mrnom/MrNomGame.cpp \
                    src/mrnom/World.cpp
 

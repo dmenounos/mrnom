@@ -13,6 +13,8 @@ public:
 
 	RenderView(GameContext* gameContext);
 
+	virtual ~RenderView();
+
 	void setUp();
 
 	void tearDown();

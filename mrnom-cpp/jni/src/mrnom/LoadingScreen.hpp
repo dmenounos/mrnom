@@ -2,7 +2,6 @@
 #define LOADINGSCREEN_HPP
 
 #include "../framework.h"
-#include "World.hpp"
 
 class LoadingScreen : public GameScreen {
 
@@ -21,10 +20,6 @@ public:
 	virtual void pause();
 
 	virtual void dispose();
-
-private:
-
-	World* mWorld;
 };
 
 #endif

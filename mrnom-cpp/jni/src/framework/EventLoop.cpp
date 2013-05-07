@@ -7,10 +7,11 @@ EventLoop::EventLoop() :
 	mApplication(0),
 	mActive(false),
 	mQuit(false) {
+	LOG_D("EventLoop::EventLoop()");
 }
 
 EventLoop::~EventLoop() {
-	LOG_D("EventLoop::~EventLoop");
+	LOG_D("EventLoop::~EventLoop()");
 }
 
 android_app* EventLoop::getApplication() const {

@@ -1,14 +1,15 @@
 #include "GameContext.hpp"
 #include "GameScreen.hpp"
 #include "RenderView.hpp"
-#include "ResourceFactory.cpp"
+#include "ResourceFactory.hpp"
 
 GameContext::GameContext() :
 	EventLoop() {
+	LOG_D("GameContext::GameContext()");
 }
 
 GameContext::~GameContext() {
-	LOG_D("GameContext::~GameContext");
+	LOG_D("GameContext::~GameContext()");
 	delete mRenderView;
 	delete mScreen;
 }

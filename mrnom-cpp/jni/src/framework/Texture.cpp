@@ -1,195 +1,97 @@
 #include "Texture.hpp"
 
-Texture::Texture(Resource resource) :
-	mResource(resource),
-	mTextureId(0),
-	mWidth(0),
-	mHeight(0) {
+#include <GLES/gl.h>
+
+Texture::Texture() :
+	mWidth(0), mHeight(0),
+	mFormat(0), mTextureId(0) {
+	LOG_D("Texture::Texture()");
 }
 
 Texture::~Texture() {
+	LOG_D("Texture::~Texture()");
 }
 
-int32_t Texture::getWidth() {
+int32_t Texture::getWidth() const {
 	return mWidth;
 }
 
-int32_t Texture::getHeight() {
+int32_t Texture::getHeight() const {
 	return mHeight;
 }
 
-void Texture::load()
+int32_t Texture::getFormat() const {
+	return mFormat;
+}
+
+void Texture::load(
+	int32_t width,
+	int32_t height,
+	int32_t format,
+	uint8_t* pixels)
 {
+	LOG_D("Texture::load(%d, %d, %d)", width, height, format);
+
+	GLenum errorResult;
+
+	// Generate new texture id
+	glGenTextures(1, &mTextureId);
+
+	LOG_D("Texture::load mTextureId: %d", mTextureId);
+
+	glBindTexture(GL_TEXTURE_2D, mTextureId);
+
+	// Setup texture properties
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	// Load image data into OpenGL:
+	// target         : Specifies the target texture. Must be GL_TEXTURE_2D.
+	// level          : Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
+	// internalformat : Specifies the number of color components in the texture. Must be 1, 2, 3, or 4.
+	// width          : Specifies the width of the texture image. Must be 2^n + 2 * (border) for some integer n.
+	// height         : Specifies the height of the texture image. Must be 2^m + 2 * (border) for some integer m.
+	// border         : Specifies the width of the border. Must be either 0 or 1.
+	// format         : Specifies the format of the pixel data. The following symbolic values are accepted:
+	//                  GL_COLOR_INDEX, GL_RED, GL_GREEN, GL_BLUE, GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, GL_LUMINANCE_ALPHA.
+	// type           : Specifies the data type of the pixel data. The following symbolic values are accepted:
+	//                  GL_UNSIGNED_BYTE, GL_BYTE, GL_BITMAP, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_FLOAT.
+	// pixels         : Specifies a pointer to the image data in memory.
+	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, pixels);
+
+	delete [] pixels;
+
+	mWidth  = width;
+	mHeight = height;
+	mFormat = format;
+
+	LOG_D("Texture::load mWidth:  %d", mWidth);
+	LOG_D("Texture::load mHeight: %d", mHeight);
+	LOG_D("Texture::load mFormat: %d", mFormat);
+
+	if (glGetError() != GL_NO_ERROR) {
+		LOG_E("Error loading texture into OpenGL.");
+		unload();
+	}
 }
 
 void Texture::unload()
 {
+	if (mTextureId != 0) {
+		glDeleteTextures(1, &mTextureId);
+		mTextureId = 0;
+	}
+
+	mWidth  = 0;
+	mHeight = 0;
+	mFormat = 0;
 }
+
 
 void Texture::apply()
 {
-}
-
-uint8_t* Texture::loadImage()
-{
-	png_byte header[8];
-	png_struct* pngPtr = NULL;
-	png_info* infoPtr = NULL;
-	png_byte* imageBuffer = NULL;
-	png_byte** rowPtrs = NULL;
-	png_int_32 rowSize;
-	bool transparency;
-
-	mResource.open();
-	mResource.read(header, sizeof(header));
-	if (png_sig_cmp(header, 0, 8) != 0) goto ERROR;
-
-	/*
-	 * Create all structures necessary to read o PNG image.
-	 */
-
-	pngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-	if (!pngPtr) goto ERROR;
-
-	infoPtr = png_create_info_struct(pngPtr);
-	if (!infoPtr) goto ERROR;
-
-	/*
-	 * Prepare reading operationsby giving our callback_read().
-	 *
-	 * Setup error management with setjmp(). This allows jumping like a goto
-	 * but through the call stack. If an error occurs, control flow comes back
-	 * at the point where setjmp() has been called first, but enters the if
-	 * block instead (here goto ERROR).
-	 */
-
-	png_set_read_fn(pngPtr, &mResource, callback_read);
-	if (setjmp(png_jmpbuf(pngPtr))) goto ERROR;
-
-	/*
-	 * Start reading PNG file header, ignoring the first 8 bytes.
-	 *
-	 * PNG files can be encoded in several formats: RGB, RGBA, 256 colors with
-	 * a palette, grayscale... R, G, B color channels can be encoded on up to
-	 * 16 bits. Hopefully, libpng provides transformation functions to decode
-	 * unusual formats to more classical RGB and luminance formats with 8 bits
-	 * per channel with or without an alpha channel.
-	 *
-	 * Transformations are validated with png_read_update_info().
-	 */
-
-	png_set_sig_bytes(pngPtr, 8);
-	png_read_info(pngPtr, infoPtr);
-
-	png_uint_32 width, height;
-	png_int_32 depth, colorType;
-	png_get_IHDR(pngPtr, infoPtr, &width, &height, &depth, &colorType, NULL, NULL, NULL);
-
-	mWidth = width;
-	mHeight = height;
-
-	// Creates a full alpha channel if transparency is encoded as
-	// an array of palette entries or a single transparent color.
-
-	transparency = false;
-
-	if (png_get_valid(pngPtr, infoPtr, PNG_INFO_tRNS)) {
-		png_set_tRNS_to_alpha(pngPtr);
-		transparency = true;
-		// goto ERROR;
-	}
-
-	if (depth < 8) {
-		png_set_packing(pngPtr);
-	}
-	else if (depth == 16) {
-		png_set_strip_16(pngPtr);
-	}
-
-	// Indicates that image needs conversion to RGBA if needed.
-
-	switch(colorType) {
-	case PNG_COLOR_TYPE_PALETTE:
-		png_set_palette_to_rgb(pngPtr);
-		mFormat = transparency ? GL_RGBA : GL_RGB;
-		break;
-	case PNG_COLOR_TYPE_RGB:
-		mFormat = transparency ? GL_RGBA : GL_RGB;
-		break;
-	case PNG_COLOR_TYPE_RGBA:
-		mFormat = GL_RGBA;
-		break;
-	case PNG_COLOR_TYPE_GRAY:
-		png_set_expand_gray_1_2_4_to_8(pngPtr);
-		mFormat = transparency ? GL_LUMINANCE_ALPHA : GL_LUMINANCE;
-		break;
-	case PNG_COLOR_TYPE_GA:
-		png_set_expand_gray_1_2_4_to_8(pngPtr);
-		mFormat = GL_LUMINANCE_ALPHA;
-		break;
-	}
-
-	png_read_update_info(pngPtr, infoPtr);
-
-	/*
-	 * Allocate the necessary temporary buffer to hold image data and
-	 * a second one with the address of each output image row for libpng.
-	 */
-
-	rowSize = png_get_rowbytes(pngPtr, infoPtr);
-	if (rowSize <= 0) goto ERROR;
-
-	imageBuffer = new png_byte[rowSize * height];
-	if (!imageBuffer) goto ERROR;
-
-	rowPtrs = new png_byte*[height];
-	if (!rowPtrs) goto ERROR;
-
-	/*
-	 * Note, row order is inverted because OpenGL uses a different coordinate
-	 * system (first pixel at bottom-left) then PNG (first pixel at top-left).
-	 */
-
-	for (int32_t i = 0; i < height; ++i) {
-		rowPtrs[height - (i + 1)] = imageBuffer + i * rowSize;
-	}
-
-	/*
-	 * Start reading image content.
-	 */
-
-	png_read_image(pngPtr, rowPtrs);
-
-	/*
-	 * Finally, release resources (whether an error occurs on not) and return
-	 * loaded data.
-	 */
-
-	mResource.close();
-
-	delete [] rowPtrs;
-
-	png_destroy_read_struct(&pngPtr, &infoPtr, NULL);
-
-	return imageBuffer;
-
-	ERROR:
-	LOG_E("Error while reading PNG file");
-
-	mResource.close();
-
-	delete [] rowPtrs;
-	delete [] imageBuffer;
-
-	if (pngPtr != NULL) {
-		png_struct** pngPtrPtr = &pngPtr;
-		png_info** infoPtrPtr = infoPtr != NULL ? &infoPtr : NULL;
-		png_destroy_read_struct(pngPtrPtr, infoPtrPtr, NULL);
-	}
-
-	return NULL;
-}
-
-void Texture::callback_read(png_struct* pngPtr, png_byte* pngData, png_size_t pngSize)
-{
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mTextureId);
 }

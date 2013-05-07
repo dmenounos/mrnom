@@ -1,5 +1,5 @@
-#ifndef SCREEN_HPP
-#define SCREEN_HPP
+#ifndef GAMESCREEN_HPP
+#define GAMESCREEN_HPP
 
 #include "../common.h"
 
