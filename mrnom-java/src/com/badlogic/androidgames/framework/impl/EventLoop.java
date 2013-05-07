@@ -18,7 +18,7 @@ public abstract class EventLoop extends Activity {
 	}
 
 	/**
-	 * Resume the render loop.
+	 * Resumes the render loop.
 	 */
 	public void resumeRender() {
 		mActive = true;
@@ -28,7 +28,7 @@ public abstract class EventLoop extends Activity {
 	}
 
 	/**
-	 * Pause the render loop.
+	 * Pauses the render loop.
 	 */
 	public void pauseRender() {
 		mActive = false;

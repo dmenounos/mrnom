@@ -7,9 +7,9 @@
 
 class GameContext;
 
-class RenderView
-{
-	public:
+class RenderView {
+
+public:
 
 	RenderView(GameContext* gameContext);
 
@@ -19,9 +19,9 @@ class RenderView
 
 	void render();
 
-	private:
+private:
 
-	// shared
+	// shared pointer
 	GameContext* mGameContext;
 
 	int32_t mWidth, mHeight;

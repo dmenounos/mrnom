@@ -1,4 +1,11 @@
 #include "GameContext.hpp"
+#include "GameScreen.hpp"
+#include "RenderView.hpp"
+#include "ResourceFactory.cpp"
+
+GameContext::GameContext() :
+	EventLoop() {
+}
 
 GameContext::~GameContext() {
 	LOG_D("GameContext::~GameContext");
@@ -13,6 +20,7 @@ void GameContext::onUpdate(float delta) {
 }
 
 void GameContext::onStart() {
+	mResourceFactory = new ResourceFactory(this);
 	mRenderView = new RenderView(this);
 	mScreen = getStartScreen();
 }
@@ -49,4 +57,8 @@ void GameContext::setScreen(GameScreen* screen)
 	screen->resume();
 	screen->update(0);
 	mScreen = screen;
+}
+
+ResourceFactory* GameContext::getResourceFactory() const {
+	return mResourceFactory;
 }

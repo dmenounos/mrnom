@@ -10,13 +10,13 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.badlogic.androidgames.framework.FileIO;
-import com.badlogic.androidgames.framework.Graphics;
 import com.badlogic.androidgames.framework.Input;
 
 public abstract class GameContext extends EventLoop {
 
+	private ResourceFactory mResourceFactory;
 	private AndroidRenderView mRenderView;
-	private Graphics mGraphics;
+	private AndroidGraphics mGraphics;
 	private AndroidAudio mAudio;
 	private Input mInput;
 	private FileIO mFileIO;
@@ -37,8 +37,9 @@ public abstract class GameContext extends EventLoop {
 		float scaleX = (float) frameBufferWidth / getWindowManager().getDefaultDisplay().getWidth();
 		float scaleY = (float) frameBufferHeight / getWindowManager().getDefaultDisplay().getHeight();
 
+		mResourceFactory = new ResourceFactory(this);
 		mRenderView = new AndroidRenderView(this, frameBuffer);
-		mGraphics = new AndroidGraphics(getAssets(), frameBuffer);
+		mGraphics = new AndroidGraphics(frameBuffer);
 		mFileIO = new AndroidFileIO(getAssets());
 		mAudio = new AndroidAudio(this);
 		mInput = new AndroidInput(this, mRenderView, scaleX, scaleY);
@@ -47,6 +48,10 @@ public abstract class GameContext extends EventLoop {
 
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		mWakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "GLGame");
+	}
+
+	public ResourceFactory getResourceFactory() {
+		return mResourceFactory;
 	}
 
 	@Override
@@ -104,7 +109,7 @@ public abstract class GameContext extends EventLoop {
 		return mFileIO;
 	}
 
-	public Graphics getGraphics() {
+	public AndroidGraphics getGraphics() {
 		return mGraphics;
 	}
 

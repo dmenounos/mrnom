@@ -8,9 +8,9 @@
  * Rough equivalent to the Java Activity.
  * Implements the application event loop.
  */
-class EventLoop
-{
-	public:
+class EventLoop {
+
+public:
 
 	EventLoop();
 
@@ -24,12 +24,12 @@ class EventLoop
 	void run(android_app* application);
 
 	/**
-	 * Resume the render loop.
+	 * Resumes the render loop.
 	 */
 	void resumeRender();
 
 	/**
-	 * Pause the render loop.
+	 * Pauses the render loop.
 	 */
 	void pauseRender();
 
@@ -37,40 +37,41 @@ class EventLoop
 	 * Called on each cycle, as long as the render loop is active,
 	 * i.e. in-between onResume / onPause system commands.
 	 */
-	virtual void onUpdate(float delta) {};
+	virtual void onUpdate(float delta) {}
 
 	/** State change call-back. */
-	virtual void onStart() {};
+	virtual void onStart() {}
 
 	/** State change call-back. */
-	virtual void onResume() {};
+	virtual void onResume() {}
 
 	/** State change call-back. */
-	virtual void onPause() {};
+	virtual void onPause() {}
 
 	/** State change call-back. */
-	virtual void onStop() {};
+	virtual void onStop() {}
 
 	/** State change call-back. */
-	virtual void onDestroy() {};
+	virtual void onDestroy() {}
 
-	private:
+protected:
 
 	/**
 	 * System state change call-back (non object oriented).
-	 * Delegates to the framework event call-back.
+	 * Delegates to a framework state call-back.
 	 */
 	static void systemStateCallback(android_app* app, int32_t cmd);
 
 	/**
 	 * System input event call-back (non object oriented).
-	 * Delegates to the framework event call-back.
+	 * Delegates to a framework input call-back.
 	 */
 	static int32_t systemInputCallback(android_app* app, AInputEvent* event);
 
-	private:
+private:
 
-	android_app* mApplication; // shared
+	// shared pointer
+	android_app* mApplication;
 
 	Timer mTimer;
 	bool mActive;

@@ -3,9 +3,9 @@
 
 #include "../common.h"
 
-class Timer
-{
-	public:
+class Timer {
+
+public:
 
 	Timer();
 
@@ -21,7 +21,7 @@ class Timer
 	 */
 	double current();
 
-	private:
+private:
 
 	double mLastTime;
 };

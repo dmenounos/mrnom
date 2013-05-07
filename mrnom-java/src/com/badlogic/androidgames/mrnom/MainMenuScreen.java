@@ -2,8 +2,8 @@ package com.badlogic.androidgames.mrnom;
 
 import java.util.List;
 
-import com.badlogic.androidgames.framework.Graphics;
 import com.badlogic.androidgames.framework.Input.TouchEvent;
+import com.badlogic.androidgames.framework.impl.AndroidGraphics;
 import com.badlogic.androidgames.framework.impl.GameContext;
 import com.badlogic.androidgames.framework.impl.GameScreen;
 
@@ -15,9 +15,9 @@ public class MainMenuScreen extends GameScreen {
 
 	@Override
 	public void update(float deltaTime) {
-		Graphics g = context.getGraphics();
-		List<TouchEvent> touchEvents = context.getInput().getTouchEvents();
-		context.getInput().getKeyEvents();
+		AndroidGraphics g = mGameContext.getGraphics();
+		List<TouchEvent> touchEvents = mGameContext.getInput().getTouchEvents();
+		mGameContext.getInput().getKeyEvents();
 
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
@@ -29,19 +29,19 @@ public class MainMenuScreen extends GameScreen {
 						Assets.click.play(1);
 				}
 				if (inBounds(event, 64, 220, 192, 42)) {
-					context.setScreen(new LevelScreen(context));
+					mGameContext.setScreen(new LevelScreen(mGameContext));
 					if (Settings.soundEnabled)
 						Assets.click.play(1);
 					return;
 				}
 				if (inBounds(event, 64, 220 + 42, 192, 42)) {
-					context.setScreen(new HighscoreScreen(context));
+					mGameContext.setScreen(new HighscoreScreen(mGameContext));
 					if (Settings.soundEnabled)
 						Assets.click.play(1);
 					return;
 				}
 				if (inBounds(event, 64, 220 + 84, 192, 42)) {
-					context.setScreen(new HelpScreen(context));
+					mGameContext.setScreen(new HelpScreen(mGameContext));
 					if (Settings.soundEnabled)
 						Assets.click.play(1);
 					return;
@@ -59,7 +59,7 @@ public class MainMenuScreen extends GameScreen {
 
 	@Override
 	public void render(float deltaTime) {
-		Graphics g = context.getGraphics();
+		AndroidGraphics g = mGameContext.getGraphics();
 
 		g.drawPixmap(Assets.background, 0, 0);
 		g.drawPixmap(Assets.logo, 32, 20);
@@ -72,7 +72,7 @@ public class MainMenuScreen extends GameScreen {
 
 	@Override
 	public void pause() {
-		Settings.save(context.getFileIO());
+		Settings.save(mGameContext.getFileIO());
 	}
 
 	@Override

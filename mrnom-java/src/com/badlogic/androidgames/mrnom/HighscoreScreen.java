@@ -2,8 +2,8 @@ package com.badlogic.androidgames.mrnom;
 
 import java.util.List;
 
-import com.badlogic.androidgames.framework.Graphics;
 import com.badlogic.androidgames.framework.Input.TouchEvent;
+import com.badlogic.androidgames.framework.impl.AndroidGraphics;
 import com.badlogic.androidgames.framework.impl.GameContext;
 import com.badlogic.androidgames.framework.impl.GameScreen;
 
@@ -20,8 +20,8 @@ public class HighscoreScreen extends GameScreen {
 
 	@Override
 	public void update(float deltaTime) {
-		List<TouchEvent> touchEvents = context.getInput().getTouchEvents();
-		context.getInput().getKeyEvents();
+		List<TouchEvent> touchEvents = mGameContext.getInput().getTouchEvents();
+		mGameContext.getInput().getKeyEvents();
 
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
@@ -30,7 +30,7 @@ public class HighscoreScreen extends GameScreen {
 				if (event.x < 64 && event.y > 416) {
 					if (Settings.soundEnabled)
 						Assets.click.play(1);
-					context.setScreen(new MainMenuScreen(context));
+					mGameContext.setScreen(new MainMenuScreen(mGameContext));
 					return;
 				}
 			}
@@ -39,7 +39,7 @@ public class HighscoreScreen extends GameScreen {
 
 	@Override
 	public void render(float deltaTime) {
-		Graphics g = context.getGraphics();
+		AndroidGraphics g = mGameContext.getGraphics();
 
 		g.drawPixmap(Assets.background, 0, 0);
 		g.drawPixmap(Assets.mainMenu, 64, 20, 0, 42, 196, 42);
@@ -53,7 +53,7 @@ public class HighscoreScreen extends GameScreen {
 		g.drawPixmap(Assets.buttons, 0, 416, 64, 64, 64, 64);
 	}
 
-	public void drawText(Graphics g, String line, int x, int y) {
+	public void drawText(AndroidGraphics g, String line, int x, int y) {
 		int len = line.length();
 		for (int i = 0; i < len; i++) {
 			char character = line.charAt(i);

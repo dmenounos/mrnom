@@ -8,9 +8,9 @@ class GameContext;
 /**
  * Abstract game screen class.
  */
-class GameScreen
-{
-	public:
+class GameScreen {
+
+public:
 
 	GameScreen(GameContext* context);
 
@@ -26,9 +26,9 @@ class GameScreen
 
 	virtual void dispose() = 0;
 
-	protected:
+protected:
 
-	// shared
+	// shared pointer
 	GameContext* mContext;
 };
 

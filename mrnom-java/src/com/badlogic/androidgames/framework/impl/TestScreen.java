@@ -9,43 +9,41 @@ import java.util.List;
 import android.graphics.Color;
 import android.util.Log;
 
-import com.badlogic.androidgames.framework.Graphics;
-import com.badlogic.androidgames.framework.Graphics.PixmapFormat;
 import com.badlogic.androidgames.framework.Input;
 import com.badlogic.androidgames.framework.Input.KeyEvent;
 import com.badlogic.androidgames.framework.Input.TouchEvent;
-import com.badlogic.androidgames.framework.Pixmap;
+import com.badlogic.androidgames.framework.impl.AndroidGraphics.PixmapFormat;
 
 class TestScreen extends GameScreen {
 
 	private long startTime = System.nanoTime();
 	private int frames;
-	private Pixmap bob;
-	private Pixmap bobAlpha;
+	private Texture bob;
+	private Texture bobAlpha;
 	private AndroidSound sound;
 	private AndroidMusic music;
 
-	public TestScreen(GameContext game) {
-		super(game);
+	public TestScreen(GameContext gameContext) {
+		super(gameContext);
 
-		bob = game.getGraphics().newPixmap("bobrgb888.png", PixmapFormat.RGB565);
-		bobAlpha = game.getGraphics().newPixmap("bobargb8888.png", PixmapFormat.ARGB4444);
-		music = game.getAudio().newMusic("music.ogg");
+		bob = gameContext.getResourceFactory().newPixmap("bobrgb888.png", PixmapFormat.RGB565);
+		bobAlpha = gameContext.getResourceFactory().newPixmap("bobargb8888.png", PixmapFormat.ARGB4444);
+		music = gameContext.getAudio().newMusic("music.ogg");
 		music.setLooping(true);
 		music.setVolume(0.5f);
 		music.play();
-		sound = game.getAudio().newSound("music.ogg");
+		sound = gameContext.getAudio().newSound("music.ogg");
 
 		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(game.getFileIO().readAsset("test.txt")));
+			BufferedReader in = new BufferedReader(new InputStreamReader(gameContext.getFileIO().readAsset("test.txt")));
 			String text = in.readLine();
 			in.close();
 
-			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(game.getFileIO().writeFile("test.txt")));
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(gameContext.getFileIO().writeFile("test.txt")));
 			out.write("This is a freaking test");
 			out.close();
 
-			in = new BufferedReader(new InputStreamReader(game.getFileIO().readFile("test.txt")));
+			in = new BufferedReader(new InputStreamReader(gameContext.getFileIO().readFile("test.txt")));
 			String text2 = in.readLine();
 			in.close();
 
@@ -62,8 +60,8 @@ class TestScreen extends GameScreen {
 
 	@Override
 	public void render(float deltaTime) {
-		Graphics g = context.getGraphics();
-		Input inp = context.getInput();
+		AndroidGraphics g = mGameContext.getGraphics();
+		Input inp = mGameContext.getInput();
 		g.clear(Color.RED);
 		g.drawLine(0, 0, 320, 480, Color.BLUE);
 		g.drawRect(20, 20, 100, 100, Color.GREEN);

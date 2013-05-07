@@ -1,9 +1,9 @@
 package com.badlogic.androidgames.mrnom;
 
-import com.badlogic.androidgames.framework.Graphics;
-import com.badlogic.androidgames.framework.Graphics.PixmapFormat;
+import com.badlogic.androidgames.framework.impl.AndroidGraphics.PixmapFormat;
 import com.badlogic.androidgames.framework.impl.GameContext;
 import com.badlogic.androidgames.framework.impl.GameScreen;
+import com.badlogic.androidgames.framework.impl.ResourceFactory;
 
 public class LoadingScreen extends GameScreen {
 
@@ -13,31 +13,38 @@ public class LoadingScreen extends GameScreen {
 
 	@Override
 	public void update(float deltaTime) {
-		Graphics g = context.getGraphics();
-		Assets.background = g.newPixmap("background.png", PixmapFormat.RGB565);
-		Assets.logo = g.newPixmap("logo.png", PixmapFormat.ARGB4444);
-		Assets.mainMenu = g.newPixmap("mainmenu.png", PixmapFormat.ARGB4444);
-		Assets.buttons = g.newPixmap("buttons.png", PixmapFormat.ARGB4444);
-		Assets.help1 = g.newPixmap("help1.png", PixmapFormat.ARGB4444);
-		Assets.help2 = g.newPixmap("help2.png", PixmapFormat.ARGB4444);
-		Assets.help3 = g.newPixmap("help3.png", PixmapFormat.ARGB4444);
-		Assets.numbers = g.newPixmap("numbers.png", PixmapFormat.ARGB4444);
-		Assets.ready = g.newPixmap("ready.png", PixmapFormat.ARGB4444);
-		Assets.pause = g.newPixmap("pausemenu.png", PixmapFormat.ARGB4444);
-		Assets.gameOver = g.newPixmap("gameover.png", PixmapFormat.ARGB4444);
-		Assets.headUp = g.newPixmap("headup.png", PixmapFormat.ARGB4444);
-		Assets.headLeft = g.newPixmap("headleft.png", PixmapFormat.ARGB4444);
-		Assets.headDown = g.newPixmap("headdown.png", PixmapFormat.ARGB4444);
-		Assets.headRight = g.newPixmap("headright.png", PixmapFormat.ARGB4444);
-		Assets.tail = g.newPixmap("tail.png", PixmapFormat.ARGB4444);
-		Assets.stain1 = g.newPixmap("stain1.png", PixmapFormat.ARGB4444);
-		Assets.stain2 = g.newPixmap("stain2.png", PixmapFormat.ARGB4444);
-		Assets.stain3 = g.newPixmap("stain3.png", PixmapFormat.ARGB4444);
-		Assets.click = context.getAudio().newSound("click.ogg");
-		Assets.eat = context.getAudio().newSound("eat.ogg");
-		Assets.bitten = context.getAudio().newSound("bitten.ogg");
-		Settings.load(context.getFileIO());
-		context.setScreen(new MainMenuScreen(context));
+		ResourceFactory resourceFactory = mGameContext.getResourceFactory();
+
+		// @formatter:off
+
+		Assets.background = resourceFactory.newPixmap("background.png", PixmapFormat.RGB565);
+		Assets.logo       = resourceFactory.newPixmap("logo.png",       PixmapFormat.ARGB4444);
+		Assets.mainMenu   = resourceFactory.newPixmap("mainmenu.png",   PixmapFormat.ARGB4444);
+		Assets.buttons    = resourceFactory.newPixmap("buttons.png",    PixmapFormat.ARGB4444);
+		Assets.help1      = resourceFactory.newPixmap("help1.png",      PixmapFormat.ARGB4444);
+		Assets.help2      = resourceFactory.newPixmap("help2.png",      PixmapFormat.ARGB4444);
+		Assets.help3      = resourceFactory.newPixmap("help3.png",      PixmapFormat.ARGB4444);
+		Assets.numbers    = resourceFactory.newPixmap("numbers.png",    PixmapFormat.ARGB4444);
+		Assets.ready      = resourceFactory.newPixmap("ready.png",      PixmapFormat.ARGB4444);
+		Assets.pause      = resourceFactory.newPixmap("pausemenu.png",  PixmapFormat.ARGB4444);
+		Assets.gameOver   = resourceFactory.newPixmap("gameover.png",   PixmapFormat.ARGB4444);
+		Assets.headUp     = resourceFactory.newPixmap("headup.png",     PixmapFormat.ARGB4444);
+		Assets.headLeft   = resourceFactory.newPixmap("headleft.png",   PixmapFormat.ARGB4444);
+		Assets.headDown   = resourceFactory.newPixmap("headdown.png",   PixmapFormat.ARGB4444);
+		Assets.headRight  = resourceFactory.newPixmap("headright.png",  PixmapFormat.ARGB4444);
+		Assets.tail       = resourceFactory.newPixmap("tail.png",       PixmapFormat.ARGB4444);
+		Assets.stain1     = resourceFactory.newPixmap("stain1.png",     PixmapFormat.ARGB4444);
+		Assets.stain2     = resourceFactory.newPixmap("stain2.png",     PixmapFormat.ARGB4444);
+		Assets.stain3     = resourceFactory.newPixmap("stain3.png",     PixmapFormat.ARGB4444);
+
+		Assets.click      = mGameContext.getAudio().newSound("click.ogg");
+		Assets.eat        = mGameContext.getAudio().newSound("eat.ogg");
+		Assets.bitten     = mGameContext.getAudio().newSound("bitten.ogg");
+		
+		// @formatter:on
+
+		Settings.load(mGameContext.getFileIO());
+		mGameContext.setScreen(new MainMenuScreen(mGameContext));
 	}
 
 	@Override

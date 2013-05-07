@@ -36,7 +36,7 @@ void EventLoop::run(android_app* application)
 	while (!mQuit) {
 
 		// Consume system events awaiting in the queue.
-		// timeout type: 0: non-blocking, -1: blocking.
+		// Timeout type: 0: non-blocking, -1: blocking.
 
 		while ((result = ALooper_pollAll((mActive ? 0 : -1), NULL, &events, (void**) &source)) >= 0) {
 			if (source != NULL) source->process(application, source);

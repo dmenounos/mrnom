@@ -3,13 +3,14 @@
 
 #include "../common.h"
 
+/**
+ * Encapsulates asset loading.
+ */
 class Resource {
 
-	public:
+public:
 
-	Resource(android_app* application, const char* path);
-
-	const char* getPath();
+	Resource(AAssetManager* assetManager, const char* path);
 
 	void open();
 
@@ -17,11 +18,14 @@ class Resource {
 
 	int32_t read(void* buffer, size_t count);
 
-	private:
+private:
 
 	const char* mPath;
-	AAssetManager* mAAssetManager;
-	AAsset* mAAsset;
+
+	// shared pointer
+	AAssetManager* mAssetManager;
+
+	AAsset* mAsset;
 };
 
 #endif

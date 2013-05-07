@@ -9,11 +9,11 @@
 
 class Texture {
 
-	public:
+public:
 
-	Texture(android_app* application, const char* path);
+	Texture(Resource resource);
 
-	~Texture();
+	virtual ~Texture();
 
 	int32_t getWidth();
 
@@ -25,15 +25,13 @@ class Texture {
 
 	void apply();
 
-	protected:
+protected:
 
 	uint8_t* loadImage();
 
-	private:
-
 	static void callback_read(png_structp pngStruct, png_bytep pngData, png_size_t pngSize);
 
-	private:
+private:
 
 	Resource mResource;
 	GLuint mTextureId;

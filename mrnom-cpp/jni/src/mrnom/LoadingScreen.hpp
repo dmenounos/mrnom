@@ -4,9 +4,9 @@
 #include "../framework.h"
 #include "World.hpp"
 
-class LoadingScreen : public GameScreen
-{
-	public:
+class LoadingScreen : public GameScreen {
+
+public:
 
 	LoadingScreen(GameContext* context);
 
@@ -22,7 +22,7 @@ class LoadingScreen : public GameScreen
 
 	virtual void dispose();
 
-	private:
+private:
 
 	World* mWorld;
 };

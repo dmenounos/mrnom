@@ -2,15 +2,19 @@
 #define GAMECONTEXT_HPP
 
 #include "EventLoop.hpp"
-#include "GameScreen.hpp"
-#include "RenderView.hpp"
+
+class GameScreen;
+class RenderView;
+class ResourceFactory;
 
 /**
  * Abstract game context class.
  */
-class GameContext : public EventLoop
-{
-	public:
+class GameContext : public EventLoop {
+
+public:
+
+	GameContext();
 
 	virtual ~GameContext();
 
@@ -30,10 +34,13 @@ class GameContext : public EventLoop
 
 	virtual GameScreen* getStartScreen() = 0;
 
-	private:
+	ResourceFactory* getResourceFactory() const;
 
-	RenderView* mRenderView;
+private:
+
 	GameScreen* mScreen;
+	RenderView* mRenderView;
+	ResourceFactory* mResourceFactory;
 };
 
 #endif

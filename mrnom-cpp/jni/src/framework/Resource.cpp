@@ -1,24 +1,20 @@
 #include "Resource.hpp"
 
-Resource::Resource(android_app* application, const char* path) :
+Resource::Resource(AAssetManager* assetManager, const char* path) :
 	mPath(path),
-	mAAssetManager(application->activity->assetManager),
-	mAAsset(NULL) {
-}
-
-const char* Resource::getPath() {
-	return mPath;
+	mAssetManager(assetManager),
+	mAsset(NULL) {
 }
 
 void Resource::open() {
-	mAAsset = AAssetManager_open(mAAssetManager, mPath, AASSET_MODE_UNKNOWN);
+	mAsset = AAssetManager_open(mAssetManager, mPath, AASSET_MODE_UNKNOWN);
 }
 
 void Resource::close() {
-	AAsset_close(mAAsset);
-	mAAsset = NULL;
+	AAsset_close(mAsset);
+	mAsset = NULL;
 }
 
 int32_t Resource::read(void* buffer, size_t count) {
-	return AAsset_read(mAAsset, buffer, count);
+	return AAsset_read(mAsset, buffer, count);
 }

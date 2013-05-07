@@ -2,10 +2,10 @@ package com.badlogic.androidgames.framework.impl;
 
 public abstract class GameScreen {
 
-	protected final GameContext context;
+	protected final GameContext mGameContext;
 
-	public GameScreen(GameContext game) {
-		this.context = game;
+	public GameScreen(GameContext gameContext) {
+		mGameContext = gameContext;
 	}
 
 	public abstract void update(float deltaTime);

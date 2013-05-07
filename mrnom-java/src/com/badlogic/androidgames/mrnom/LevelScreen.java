@@ -4,9 +4,9 @@ import java.util.List;
 
 import android.graphics.Color;
 
-import com.badlogic.androidgames.framework.Graphics;
 import com.badlogic.androidgames.framework.Input.TouchEvent;
-import com.badlogic.androidgames.framework.Pixmap;
+import com.badlogic.androidgames.framework.impl.AndroidGraphics;
+import com.badlogic.androidgames.framework.impl.Texture;
 import com.badlogic.androidgames.framework.impl.GameContext;
 import com.badlogic.androidgames.framework.impl.GameScreen;
 
@@ -28,8 +28,8 @@ public class LevelScreen extends GameScreen {
 
 	@Override
 	public void update(float deltaTime) {
-		List<TouchEvent> touchEvents = context.getInput().getTouchEvents();
-		context.getInput().getKeyEvents();
+		List<TouchEvent> touchEvents = mGameContext.getInput().getTouchEvents();
+		mGameContext.getInput().getKeyEvents();
 
 		if (state == GameState.Ready)
 			updateReady(touchEvents);
@@ -97,7 +97,7 @@ public class LevelScreen extends GameScreen {
 					if (event.y > 148 && event.y < 196) {
 						if (Settings.soundEnabled)
 							Assets.click.play(1);
-						context.setScreen(new MainMenuScreen(context));
+						mGameContext.setScreen(new MainMenuScreen(mGameContext));
 						return;
 					}
 				}
@@ -113,7 +113,7 @@ public class LevelScreen extends GameScreen {
 				if (event.x >= 128 && event.x <= 192 && event.y >= 200 && event.y <= 264) {
 					if (Settings.soundEnabled)
 						Assets.click.play(1);
-					context.setScreen(new MainMenuScreen(context));
+					mGameContext.setScreen(new MainMenuScreen(mGameContext));
 					return;
 				}
 			}
@@ -122,7 +122,7 @@ public class LevelScreen extends GameScreen {
 
 	@Override
 	public void render(float deltaTime) {
-		Graphics g = context.getGraphics();
+		AndroidGraphics g = mGameContext.getGraphics();
 
 		g.drawPixmap(Assets.background, 0, 0);
 		drawWorld(world);
@@ -139,12 +139,12 @@ public class LevelScreen extends GameScreen {
 	}
 
 	private void drawWorld(World world) {
-		Graphics g = context.getGraphics();
+		AndroidGraphics g = mGameContext.getGraphics();
 		Snake snake = world.snake;
 		SnakePart head = snake.parts.get(0);
 		Stain stain = world.stain;
 
-		Pixmap stainPixmap = null;
+		Texture stainPixmap = null;
 		if (stain.type == Stain.TYPE_1)
 			stainPixmap = Assets.stain1;
 		if (stain.type == Stain.TYPE_2)
@@ -163,7 +163,7 @@ public class LevelScreen extends GameScreen {
 			g.drawPixmap(Assets.tail, x, y);
 		}
 
-		Pixmap headPixmap = null;
+		Texture headPixmap = null;
 		if (snake.direction == Snake.UP)
 			headPixmap = Assets.headUp;
 		if (snake.direction == Snake.LEFT)
@@ -178,14 +178,14 @@ public class LevelScreen extends GameScreen {
 	}
 
 	private void drawReadyUI() {
-		Graphics g = context.getGraphics();
+		AndroidGraphics g = mGameContext.getGraphics();
 
 		g.drawPixmap(Assets.ready, 47, 100);
 		g.drawLine(0, 416, 480, 416, Color.BLACK);
 	}
 
 	private void drawRunningUI() {
-		Graphics g = context.getGraphics();
+		AndroidGraphics g = mGameContext.getGraphics();
 
 		g.drawPixmap(Assets.buttons, 0, 0, 64, 128, 64, 64);
 		g.drawLine(0, 416, 480, 416, Color.BLACK);
@@ -194,21 +194,21 @@ public class LevelScreen extends GameScreen {
 	}
 
 	private void drawPausedUI() {
-		Graphics g = context.getGraphics();
+		AndroidGraphics g = mGameContext.getGraphics();
 
 		g.drawPixmap(Assets.pause, 80, 100);
 		g.drawLine(0, 416, 480, 416, Color.BLACK);
 	}
 
 	private void drawGameOverUI() {
-		Graphics g = context.getGraphics();
+		AndroidGraphics g = mGameContext.getGraphics();
 
 		g.drawPixmap(Assets.gameOver, 62, 100);
 		g.drawPixmap(Assets.buttons, 128, 200, 0, 128, 64, 64);
 		g.drawLine(0, 416, 480, 416, Color.BLACK);
 	}
 
-	public void drawText(Graphics g, String line, int x, int y) {
+	public void drawText(AndroidGraphics g, String line, int x, int y) {
 		int len = line.length();
 		for (int i = 0; i < len; i++) {
 			char character = line.charAt(i);
@@ -241,7 +241,7 @@ public class LevelScreen extends GameScreen {
 
 		if (world.gameOver) {
 			Settings.addScore(world.score);
-			Settings.save(context.getFileIO());
+			Settings.save(mGameContext.getFileIO());
 		}
 	}
 
