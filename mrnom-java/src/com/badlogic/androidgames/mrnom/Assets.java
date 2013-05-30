@@ -1,7 +1,7 @@
 package com.badlogic.androidgames.mrnom;
 
-import com.badlogic.androidgames.framework.impl.Texture;
-import com.badlogic.androidgames.framework.impl.AndroidSound;
+import com.badlogic.androidgames.engine.impl.AndroidSound;
+import com.badlogic.androidgames.engine.impl.Texture;
 
 public class Assets {
 

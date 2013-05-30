@@ -1,7 +1,7 @@
 #ifndef MRNOMGAME_HPP
 #define MRNOMGAME_HPP
 
-#include "../framework.h"
+#include "../engine.h"
 #include "LoadingScreen.hpp"
 
 class MrNomGame : public GameContext

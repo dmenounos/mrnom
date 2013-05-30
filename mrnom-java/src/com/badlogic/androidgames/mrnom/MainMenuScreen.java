@@ -2,10 +2,10 @@ package com.badlogic.androidgames.mrnom;
 
 import java.util.List;
 
-import com.badlogic.androidgames.framework.Input.TouchEvent;
-import com.badlogic.androidgames.framework.impl.AndroidGraphics;
-import com.badlogic.androidgames.framework.impl.GameContext;
-import com.badlogic.androidgames.framework.impl.GameScreen;
+import com.badlogic.androidgames.engine.Input.TouchEvent;
+import com.badlogic.androidgames.engine.impl.AndroidGraphics;
+import com.badlogic.androidgames.engine.impl.GameContext;
+import com.badlogic.androidgames.engine.impl.GameScreen;
 
 public class MainMenuScreen extends GameScreen {
 

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import com.badlogic.androidgames.framework.FileIO;
+import com.badlogic.androidgames.engine.FileIO;
 
 public class Settings {
 	public static boolean soundEnabled = true;

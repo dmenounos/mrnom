@@ -20,14 +20,14 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := mrnom
 
-LOCAL_SRC_FILES := src/framework/EventLoop.cpp \
-                   src/framework/GameContext.cpp \
-                   src/framework/GameScreen.cpp \
-                   src/framework/RenderView.cpp \
-                   src/framework/ResourceFactory.cpp \
-                   src/framework/ResourceReader.cpp \
-                   src/framework/Texture.cpp \
-                   src/framework/Timer.cpp \
+LOCAL_SRC_FILES := src/engine/EventLoop.cpp \
+                   src/engine/GameContext.cpp \
+                   src/engine/GameScreen.cpp \
+                   src/engine/RenderView.cpp \
+                   src/engine/ResourceFactory.cpp \
+                   src/engine/Resource.cpp \
+                   src/engine/Texture.cpp \
+                   src/engine/Timer.cpp \
                    src/mrnom/LoadingScreen.cpp \
                    src/mrnom/MainMenuScreen.cpp \
                    src/mrnom/MrNomGame.cpp \

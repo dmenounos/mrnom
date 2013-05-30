@@ -1,7 +1,7 @@
 #ifndef LOADINGSCREEN_HPP
 #define LOADINGSCREEN_HPP
 
-#include "../framework.h"
+#include "../engine.h"
 
 class LoadingScreen : public GameScreen {
 

@@ -4,11 +4,11 @@ import java.util.List;
 
 import android.graphics.Color;
 
-import com.badlogic.androidgames.framework.Input.TouchEvent;
-import com.badlogic.androidgames.framework.impl.AndroidGraphics;
-import com.badlogic.androidgames.framework.impl.Texture;
-import com.badlogic.androidgames.framework.impl.GameContext;
-import com.badlogic.androidgames.framework.impl.GameScreen;
+import com.badlogic.androidgames.engine.Input.TouchEvent;
+import com.badlogic.androidgames.engine.impl.AndroidGraphics;
+import com.badlogic.androidgames.engine.impl.GameContext;
+import com.badlogic.androidgames.engine.impl.GameScreen;
+import com.badlogic.androidgames.engine.impl.Texture;
 
 public class LevelScreen extends GameScreen {
 

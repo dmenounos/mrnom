@@ -1,9 +1,9 @@
 package com.badlogic.androidgames.mrnom;
 
-import com.badlogic.androidgames.framework.impl.AndroidGraphics.PixmapFormat;
-import com.badlogic.androidgames.framework.impl.GameContext;
-import com.badlogic.androidgames.framework.impl.GameScreen;
-import com.badlogic.androidgames.framework.impl.ResourceFactory;
+import com.badlogic.androidgames.engine.impl.AndroidGraphics.PixmapFormat;
+import com.badlogic.androidgames.engine.impl.GameContext;
+import com.badlogic.androidgames.engine.impl.GameScreen;
+import com.badlogic.androidgames.engine.impl.ResourceFactory;
 
 public class LoadingScreen extends GameScreen {
 

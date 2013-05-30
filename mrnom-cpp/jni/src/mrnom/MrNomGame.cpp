@@ -26,5 +26,5 @@ void android_main(android_app* application)
 	printTypeLimits();
 
 	MrNomGame gameContext;
-	gameContext.run(application);
+	gameContext.init(application);
 }
