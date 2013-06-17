@@ -18,7 +18,7 @@ public:
 
 	virtual ~GameContext();
 
-	virtual void onUpdate(float delta);
+	virtual void onUpdate(float deltaTime);
 
 	virtual void onStart();
 

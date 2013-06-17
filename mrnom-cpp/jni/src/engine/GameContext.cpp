@@ -14,9 +14,9 @@ GameContext::~GameContext() {
 	delete mScreen;
 }
 
-void GameContext::onUpdate(float delta) {
-	getScreen()->update(delta);
-	getScreen()->render(delta);
+void GameContext::onUpdate(float deltaTime) {
+	getScreen()->update(deltaTime);
+	getScreen()->render(deltaTime);
 	mRenderView->render();
 }
 

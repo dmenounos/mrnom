@@ -4,7 +4,7 @@
 #include "../common.h"
 
 /**
- * Asset input / output.
+ * Encapsulates asset I/O.
  */
 class Resource {
 

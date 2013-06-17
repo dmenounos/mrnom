@@ -6,10 +6,14 @@
 #include <png.h>
 #include <GLES/gl.h>
 
-// private helper function
+/**
+ * Helper function declaration.
+ */
 AAssetManager* getAssetManager(GameContext* gameContex);
 
-// private helper function
+/**
+ * Helper function declaration.
+ */
 void readCallback(png_structp pngStruct, png_bytep pngData, png_size_t pngSize);
 
 ResourceFactory::ResourceFactory(GameContext* gameContext) :
@@ -43,7 +47,7 @@ Texture* ResourceFactory::createTexture(const char* path) {
 	if (!infoPtr) goto ERROR;
 
 	/*
-	 * Prepare reading operationsby giving our callback_read().
+	 * Prepare reading operations by giving our callback_read().
 	 *
 	 * Setup error management with setjmp(). This allows jumping like a goto
 	 * but through the call stack. If an error occurs, control flow comes back
@@ -175,7 +179,9 @@ Texture* ResourceFactory::createTexture(const char* path) {
 	return 0;
 }
 
-// private helper function
+/**
+ * Helper function definition.
+ */
 void readCallback(png_struct* pngPtr, png_byte* pngData, png_size_t pngSize) {
 	Resource* reader = (Resource*) png_get_io_ptr(pngPtr);
 
@@ -184,7 +190,9 @@ void readCallback(png_struct* pngPtr, png_byte* pngData, png_size_t pngSize) {
 	}
 }
 
-// private helper function
+/**
+ * Helper function definition.
+ */
 AAssetManager* getAssetManager(GameContext* gameContex) {
 	return gameContex->getApplication()->activity->assetManager;
 }

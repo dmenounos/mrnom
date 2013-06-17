@@ -17,12 +17,21 @@ public:
 
 	int32_t getFormat() const;
 
+	/**
+	 * Initializes texture meta data.
+	 * Maintains OpenGL texture handle.
+	 * Transfers pixel buffer into OpenGL.
+	 */
 	void load(
 		int32_t  width,
 		int32_t  height,
 		int32_t  format,
 		uint8_t* pixels);
 
+	/**
+	 * Clears texture meta data and handle.
+	 * Deletes OpenGL pixel buffer.
+	 */
 	void unload();
 
 	void apply();

@@ -37,7 +37,7 @@ public:
 	 * Called on each cycle, as long as the render loop is active,
 	 * i.e. in-between onResume / onPause system commands.
 	 */
-	virtual void onUpdate(float delta) {}
+	virtual void onUpdate(float deltaTime) {}
 
 	/** State change call-back. */
 	virtual void onStart() {}

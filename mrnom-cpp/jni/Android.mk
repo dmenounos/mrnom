@@ -23,9 +23,11 @@ LOCAL_MODULE := mrnom
 LOCAL_SRC_FILES := src/engine/EventLoop.cpp \
                    src/engine/GameContext.cpp \
                    src/engine/GameScreen.cpp \
+                   src/engine/Location.cpp \
                    src/engine/RenderView.cpp \
                    src/engine/ResourceFactory.cpp \
                    src/engine/Resource.cpp \
+                   src/engine/Sprite.cpp \
                    src/engine/Texture.cpp \
                    src/engine/Timer.cpp \
                    src/mrnom/LoadingScreen.cpp \
