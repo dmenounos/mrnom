@@ -16,12 +16,13 @@ public:
 
 	void load();
 
-	void draw(float deltaTime);
-
 	void setAnimation(int32_t startFrame, int32_t frameCount, float speed, bool loop);
 
 	bool hasAnimationEnded();
 
+	void update(float deltaTime);
+
+	void render(float deltaTime);
 private:
 
 	Location mLocation;
@@ -40,16 +41,23 @@ private:
 	/** Total texture frames. */
 	int32_t mFrameCount;
 
-	/** The animation starting frame. */
+	/** Animation offset frame. */
 	int32_t mAnimStartFrame;
 
-	/** The animation total frames. */
+	/** Animation total frames. */
 	int32_t mAnimFrameCount;
 
-	/** The animation time accumulator. */
-	float mAnimFrame;
+	/** Animation current frame. */
+	int32_t mAnimCurrentFrame;
 
-	float mAnimSpeed;
+	/** Animation time accumulator. */
+	float mAnimProgress;
+
+	/** Animation time duration. */
+	float mAnimDuration;
+
+	/** Animation frames / second. */
+	float mAnimFactor;
 
 	bool mAnimLoop;
 };
