@@ -4,6 +4,8 @@
 #include "../engine.h"
 #include "LoadingScreen.hpp"
 
+using namespace engine;
+
 class MrNomGame : public GameContext
 {
 	public:

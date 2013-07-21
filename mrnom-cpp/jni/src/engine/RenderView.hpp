@@ -5,6 +5,8 @@
 
 #include <EGL/egl.h>
 
+namespace engine {
+
 class GameContext;
 
 class RenderView {
@@ -15,21 +17,25 @@ public:
 
 	virtual ~RenderView();
 
-	void setUp();
+	virtual void setUp();
 
-	void tearDown();
+	virtual void tearDown();
 
-	void render();
+	virtual void render();
 
 private:
 
 	// shared pointer
 	GameContext* mGameContext;
 
-	int32_t mWidth, mHeight;
+	int32_t mWidth;
+	int32_t mHeight;
+
 	EGLDisplay mEglDisplay;
 	EGLSurface mEglSurface;
 	EGLContext mEglContext;
 };
+
+}
 
 #endif

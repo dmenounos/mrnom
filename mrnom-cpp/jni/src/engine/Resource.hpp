@@ -14,7 +14,7 @@ public:
 
 	virtual ~Resource();
 
-	int32_t read(void* buffer, size_t count);
+	virtual int32_t read(void* buffer, size_t count);
 
 private:
 

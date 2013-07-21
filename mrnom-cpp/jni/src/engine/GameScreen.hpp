@@ -3,6 +3,8 @@
 
 #include "../common.h"
 
+namespace engine {
+
 class GameContext;
 
 /**
@@ -16,20 +18,34 @@ public:
 
 	virtual ~GameScreen();
 
-	virtual void update(float deltaTime) = 0;
+	/**
+	 * @param deltaTime The elapsed time, in seconds.
+	 */
+	virtual void update(float deltaTime);
 
-	virtual void render(float deltaTime) = 0;
+	/**
+	 * @param deltaTime The elapsed time, in seconds.
+	 */
+	virtual void render(float deltaTime);
 
-	virtual void resume() = 0;
+	virtual void resume();
 
-	virtual void pause() = 0;
+	virtual void pause();
 
-	virtual void dispose() = 0;
+	virtual void dispose();
 
 protected:
 
 	// shared pointer
 	GameContext* mContext;
+
+	/** FPS time accumulator. */
+	float mFpsTime;
+
+	/** FPS tick flag. */
+	bool mFpsTick;
 };
+
+}
 
 #endif

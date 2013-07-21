@@ -3,8 +3,10 @@
 
 #include "../engine.h"
 
-class World
-{
+using namespace engine;
+
+class World {
+
 	static const int WORLD_WIDTH  = 10;
 	static const int WORLD_HEIGHT = 13;
 
@@ -12,22 +14,24 @@ class World
 	static const float TICK_INITIAL   = 0.5f;
 	static const float TICK_DECREMENT = 0.05f;
 
-	public:
+public:
 
-	/**
-	 * Constructor.
-	 */
 	World();
 
-	void update(float deltaTime);
+	virtual ~World();
 
-	private:
+	/**
+	 * @param deltaTime The elapsed time, in seconds.
+	 */
+	virtual void update(float deltaTime);
+
+private:
 
 	/** Time accumulator. */
 	float mTime;
 
 	/** Tick interval. */
-	float mTick;
+	float mTickTime;
 };
 
 #endif

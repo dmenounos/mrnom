@@ -2,7 +2,11 @@
 #define SPRITE_HPP
 
 #include "../common.h"
-#include "Location.hpp"
+
+#include "Animation.hpp"
+#include "Vector.hpp"
+
+namespace engine {
 
 class Texture;
 
@@ -10,56 +14,45 @@ class Sprite {
 
 public:
 
-	Sprite(Location location, Texture* texture, int32_t width, int32_t height);
+	Sprite(Texture* texture);
 
 	virtual ~Sprite();
 
-	void load();
+	virtual void reload();
 
-	void setAnimation(int32_t startFrame, int32_t frameCount, float speed, bool loop);
+	virtual void update(float deltaTime);
 
-	bool hasAnimationEnded();
+	virtual void render(float deltaTime);
 
-	void update(float deltaTime);
+	int32_t getFrameWidth() const;
 
-	void render(float deltaTime);
+	int32_t getFrameHeight() const;
+
+	int32_t getHorFrames() const;
+	void setHorFrames(int32_t horFrames);
+
+	int32_t getVerFrames() const;
+	void setVerFrames(int32_t verFrames);
+
+	Animation& getAnimation();
+
+	Vector& getPosition();
+
 private:
-
-	Location mLocation;
 
 	Texture* mTexture;
 
-	int32_t mWidth;
-	int32_t mHeight;
+	int32_t mFrameWidth;
+	int32_t mFrameHeight;
 
-	/** Horizontal texture frames. */
-	int32_t mFrameXCount;
+	int32_t mHorFrames;
+	int32_t mVerFrames;
 
-	/** Vertical texture frames. */
-	int32_t mFrameYCount;
+	Animation mAnimation;
 
-	/** Total texture frames. */
-	int32_t mFrameCount;
-
-	/** Animation offset frame. */
-	int32_t mAnimStartFrame;
-
-	/** Animation total frames. */
-	int32_t mAnimFrameCount;
-
-	/** Animation current frame. */
-	int32_t mAnimCurrentFrame;
-
-	/** Animation time accumulator. */
-	float mAnimProgress;
-
-	/** Animation time duration. */
-	float mAnimDuration;
-
-	/** Animation frames / second. */
-	float mAnimFactor;
-
-	bool mAnimLoop;
+	Vector mPosition;
 };
+
+}
 
 #endif

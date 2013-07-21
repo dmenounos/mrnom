@@ -3,6 +3,8 @@
 
 #include "../common.h"
 
+namespace engine {
+
 class Timer {
 
 public:
@@ -25,5 +27,7 @@ private:
 
 	double mLastTime;
 };
+
+}
 
 #endif

@@ -3,6 +3,8 @@
 
 #include "EventLoop.hpp"
 
+namespace engine {
+
 class GameScreen;
 class RenderView;
 class ResourceFactory;
@@ -18,6 +20,9 @@ public:
 
 	virtual ~GameContext();
 
+	/**
+	 * @param deltaTime The elapsed time, in seconds.
+	 */
 	virtual void onUpdate(float deltaTime);
 
 	virtual void onStart();
@@ -42,5 +47,7 @@ private:
 	RenderView* mRenderView;
 	ResourceFactory* mResourceFactory;
 };
+
+}
 
 #endif

@@ -3,8 +3,10 @@
 
 #include "../common.h"
 
+namespace engine {
+
 class GameContext;
-class Texture;
+class Bitmap;
 
 /**
  * Encapsulates asset creation.
@@ -15,12 +17,14 @@ public:
 
 	ResourceFactory(GameContext* gameContext);
 
-	Texture* createTexture(const char* path);
+	Bitmap* createBitmap(const char* path);
 
 private:
 
 	// shared pointer
 	GameContext* mGameContext;
 };
+
+}
 
 #endif

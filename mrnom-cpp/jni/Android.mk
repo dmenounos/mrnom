@@ -20,27 +20,13 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := mrnom
 
-LOCAL_SRC_FILES := src/engine/EventLoop.cpp \
-                   src/engine/GameContext.cpp \
-                   src/engine/GameScreen.cpp \
-                   src/engine/Location.cpp \
-                   src/engine/RenderView.cpp \
-                   src/engine/ResourceFactory.cpp \
-                   src/engine/Resource.cpp \
-                   src/engine/Sprite.cpp \
-                   src/engine/Texture.cpp \
-                   src/engine/Timer.cpp \
-                   src/mrnom/LoadingScreen.cpp \
-                   src/mrnom/MainMenuScreen.cpp \
-                   src/mrnom/MrNomGame.cpp \
-                   src/mrnom/World.cpp
+LS_CPP = $(subst $(1)/,,$(wildcard $(1)/src/*/*.cpp))
+
+LOCAL_SRC_FILES := $(call LS_CPP,$(LOCAL_PATH))
 
 LOCAL_LDLIBS := -landroid -llog -lEGL -lGLESv1_CM
 
 LOCAL_STATIC_LIBRARIES := android_native_app_glue png
-
-# This last command launches the compilation process and indicates which type
-# of library to generate
 
 include $(BUILD_SHARED_LIBRARY)
 

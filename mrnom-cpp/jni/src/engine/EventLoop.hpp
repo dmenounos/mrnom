@@ -4,6 +4,8 @@
 #include "../common.h"
 #include "Timer.hpp"
 
+namespace engine {
+
 /**
  * Rough equivalent to the Java Activity.
  * Implements the application event loop.
@@ -36,6 +38,8 @@ public:
 	/**
 	 * Called on each cycle, as long as the render loop is active,
 	 * i.e. in-between onResume / onPause system commands.
+	 *
+	 * @param deltaTime The elapsed time, in seconds.
 	 */
 	virtual void onUpdate(float deltaTime) {}
 
@@ -77,5 +81,7 @@ private:
 	bool mActive;
 	bool mQuit;
 };
+
+}
 
 #endif

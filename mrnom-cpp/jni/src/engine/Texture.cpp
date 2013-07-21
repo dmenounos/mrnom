@@ -1,43 +1,37 @@
 #include "Texture.hpp"
 
+#include "Bitmap.hpp"
+#include "GameContext.hpp"
+#include "ResourceFactory.hpp"
+
 #include <GLES/gl.h>
 
-Texture::Texture() :
-	mWidth(0), mHeight(0),
-	mFormat(0), mTextureId(0) {
-	LOG_D("Texture::Texture()");
+namespace engine {
+
+Texture::Texture(GameContext* gameContext, const char* fileName) :
+	mGameContext(gameContext), mFileName(fileName),
+	mWidth(0), mHeight(0), mTextureId(0) {
+	LOG_D("### Texture::Texture()");
 }
 
 Texture::~Texture() {
-	LOG_D("Texture::~Texture()");
+	LOG_D("### Texture::~Texture()");
+	unload();
 }
 
-int32_t Texture::getWidth() const {
-	return mWidth;
-}
+void Texture::reload() {
+	LOG_D("--> Texture::reload()");
 
-int32_t Texture::getHeight() const {
-	return mHeight;
-}
+	ResourceFactory* resourceFactory = mGameContext->getResourceFactory();
+	Bitmap* bitmap = resourceFactory->createBitmap(mFileName);
 
-int32_t Texture::getFormat() const {
-	return mFormat;
-}
-
-void Texture::load(
-	int32_t width,
-	int32_t height,
-	int32_t format,
-	uint8_t* pixels)
-{
-	LOG_D("Texture::load(%d, %d, %d)", width, height, format);
-
-	GLenum errorResult;
+	mWidth  = bitmap->getWidth();
+	mHeight = bitmap->getHeight();
 
 	// Generate new texture id
 	glGenTextures(1, &mTextureId);
 
-	LOG_D("Texture::load mTextureId: %d", mTextureId);
+	LOG_D("--- Texture::reload() mTextureId: %d", mTextureId);
 
 	glBindTexture(GL_TEXTURE_2D, mTextureId);
 
@@ -50,52 +44,61 @@ void Texture::load(
 	/*
 	 * Load image data into OpenGL:
 	 *
-	 * target         : Specifies the target texture. Must be GL_TEXTURE_2D.
-	 * level          : Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
-	 * internalformat : Specifies the number of color components in the texture. Must be 1, 2, 3, or 4.
-	 * width          : Specifies the width of the texture image. Must be 2^n + 2 * (border) for some integer n.
-	 * height         : Specifies the height of the texture image. Must be 2^m + 2 * (border) for some integer m.
-	 * border         : Specifies the width of the border. Must be either 0 or 1.
-	 * format         : Specifies the format of the pixel data. The following symbolic values are accepted:
-	 *                  GL_COLOR_INDEX, GL_RED, GL_GREEN, GL_BLUE, GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, GL_LUMINANCE_ALPHA.
-	 * type           : Specifies the data type of the pixel data. The following symbolic values are accepted:
-	 *                  GL_UNSIGNED_BYTE, GL_BYTE, GL_BITMAP, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_FLOAT.
-	 * pixels         : Specifies a pointer to the image data in memory.
+	 * target         : The target texture. Must be GL_TEXTURE_2D.
+	 * level          : The level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
+	 * internalformat : The number of color components in the texture. Must be same as format. The following symbolic values are accepted:
+	 *                  GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, GL_LUMINANCE_ALPHA.
+	 * width          : The width of the texture image. Must be 2^n + 2 * (border) for some integer n.
+	 * height         : The height of the texture image. Must be 2^m + 2 * (border) for some integer m.
+	 * border         : The width of the border. Must be either 0 or 1.
+	 * format         : The format of the pixel data. Must be same as internalformat. The following symbolic values are accepted:
+	 *                  GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, GL_LUMINANCE_ALPHA.
+	 * type           : The data type of the pixel data. The following symbolic values are accepted:
+	 *                  GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1.
+	 * pixels         : A pointer to the image data in memory.
 	 */
 
-	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, pixels);
-
-	delete [] pixels;
-
-	mWidth  = width;
-	mHeight = height;
-	mFormat = format;
-
-	LOG_D("Texture::load mWidth:  %d", mWidth);
-	LOG_D("Texture::load mHeight: %d", mHeight);
-	LOG_D("Texture::load mFormat: %d", mFormat);
+	glTexImage2D(GL_TEXTURE_2D,
+	             0,
+	             bitmap->getFormat(),
+	             bitmap->getWidth(),
+	             bitmap->getHeight(),
+	             0,
+	             bitmap->getFormat(),
+	             GL_UNSIGNED_BYTE,
+	             bitmap->getPixels());
 
 	if (glGetError() != GL_NO_ERROR) {
-		LOG_E("Error loading texture into OpenGL.");
-		unload();
+		LOG_E("Error uploading texture into OpenGL.");
 	}
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	delete bitmap;
 }
 
-void Texture::unload()
-{
-	if (mTextureId != 0) {
+void Texture::unload() {
+	LOG_D("--- Texture::unload()");
+
+	if (mTextureId) {
 		glDeleteTextures(1, &mTextureId);
-		mTextureId = 0;
 	}
-
-	mWidth  = 0;
-	mHeight = 0;
-	mFormat = 0;
 }
 
-
-void Texture::apply()
-{
-	glActiveTexture(GL_TEXTURE0);
+void Texture::bind() {
 	glBindTexture(GL_TEXTURE_2D, mTextureId);
+}
+
+const char* Texture::getFileName() const {
+	return mFileName;
+}
+
+int32_t Texture::getWidth() const {
+	return mWidth;
+}
+
+int32_t Texture::getHeight() const {
+	return mHeight;
+}
+
 }

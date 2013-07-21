@@ -55,7 +55,7 @@ public class AndroidGraphics {
 		dstRect.right = x + srcWidth - 1;
 		dstRect.bottom = y + srcHeight - 1;
 
-		canvas.drawBitmap(((Texture) pixmap).bitmap, srcRect, dstRect, null);
+		canvas.drawBitmap(pixmap.bitmap, srcRect, dstRect, null);
 	}
 
 	public void drawPixmap(Texture pixmap, int x, int y) {

@@ -2,16 +2,18 @@
 
 World::World() :
 	mTime(0.0),
-	mTick(TICK_INITIAL) {
+	mTickTime(TICK_INITIAL) {
+	LOG_D("### World::World()");
 }
 
-void World::update(float deltaTime)
-{
-	mTime +=deltaTime;
+World::~World() {
+	LOG_D("### World::~World()");
+}
 
-	while (mTime > mTick) {
-		LOG_D("mTime: %f FPS: %f", mTime, 1 / deltaTime);
-		assert(deltaTime > 0.001f);
-		mTime -= mTick;
+void World::update(float deltaTime) {
+	mTime += deltaTime;
+
+	while (mTime > mTickTime) {
+		mTime -= mTickTime;
 	}
 }

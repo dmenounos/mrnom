@@ -3,20 +3,23 @@
 
 /* C APIs */
 
-// Core Input and Output
-// Formatted Input and Output
-#include <stdio.h>
-
 // Process Control
 // Memory Allocation
 // Random Number Generation
 // String to Number Conversion
 #include <stdlib.h>
 
+// Core Input and Output
+// Formatted Input and Output
+/* TOOLCHAINS / GCC */
+#include <stdio.h>
+
 // Exact width integer types
+/* TOOLCHAINS / GCC */
 #include <stdint.h>
 
 // bool, char, short, int, long limits
+/* TOOLCHAINS / GCC */
 #include <limits.h>
 
 #include <assert.h>

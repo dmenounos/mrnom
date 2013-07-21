@@ -2,11 +2,11 @@
 
 Resource::Resource(AAssetManager* assetManager, const char* path) {
 	mAsset = AAssetManager_open(assetManager, path, AASSET_MODE_UNKNOWN);
-	LOG_D("Resource::Resource(%s)", path);
+	LOG_D("### Resource::Resource(%s)", path);
 }
 
 Resource::~Resource() {
-	LOG_D("Resource::~Resource()");
+	LOG_D("### Resource::~Resource()");
 	AAsset_close(mAsset);
 	mAsset = NULL;
 }

@@ -3,45 +3,52 @@
 
 #include "../common.h"
 
+namespace engine {
+
+class GameContext;
+
 class Texture {
 
 public:
 
-	Texture();
+	Texture(GameContext* gameContext, const char* fileName);
 
 	virtual ~Texture();
+
+	/**
+	 * Uploads pixel buffer into OpenGL.
+	 */
+	virtual void reload();
+
+	/**
+	 * Deletes pixel buffer from OpenGL.
+	 */
+	virtual void unload();
+
+	/**
+	 * Binds the texture for use with OpenGL.
+	 */
+	virtual void bind();
+
+	const char* getFileName() const;
 
 	int32_t getWidth() const;
 
 	int32_t getHeight() const;
 
-	int32_t getFormat() const;
-
-	/**
-	 * Initializes texture meta data.
-	 * Maintains OpenGL texture handle.
-	 * Transfers pixel buffer into OpenGL.
-	 */
-	void load(
-		int32_t  width,
-		int32_t  height,
-		int32_t  format,
-		uint8_t* pixels);
-
-	/**
-	 * Clears texture meta data and handle.
-	 * Deletes OpenGL pixel buffer.
-	 */
-	void unload();
-
-	void apply();
-
 private:
+
+	// shared pointer
+	GameContext* mGameContext;
+
+	const char* mFileName;
 
 	int32_t mWidth;
 	int32_t mHeight;
-	int32_t mFormat;
+
 	uint32_t mTextureId;
 };
+
+}
 
 #endif

@@ -70,7 +70,7 @@ public abstract class EventLoop extends Activity {
 					// Log.d("MrNom", "frameTime: " + frameTime + " sleepTime: " + sleepTime);
 
 					try {
-						sleep((long) (sleepTime * 1000)); // milliseconds
+						sleep((long) (sleepTime * 1000.0)); // milliseconds
 					}
 					catch (InterruptedException e) {
 					}

@@ -3,13 +3,15 @@
 #include "RenderView.hpp"
 #include "ResourceFactory.hpp"
 
+namespace engine {
+
 GameContext::GameContext() :
 	EventLoop() {
-	LOG_D("GameContext::GameContext()");
+	LOG_D("### GameContext::GameContext()");
 }
 
 GameContext::~GameContext() {
-	LOG_D("GameContext::~GameContext()");
+	LOG_D("### GameContext::~GameContext()");
 	delete mRenderView;
 	delete mScreen;
 }
@@ -62,4 +64,6 @@ void GameContext::setScreen(GameScreen* screen)
 
 ResourceFactory* GameContext::getResourceFactory() const {
 	return mResourceFactory;
+}
+
 }

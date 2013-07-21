@@ -1,7 +1,7 @@
 #include "MrNomGame.hpp"
 
 MrNomGame::~MrNomGame() {
-	LOG_D("MrNomGame::~MrNomGame");
+	LOG_D("### MrNomGame::~MrNomGame");
 }
 
 GameScreen* MrNomGame::getStartScreen() {

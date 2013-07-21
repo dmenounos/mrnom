@@ -4,22 +4,24 @@
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 
+namespace engine {
+
 RenderView::RenderView(GameContext* gameContext) :
 	mGameContext(gameContext),
 	mWidth(0), mHeight(0),
 	mEglDisplay(EGL_NO_DISPLAY),
 	mEglSurface(EGL_NO_SURFACE),
 	mEglContext(EGL_NO_CONTEXT) {
-	LOG_D("RenderView::RenderView()");
+	LOG_D("### RenderView::RenderView()");
 }
 
 RenderView::~RenderView() {
-	LOG_D("RenderView::~RenderView()");
+	LOG_D("### RenderView::~RenderView()");
 }
 
 void RenderView::setUp()
 {
-	LOG_D("RenderView::setUp");
+	LOG_D("--> RenderView::setUp()");
 
 	EGLint format;
 	EGLint numConfigs;
@@ -90,12 +92,12 @@ void RenderView::setUp()
 	return;
 
 	ERROR:
-	LOG_E("Error while initializing OpenGL");
+	LOG_E("Error while initializing OpenGL: %d", eglGetError());
 }
 
 void RenderView::tearDown()
 {
-	LOG_D("RenderView::tearDown");
+	LOG_D("--> RenderView::tearDown()");
 
 	if (mEglDisplay != EGL_NO_DISPLAY) {
 		eglMakeCurrent(mEglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
@@ -125,4 +127,6 @@ void RenderView::render()
 	if (!eglSwapBuffers(mEglDisplay, mEglSurface)) {
 		LOG_E("Error swapping buffers: %d", eglGetError());
 	}
+}
+
 }

@@ -1,10 +1,12 @@
 #include "ResourceFactory.hpp"
 #include "Resource.hpp"
 #include "GameContext.hpp"
-#include "Texture.hpp"
+#include "Bitmap.hpp"
 
 #include <png.h>
 #include <GLES/gl.h>
+
+namespace engine {
 
 /**
  * Helper function declaration.
@@ -20,10 +22,9 @@ ResourceFactory::ResourceFactory(GameContext* gameContext) :
 	mGameContext(gameContext) {
 }
 
-Texture* ResourceFactory::createTexture(const char* path) {
+Bitmap* ResourceFactory::createBitmap(const char* path) {
 	AAssetManager* assetManager = getAssetManager(mGameContext);
-	Resource Resource(assetManager, path);
-	Texture* texture = new Texture();
+	Resource resource(assetManager, path);
 
 	png_byte header[8];
 	png_struct* pngPtr = NULL;
@@ -33,7 +34,7 @@ Texture* ResourceFactory::createTexture(const char* path) {
 	png_int_32 rowSize;
 	bool transparency;
 
-	Resource.read(header, sizeof(header));
+	resource.read(header, sizeof(header));
 	if (png_sig_cmp(header, 0, 8) != 0) goto ERROR;
 
 	/*
@@ -55,7 +56,7 @@ Texture* ResourceFactory::createTexture(const char* path) {
 	 * block instead (here goto ERROR).
 	 */
 
-	png_set_read_fn(pngPtr, &Resource, readCallback);
+	png_set_read_fn(pngPtr, &resource, readCallback);
 	if (setjmp(png_jmpbuf(pngPtr))) goto ERROR;
 
 	/*
@@ -159,13 +160,10 @@ Texture* ResourceFactory::createTexture(const char* path) {
 
 	png_destroy_read_struct(&pngPtr, &infoPtr, NULL);
 
-	texture->load(width, height, format, imageBuffer);
-	return texture;
+	return new Bitmap(width, height, format, imageBuffer);
 
 	ERROR:
 	LOG_E("Error while reading PNG file.");
-
-	delete texture;
 
 	delete [] rowPtrs;
 	delete [] imageBuffer;
@@ -195,4 +193,6 @@ void readCallback(png_struct* pngPtr, png_byte* pngData, png_size_t pngSize) {
  */
 AAssetManager* getAssetManager(GameContext* gameContex) {
 	return gameContex->getApplication()->activity->assetManager;
+}
+
 }

@@ -3,6 +3,8 @@
 
 #include "../engine.h"
 
+using namespace engine;
+
 class LoadingScreen : public GameScreen {
 
 public:
@@ -11,8 +13,14 @@ public:
 
 	virtual ~LoadingScreen();
 
+	/**
+	 * @param deltaTime The elapsed time, in seconds.
+	 */
 	virtual void update(float deltaTime);
 
+	/**
+	 * @param deltaTime The elapsed time, in seconds.
+	 */
 	virtual void render(float deltaTime);
 
 	virtual void resume();
@@ -20,6 +28,11 @@ public:
 	virtual void pause();
 
 	virtual void dispose();
+
+private:
+
+	Texture* backgroundTexture;
+	Texture* logoTexture;
 };
 
 #endif

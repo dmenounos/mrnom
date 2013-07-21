@@ -2,7 +2,10 @@
 #define MAINMENUSCREEN_HPP
 
 #include "../engine.h"
-#include "World.hpp"
+
+using namespace engine;
+
+class World;
 
 class MainMenuScreen : public GameScreen {
 
@@ -12,8 +15,14 @@ public:
 
 	virtual ~MainMenuScreen();
 
+	/**
+	 * @param deltaTime The elapsed time, in seconds.
+	 */
 	virtual void update(float deltaTime);
 
+	/**
+	 * @param deltaTime The elapsed time, in seconds.
+	 */
 	virtual void render(float deltaTime);
 
 	virtual void resume();
@@ -23,6 +32,8 @@ public:
 	virtual void dispose();
 
 private:
+
+	Sprite* mAnimationSprite;
 
 	World* mWorld;
 };

@@ -3,15 +3,17 @@
 #define INTERVAL_30FPS 0.0333333333333f
 #define INTERVAL_60FPS 0.0166666666667f
 
+namespace engine {
+
 EventLoop::EventLoop() :
 	mApplication(0),
 	mActive(false),
 	mQuit(false) {
-	LOG_D("EventLoop::EventLoop()");
+	LOG_D("### EventLoop::EventLoop()");
 }
 
 EventLoop::~EventLoop() {
-	LOG_D("EventLoop::~EventLoop()");
+	LOG_D("### EventLoop::~EventLoop()");
 }
 
 android_app* EventLoop::getApplication() const {
@@ -32,7 +34,7 @@ void EventLoop::init(android_app* application)
 
 	app_dummy();
 
-	LOG_D("ENTERING EVENT LOOP");
+	LOG_D("--- ENTERING EVENT LOOP");
 
 	while (!mQuit) {
 
@@ -43,7 +45,7 @@ void EventLoop::init(android_app* application)
 			if (source != NULL) source->process(application, source);
 
 			if (application->destroyRequested) {
-				LOG_D("EXITING EVENT LOOP");
+				LOG_D("--- EXITING EVENT LOOP");
 				assert(!mActive);
 				return;
 			}
@@ -68,7 +70,7 @@ void EventLoop::init(android_app* application)
 		}
 	}
 
-	LOG_D("EXITED EVENT LOOP");
+	LOG_D("--- EXITED EVENT LOOP");
 }
 
 void EventLoop::resumeRender() {
@@ -90,29 +92,31 @@ void EventLoop::systemStateCallback(android_app* app, int32_t cmd)
 
 	switch (cmd) {
 	case APP_CMD_START:
-		LOG_D("APP_CMD_START");
+		LOG_D("--- APP_CMD_START");
 		eventLoop->onStart();
 		break;
 	case APP_CMD_RESUME:
-		LOG_D("APP_CMD_RESUME");
+		LOG_D("--- APP_CMD_RESUME");
+		// eventLoop->onResume();
 		break;
 	case APP_CMD_INIT_WINDOW:
-		LOG_D("APP_CMD_INIT_WINDOW");
+		LOG_D("--- APP_CMD_INIT_WINDOW");
 		eventLoop->onResume();
 		break;
 	case APP_CMD_PAUSE:
-		LOG_D("APP_CMD_PAUSE");
-		break;
-	case APP_CMD_TERM_WINDOW:
-		LOG_D("APP_CMD_TERM_WINDOW");
+		LOG_D("--- APP_CMD_PAUSE");
 		eventLoop->onPause();
 		break;
+	case APP_CMD_TERM_WINDOW:
+		LOG_D("--- APP_CMD_TERM_WINDOW");
+		// eventLoop->onPause();
+		break;
 	case APP_CMD_STOP:
-		LOG_D("APP_CMD_STOP");
+		LOG_D("--- APP_CMD_STOP");
 		eventLoop->onStop();
 		break;
 	case APP_CMD_DESTROY:
-		LOG_D("APP_CMD_DESTROY");
+		LOG_D("--- APP_CMD_DESTROY");
 		eventLoop->onDestroy();
 		break;
 	}
@@ -125,4 +129,6 @@ int32_t EventLoop::systemInputCallback(android_app* app, AInputEvent* event)
 	}
 
 	return 0;
+}
+
 }
