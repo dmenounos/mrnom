@@ -1,7 +1,8 @@
 #include "GameContext.hpp"
 #include "GameScreen.hpp"
-#include "RenderView.hpp"
-#include "ResourceFactory.hpp"
+
+#include "system/RenderView.hpp"
+#include "system/ResourceFactory.hpp"
 
 namespace engine {
 
@@ -12,8 +13,6 @@ GameContext::GameContext() :
 
 GameContext::~GameContext() {
 	LOG_D("### GameContext::~GameContext()");
-	delete mRenderView;
-	delete mScreen;
 }
 
 void GameContext::onUpdate(float deltaTime) {
@@ -23,8 +22,8 @@ void GameContext::onUpdate(float deltaTime) {
 }
 
 void GameContext::onStart() {
-	mResourceFactory = new ResourceFactory(this);
-	mRenderView = new RenderView(this);
+	mResourceFactory = new ResourceFactory(getApplication()->activity->assetManager);
+	mRenderView = new RenderView(getApplication());
 	mScreen = getStartScreen();
 }
 
@@ -42,21 +41,33 @@ void GameContext::onPause() {
 
 void GameContext::onStop() {
 	mScreen->dispose();
+
+	if (mScreen) {
+		delete mScreen;
+	}
+
+	if (mRenderView) {
+		delete mRenderView;
+	}
+
+	if (mResourceFactory) {
+		delete mResourceFactory;
+	}
 }
 
 GameScreen* GameContext::getScreen() const {
 	return mScreen;
 }
 
-void GameContext::setScreen(GameScreen* screen)
-{
+void GameContext::setScreen(GameScreen* screen){
+	assert(screen);
+
 	if (mScreen) {
 		mScreen->pause();
 		mScreen->dispose();
 		delete mScreen;
 	}
 
-	assert(screen);
 	screen->resume();
 	screen->update(0);
 	mScreen = screen;

@@ -7,7 +7,9 @@ MainMenuScreen::MainMenuScreen(GameContext* context) :
 	LOG_D("### MainMenuScreen::MainMenuScreen()");
 
 	mAnimationSprite = new Sprite(new Texture(context, "anim_512x512.png"));
-	mAnimationSprite->getAnimation().config(0, 30, 30, true);
+	mAnimationSprite->getAnimation().setContinuous(true);  // continuous
+	mAnimationSprite->getAnimation().setTickDuration(30);  // 30 seconds
+	mAnimationSprite->getAnimation().setLength(30);        // 30 frames
 }
 
 MainMenuScreen::~MainMenuScreen() {
@@ -19,6 +21,7 @@ MainMenuScreen::~MainMenuScreen() {
 
 void MainMenuScreen::update(float deltaTime) {
 	GameScreen::update(deltaTime);
+
 	mWorld->update(deltaTime);
 	mAnimationSprite->update(deltaTime);
 }
@@ -26,7 +29,7 @@ void MainMenuScreen::update(float deltaTime) {
 void MainMenuScreen::render(float deltaTime) {
 	GameScreen::render(deltaTime);
 
-	if (mFpsTick) {
+	if (isTickComplete()) {
 		LOG_D("--- animation cursor: %d", mAnimationSprite->getAnimation().getCursor());
 	}
 }

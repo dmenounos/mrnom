@@ -15,14 +15,8 @@ public:
 
 	virtual ~MainMenuScreen();
 
-	/**
-	 * @param deltaTime The elapsed time, in seconds.
-	 */
 	virtual void update(float deltaTime);
 
-	/**
-	 * @param deltaTime The elapsed time, in seconds.
-	 */
 	virtual void render(float deltaTime);
 
 	virtual void resume();

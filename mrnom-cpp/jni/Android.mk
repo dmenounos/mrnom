@@ -20,9 +20,23 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := mrnom
 
-LS_CPP = $(subst $(1)/,,$(wildcard $(1)/src/*/*.cpp))
+# Define some variables.
 
-LOCAL_SRC_FILES := $(call LS_CPP,$(LOCAL_PATH))
+comma := ,
+empty :=
+space := $(empty) $(empty)
+
+# Define new function, with one argument $(1), that:
+#
+# 1) Lists all ".cpp" files under "$(1)/src".
+#    $(shell find $(1)/src -name "*.cpp")
+#
+# 2) Removes the prefix path "$(1)/" in front of "src".
+#    $(subst $(1)/, $(empty), ...)
+
+LS_CPP = $(subst $(1)/, $(empty), $(shell find $(1)/src -name "*.cpp"))
+
+LOCAL_SRC_FILES := $(call LS_CPP, $(LOCAL_PATH))
 
 LOCAL_LDLIBS := -landroid -llog -lEGL -lGLESv1_CM
 

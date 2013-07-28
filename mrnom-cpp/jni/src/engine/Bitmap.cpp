@@ -12,7 +12,6 @@ Bitmap::~Bitmap() {
 
 	if (mPixels != NULL) {
 		delete [] mPixels;
-		mPixels = NULL;
 	}
 }
 

@@ -3,9 +3,11 @@
 
 #include "../common.h"
 
+#include "Accumulator.hpp"
+
 namespace engine {
 
-class Animation {
+class Animation : public Accumulator {
 
 public:
 
@@ -13,13 +15,13 @@ public:
 
 	virtual ~Animation();
 
-	virtual void config(int32_t offset, int32_t length, float duration, bool loop);
+	virtual int32_t getCursor();
 
-	virtual void update(float deltaTime);
+	virtual int32_t getOffset() const;
+	virtual void setOffset(int32_t offset);
 
-	virtual bool hasEnded();
-
-	int32_t getCursor();
+	virtual int32_t getLength() const;
+	virtual void setLength(int32_t length);
 
 private:
 
@@ -29,19 +31,9 @@ private:
 	/** Total frames. */
 	int32_t mLength;
 
-	/** Current frame. */
-	int32_t mCursor;
-
-	/** Time accumulator. */
-	float mProgress;
-
-	/** Time duration. */
-	float mDuration;
-
 	/** Frames / Second. */
 	float mFactor;
 
-	bool mLoop;
 };
 
 }

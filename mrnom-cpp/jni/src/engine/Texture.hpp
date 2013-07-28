@@ -7,6 +7,9 @@ namespace engine {
 
 class GameContext;
 
+/**
+ * GPU Picture handle.
+ */
 class Texture {
 
 public:
@@ -29,8 +32,6 @@ public:
 	 * Binds the texture for use with OpenGL.
 	 */
 	virtual void bind();
-
-	const char* getFileName() const;
 
 	int32_t getWidth() const;
 

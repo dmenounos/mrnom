@@ -2,7 +2,8 @@
 
 #include "Bitmap.hpp"
 #include "GameContext.hpp"
-#include "ResourceFactory.hpp"
+
+#include "system/ResourceFactory.hpp"
 
 #include <GLES/gl.h>
 
@@ -78,7 +79,7 @@ void Texture::reload() {
 }
 
 void Texture::unload() {
-	LOG_D("--- Texture::unload()");
+	LOG_D("--> Texture::unload()");
 
 	if (mTextureId) {
 		glDeleteTextures(1, &mTextureId);
@@ -87,10 +88,6 @@ void Texture::unload() {
 
 void Texture::bind() {
 	glBindTexture(GL_TEXTURE_2D, mTextureId);
-}
-
-const char* Texture::getFileName() const {
-	return mFileName;
 }
 
 int32_t Texture::getWidth() const {

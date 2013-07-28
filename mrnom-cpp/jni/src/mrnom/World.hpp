@@ -5,7 +5,7 @@
 
 using namespace engine;
 
-class World {
+class World : public Accumulator {
 
 	static const int WORLD_WIDTH  = 10;
 	static const int WORLD_HEIGHT = 13;
@@ -19,19 +19,6 @@ public:
 	World();
 
 	virtual ~World();
-
-	/**
-	 * @param deltaTime The elapsed time, in seconds.
-	 */
-	virtual void update(float deltaTime);
-
-private:
-
-	/** Time accumulator. */
-	float mTime;
-
-	/** Tick interval. */
-	float mTickTime;
 };
 
 #endif

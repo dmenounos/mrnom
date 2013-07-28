@@ -5,6 +5,9 @@
 
 namespace engine {
 
+/**
+ * Picture data container.
+ */
 class Bitmap {
 
 public:

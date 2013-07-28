@@ -1,7 +1,7 @@
 #ifndef GAMECONTEXT_HPP
 #define GAMECONTEXT_HPP
 
-#include "EventLoop.hpp"
+#include "system/EventLoop.hpp"
 
 namespace engine {
 
@@ -20,26 +20,30 @@ public:
 
 	virtual ~GameContext();
 
-	/**
-	 * @param deltaTime The elapsed time, in seconds.
-	 */
-	virtual void onUpdate(float deltaTime);
+	virtual GameScreen* getScreen() const;
 
-	virtual void onStart();
+	virtual void setScreen(GameScreen* screen);
 
-	virtual void onResume();
+	virtual ResourceFactory* getResourceFactory() const;
 
-	virtual void onPause();
-
-	virtual void onStop();
-
-	GameScreen* getScreen() const;
-
-	void setScreen(GameScreen* screen);
+protected:
 
 	virtual GameScreen* getStartScreen() = 0;
 
-	ResourceFactory* getResourceFactory() const;
+	// override
+	virtual void onUpdate(float deltaTime);
+
+	// override
+	virtual void onStart();
+
+	// override
+	virtual void onResume();
+
+	// override
+	virtual void onPause();
+
+	// override
+	virtual void onStop();
 
 private:
 
