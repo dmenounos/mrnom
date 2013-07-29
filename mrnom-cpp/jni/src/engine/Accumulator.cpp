@@ -13,25 +13,25 @@ Accumulator::~Accumulator() {
 }
 
 void Accumulator::update(float deltaTime) {
-	if (!hasEnded()) {
+	if (!isComplete()) {
 		mTickProgress += deltaTime;
 		mTickComplete = false;
 	}
 
-	while (mContinuous && hasEnded()) {
+	while (mContinuous && isComplete()) {
 		mTickProgress -= mTickDuration;
 		mTickComplete = true;
 		onTick();
 	}
 
-	if (!mContinuous && hasEnded()) {
+	if (!mContinuous && isComplete()) {
 		mTickProgress = 0.0f;
 		mTickComplete = true;
 		onTick();
 	}
 }
 
-bool Accumulator::hasEnded() {
+bool Accumulator::isComplete() {
 	return mTickProgress >= mTickDuration;
 }
 

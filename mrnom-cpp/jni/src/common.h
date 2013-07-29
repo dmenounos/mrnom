@@ -11,15 +11,15 @@
 
 // Core Input and Output
 // Formatted Input and Output
-/* TOOLCHAINS / GCC */
+// NOTICE: TOOLCHAINS / GCC
 #include <stdio.h>
 
 // Exact width integer types
-/* TOOLCHAINS / GCC */
+// NOTICE: TOOLCHAINS / GCC
 #include <stdint.h>
 
 // bool, char, short, int, long limits
-/* TOOLCHAINS / GCC */
+// NOTICE: TOOLCHAINS / GCC
 #include <limits.h>
 
 #include <assert.h>
@@ -34,6 +34,12 @@
 #include <vector>
 #include <iostream>
 #include <stdexcept>
+
+/* OpenGL APIs */
+
+#include <EGL/egl.h>
+#include <GLES/gl.h>
+#include <GLES/glext.h>
 
 /* ANDROID APIs */
 

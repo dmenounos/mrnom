@@ -1,25 +1,38 @@
 #include "Sprite.hpp"
 #include "Texture.hpp"
+#include "Vertices.hpp"
 
 namespace engine {
 
-Sprite::Sprite(Texture* texture) :
-	mTexture(texture),
-	mFrameWidth(0), mFrameHeight(0),
+Sprite::Sprite(Texture* texture, Vertices* vertices) :
+	mTexture(texture), mVertices(vertices),
+	mAnimation(), mPosition(),
 	mHorFrames(1), mVerFrames(1),
-	mAnimation(), mPosition() {
+	mFrameWidth(0), mFrameHeight(0) {
+
 	LOG_D("### Sprite::Sprite()");
 }
 
 Sprite::~Sprite() {
 	LOG_D("### Sprite::~Sprite()");
-	delete mTexture;
+
+	delete mVertices;
 }
 
 void Sprite::reload() {
+	LOG_D("--> Sprite::reload()");
+
 	mTexture->reload();
+
 	mFrameWidth  = mTexture->getWidth()  / mHorFrames;
 	mFrameHeight = mTexture->getHeight() / mVerFrames;
+}
+
+
+void Sprite::unload() {
+	LOG_D("--> Sprite::unload()");
+
+	mTexture->unload();
 }
 
 void Sprite::update(float deltaTime) {
@@ -29,16 +42,11 @@ void Sprite::update(float deltaTime) {
 void Sprite::render(float deltaTime) {
 	int32_t currentFrameX;
 	int32_t currentFrameY;
+
+	glEnable(GL_TEXTURE_2D);
 	mTexture->bind();
-	LOG_D("--- ANIMATION FRAME: %d", mAnimation.getCursor());
-}
 
-int32_t Sprite::getFrameWidth() const {
-	return mFrameWidth;
-}
-
-int32_t Sprite::getFrameHeight() const {
-	return mFrameHeight;
+	mVertices->render();
 }
 
 int32_t Sprite::getHorFrames() const {
@@ -57,6 +65,22 @@ int32_t Sprite::getVerFrames() const {
 void Sprite::setVerFrames(int32_t verFrames) {
 	assert(verFrames >= 1);
 	mVerFrames = verFrames;
+}
+
+int32_t Sprite::getFrameWidth() const {
+	return mFrameWidth;
+}
+
+void Sprite::setFrameWidth(int32_t frameWidth) {
+	mFrameWidth = frameWidth;
+}
+
+int32_t Sprite::getFrameHeight() const {
+	return mFrameHeight;
+}
+
+void Sprite::setFrameHeight(int32_t frameHeight) {
+	mFrameHeight = frameHeight;
 }
 
 Animation& Sprite::getAnimation() {

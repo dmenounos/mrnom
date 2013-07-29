@@ -20,6 +20,9 @@ public:
 
 	virtual ~GameScreen();
 
+	// override
+	virtual void update(float deltaTime);
+
 	virtual void render(float deltaTime);
 
 	virtual void resume();

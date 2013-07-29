@@ -15,5 +15,6 @@
 #include "engine/Sprite.hpp"
 #include "engine/Texture.hpp"
 #include "engine/Vector.hpp"
+#include "engine/Vertices.hpp"
 
 #endif

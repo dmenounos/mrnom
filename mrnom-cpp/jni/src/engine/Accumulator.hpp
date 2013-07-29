@@ -21,46 +21,47 @@ public:
 	 */
 	virtual void update(float deltaTime);
 
-	virtual bool hasEnded();
+	virtual bool isComplete();
 
+	/**
+	 * Is continuous?
+	 */
 	virtual bool isContinuous() const;
 	virtual void setContinuous(bool loop);
 
+	/**
+	 * Tick time duration.
+	 */
 	virtual float getTickDuration() const;
 	virtual void setTickDuration(float tickDuration);
 
 protected:
 
+	/**
+	 * On tick complete call-back.
+	 */
 	virtual void onTick() {}
 
+	/**
+	 * Is tick complete?
+	 */
 	virtual bool isTickComplete() const;
 
+	/**
+	 * Tick time progress.
+	 */
 	virtual float getTickProgress() const;
 
 private:
 
-	/**
-	 * Configuration;
-	 * Is continuous?
-	 */
-	bool mContinuous;
+	// configuration
 
-	/**
-	 * Configuration;
-	 * Tick time duration.
-	 */
+	bool mContinuous;
 	float mTickDuration;
 
-	/**
-	 * Computed;
-	 * Is tick complete?
-	 */
-	bool mTickComplete;
+	// computed
 
-	/**
-	 * Computed;
-	 * Tick time progress.
-	 */
+	bool mTickComplete;
 	float mTickProgress;
 };
 

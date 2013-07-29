@@ -15,21 +15,28 @@ public:
 
 	virtual ~MainMenuScreen();
 
+	// override
 	virtual void update(float deltaTime);
 
+	// override
 	virtual void render(float deltaTime);
 
+	// override
 	virtual void resume();
 
+	// override
 	virtual void pause();
 
+	// override
 	virtual void dispose();
 
 private:
 
-	Sprite* mAnimationSprite;
+	Vertices* mAnimationVertices;
+	Texture*  mAnimationTexture;
+	Sprite*   mAnimationSprite;
 
-	World* mWorld;
+	World*    mWorld;
 };
 
 #endif

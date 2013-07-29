@@ -6,8 +6,7 @@
 
 namespace engine {
 
-GameContext::GameContext() :
-	EventLoop() {
+GameContext::GameContext() : EventLoop() {
 	LOG_D("### GameContext::GameContext()");
 }
 
@@ -41,18 +40,9 @@ void GameContext::onPause() {
 
 void GameContext::onStop() {
 	mScreen->dispose();
-
-	if (mScreen) {
-		delete mScreen;
-	}
-
-	if (mRenderView) {
-		delete mRenderView;
-	}
-
-	if (mResourceFactory) {
-		delete mResourceFactory;
-	}
+	delete mScreen;
+	delete mRenderView;
+	delete mResourceFactory;
 }
 
 GameScreen* GameContext::getScreen() const {

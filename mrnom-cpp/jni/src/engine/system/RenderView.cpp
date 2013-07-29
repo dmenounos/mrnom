@@ -1,8 +1,5 @@
 #include "RenderView.hpp"
 
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-
 namespace engine {
 
 RenderView::RenderView(android_app* application) :
@@ -18,8 +15,7 @@ RenderView::~RenderView() {
 	LOG_D("### RenderView::~RenderView()");
 }
 
-void RenderView::setUp()
-{
+void RenderView::setUp() {
 	LOG_D("--> RenderView::setUp()");
 
 	EGLint format;
@@ -83,13 +79,16 @@ void RenderView::setUp()
 		goto ERROR;
 	}
 
-	if (!eglQuerySurface(mEglDisplay, mEglSurface, EGL_WIDTH, &mWidth)) {
+	if (!eglQuerySurface(mEglDisplay, mEglSurface, EGL_WIDTH, &mWidth) || mWidth <= 0) {
 		goto ERROR;
 	}
 
-	if (!eglQuerySurface(mEglDisplay, mEglSurface, EGL_HEIGHT, &mHeight)) {
+	if (!eglQuerySurface(mEglDisplay, mEglSurface, EGL_HEIGHT, &mHeight) || mHeight <= 0) {
 		goto ERROR;
 	}
+
+	LOG_D("--- glViewport(0, 0, %d, %d)", mWidth, mHeight);
+	glViewport(0, 0, mWidth, mHeight);
 
 	return;
 
@@ -97,8 +96,7 @@ void RenderView::setUp()
 	LOG_E("Error while initializing OpenGL: %d", eglGetError());
 }
 
-void RenderView::tearDown()
-{
+void RenderView::tearDown() {
 	LOG_D("--> RenderView::tearDown()");
 
 	if (mEglDisplay != EGL_NO_DISPLAY) {
@@ -119,13 +117,7 @@ void RenderView::tearDown()
 	}
 }
 
-void RenderView::render()
-{
-	float clearColor = 0.5f;
-	// float clearColor = (float) rand() / (float) RAND_MAX;
-	glClearColor(clearColor, clearColor, clearColor, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
+void RenderView::render() {
 	if (!eglSwapBuffers(mEglDisplay, mEglSurface)) {
 		LOG_E("Error swapping buffers: %d", eglGetError());
 	}

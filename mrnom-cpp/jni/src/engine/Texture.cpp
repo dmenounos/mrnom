@@ -5,23 +5,26 @@
 
 #include "system/ResourceFactory.hpp"
 
-#include <GLES/gl.h>
-
 namespace engine {
 
 Texture::Texture(GameContext* gameContext, const char* fileName) :
 	mGameContext(gameContext), mFileName(fileName),
 	mWidth(0), mHeight(0), mTextureId(0) {
-	LOG_D("### Texture::Texture()");
+	LOG_D("### Texture::Texture(%s)", mFileName);
 }
 
 Texture::~Texture() {
-	LOG_D("### Texture::~Texture()");
+	LOG_D("### Texture::~Texture(%s)", mFileName);
 	unload();
 }
 
 void Texture::reload() {
 	LOG_D("--> Texture::reload()");
+
+	if (mTextureId != 0) {
+		// already loaded
+		return;
+	}
 
 	ResourceFactory* resourceFactory = mGameContext->getResourceFactory();
 	Bitmap* bitmap = resourceFactory->createBitmap(mFileName);

@@ -3,8 +3,6 @@
 
 #include "../../common.h"
 
-#include <EGL/egl.h>
-
 namespace engine {
 
 /**

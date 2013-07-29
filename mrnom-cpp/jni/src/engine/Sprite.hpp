@@ -9,48 +9,58 @@
 namespace engine {
 
 class Texture;
+class Vertices;
 
 class Sprite {
 
 public:
 
-	Sprite(Texture* texture);
+	Sprite(Texture* texture, Vertices* vertices);
 
 	virtual ~Sprite();
 
 	virtual void reload();
 
+	virtual void unload();
+
 	virtual void update(float deltaTime);
 
 	virtual void render(float deltaTime);
 
-	int32_t getFrameWidth() const;
+	virtual int32_t getHorFrames() const;
+	virtual void setHorFrames(int32_t horFrames);
 
-	int32_t getFrameHeight() const;
+	virtual int32_t getVerFrames() const;
+	virtual void setVerFrames(int32_t verFrames);
 
-	int32_t getHorFrames() const;
-	void setHorFrames(int32_t horFrames);
+	virtual int32_t getFrameWidth() const;
+	virtual void setFrameWidth(int32_t frameWidth);
 
-	int32_t getVerFrames() const;
-	void setVerFrames(int32_t verFrames);
+	virtual int32_t getFrameHeight() const;
+	virtual void setFrameHeight(int32_t frameHeight);
 
-	Animation& getAnimation();
+	virtual Animation& getAnimation();
 
-	Vector& getPosition();
+	virtual Vector& getPosition();
 
 private:
 
+	// shared pointer
 	Texture* mTexture;
 
-	int32_t mFrameWidth;
-	int32_t mFrameHeight;
+	// owned pointer
+	Vertices* mVertices;
+
+	Animation mAnimation;
+	Vector mPosition;
+
+	// configuration
 
 	int32_t mHorFrames;
 	int32_t mVerFrames;
 
-	Animation mAnimation;
-
-	Vector mPosition;
+	int32_t mFrameWidth;
+	int32_t mFrameHeight;
 };
 
 }

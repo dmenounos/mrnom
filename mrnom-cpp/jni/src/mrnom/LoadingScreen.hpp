@@ -13,20 +13,19 @@ public:
 
 	virtual ~LoadingScreen();
 
-	/**
-	 * @param deltaTime The elapsed time, in seconds.
-	 */
+	// override
 	virtual void update(float deltaTime);
 
-	/**
-	 * @param deltaTime The elapsed time, in seconds.
-	 */
+	// override
 	virtual void render(float deltaTime);
 
+	// override
 	virtual void resume();
 
+	// override
 	virtual void pause();
 
+	// override
 	virtual void dispose();
 
 private:

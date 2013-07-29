@@ -10,7 +10,6 @@ Resource::Resource(AAssetManager* assetManager, const char* path) {
 Resource::~Resource() {
 	LOG_D("### Resource::~Resource()");
 	AAsset_close(mAsset);
-	mAsset = NULL;
 }
 
 int32_t Resource::read(void* buffer, size_t count) {

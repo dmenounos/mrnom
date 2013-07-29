@@ -17,21 +17,24 @@ public:
 
 	virtual int32_t getCursor();
 
+	/**
+	 * Offset frame.
+	 */
 	virtual int32_t getOffset() const;
 	virtual void setOffset(int32_t offset);
 
+	/**
+	 * Total frames.
+	 */
 	virtual int32_t getLength() const;
 	virtual void setLength(int32_t length);
 
 private:
 
-	/** Offset frame. */
 	int32_t mOffset;
-
-	/** Total frames. */
 	int32_t mLength;
 
-	/** Frames / Second. */
+	// FPS
 	float mFactor;
 
 };

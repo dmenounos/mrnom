@@ -23,7 +23,10 @@ ResourceFactory::~ResourceFactory() {
 }
 
 Bitmap* ResourceFactory::createBitmap(const char* path) {
+	LOG_D("--> ResourceFactory::createBitmap(%s)", path);
+
 	Resource resource(mAssetManager, path);
+
 	png_byte header[8];
 	png_struct* pngPtr = NULL;
 	png_info* infoPtr = NULL;
@@ -31,6 +34,7 @@ Bitmap* ResourceFactory::createBitmap(const char* path) {
 	png_byte** rowPtrs = NULL;
 	png_int_32 rowSize;
 	bool transparency;
+
 	resource.read(header, sizeof(header));
 	if (png_sig_cmp(header, 0, 8) != 0) goto ERROR;
 
@@ -71,14 +75,17 @@ Bitmap* ResourceFactory::createBitmap(const char* path) {
 	png_uint_32 width, height;
 	png_int_32 depth, colorType;
 	png_get_IHDR(pngPtr, infoPtr, &width, &height, &depth, &colorType, NULL, NULL, NULL);
+
 	// Creates a full alpha channel if transparency is encoded as
 	// an array of palette entries or a single transparent color.
 	transparency = false;
+
 	if (png_get_valid(pngPtr, infoPtr, PNG_INFO_tRNS)) {
 		png_set_tRNS_to_alpha(pngPtr);
 		transparency = true;
 		// goto ERROR;
 	}
+
 	if (depth < 8) {
 		png_set_packing(pngPtr);
 	}
@@ -107,7 +114,9 @@ Bitmap* ResourceFactory::createBitmap(const char* path) {
 		format = GL_LUMINANCE_ALPHA;
 		break;
 	}
+
 	png_read_update_info(pngPtr, infoPtr);
+
 	/*
 	 * Allocate the necessary temporary buffer to hold image data and
 	 * a second one with the address of each output image row for libpng.
@@ -128,25 +137,33 @@ Bitmap* ResourceFactory::createBitmap(const char* path) {
 	for (int32_t i = 0; i < height; ++i) {
 		rowPtrs[height - (i + 1)] = imageBuffer + i * rowSize;
 	}
+
 	/*
 	 * Start reading image content.
 	 */
 	png_read_image(pngPtr, rowPtrs);
+
 	/*
 	 * Finally, release resources (whether an error occurs on not) and return
 	 * loaded data.
 	 */
 	delete[] rowPtrs;
 	png_destroy_read_struct(&pngPtr, &infoPtr, NULL);
+
 	return new Bitmap(width, height, format, imageBuffer);
-	ERROR: LOG_E("Error while reading PNG file.");
+
+	ERROR:
+	LOG_E("Error while reading PNG file.");
+
 	delete[] rowPtrs;
 	delete[] imageBuffer;
+
 	if (pngPtr != NULL) {
 		png_struct** pngPtrPtr = &pngPtr;
 		png_info** infoPtrPtr = infoPtr != NULL ? &infoPtr : NULL;
 		png_destroy_read_struct(pngPtrPtr, infoPtrPtr, NULL);
 	}
+
 	return 0;
 }
 

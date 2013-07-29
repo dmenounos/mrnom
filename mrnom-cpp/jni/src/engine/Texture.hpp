@@ -8,7 +8,7 @@ namespace engine {
 class GameContext;
 
 /**
- * GPU Picture handle.
+ * GPU Picture buffer handle.
  */
 class Texture {
 

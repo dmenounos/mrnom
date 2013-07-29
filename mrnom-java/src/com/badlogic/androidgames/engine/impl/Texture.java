@@ -10,7 +10,7 @@ public class Texture {
 	protected PixmapFormat format;
 
 	public Texture(Bitmap bitmap, PixmapFormat format) {
-		this.bitmap = bitmap.get;
+		this.bitmap = bitmap;
 		this.format = format;
 	}
 
