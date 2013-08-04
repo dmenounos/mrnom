@@ -1,12 +1,11 @@
 #include "ResourceFactory.hpp"
-#include "Resource.hpp"
 
-#include "../Bitmap.hpp"
+#include "Resource.hpp"
+#include "../core/Bitmap.hpp"
 
 #include <png.h>
-#include <GLES/gl.h>
 
-namespace engine {
+using namespace engine;
 
 /**
  * Helper function declaration.
@@ -176,6 +175,4 @@ void readCallback(png_struct* pngPtr, png_byte* pngData, png_size_t pngSize) {
 	if (reader->read(pngData, pngSize) < 0) {
 		png_error(pngPtr, "Error while reading PNG file.");
 	}
-}
-
 }

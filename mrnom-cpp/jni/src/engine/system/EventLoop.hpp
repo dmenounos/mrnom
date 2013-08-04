@@ -23,9 +23,9 @@ public:
 	 */
 	virtual void init(android_app* application);
 
-protected:
-
 	virtual android_app* getApplication() const;
+
+protected:
 
 	/**
 	 * Resumes the render loop.

@@ -4,7 +4,7 @@
 #include "system/RenderView.hpp"
 #include "system/ResourceFactory.hpp"
 
-namespace engine {
+using namespace engine;
 
 GameContext::GameContext() : EventLoop() {
 	LOG_D("### GameContext::GameContext()");
@@ -65,6 +65,4 @@ void GameContext::setScreen(GameScreen* screen){
 
 ResourceFactory* GameContext::getResourceFactory() const {
 	return mResourceFactory;
-}
-
 }

@@ -1,7 +1,3 @@
-# Native library building is orchestrated by a Makefile named Android.mk.
-# By convension, Android.mk is in folder jni, located inside project's root.
-# That way, ndk-build command can find this file automatically when invoked.
-
 # Instruction $(call <function>) allows evaluating a function.
 # Function my-dir returns the directory path of the last executed Makefile.
 
@@ -20,27 +16,33 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := mrnom
 
-# Define some variables.
+# Basic variables.
 
-comma := ,
 empty :=
 space := $(empty) $(empty)
+comma := ,
 
-# Define new function, with one argument $(1), that:
+# List all ".cpp" files under "$(1)/src".
+# $(shell find $(1)/src -name "*.cpp")
 #
-# 1) Lists all ".cpp" files under "$(1)/src".
-#    $(shell find $(1)/src -name "*.cpp")
-#
-# 2) Removes the prefix path "$(1)/" in front of "src".
-#    $(subst $(1)/, $(empty), ...)
+# Remove the prefix path "$(1)/" in front of "src".
+# $(subst $(1)/, $(empty), ...)
 
 LS_CPP = $(subst $(1)/, $(empty), $(shell find $(1)/src -name "*.cpp"))
-
 LOCAL_SRC_FILES := $(call LS_CPP, $(LOCAL_PATH))
+
+# Pre-compiled libraries, i.e.:
+# $ANDROID_NDK_HOME/platforms/PLATFORM/ARCHITECTURE/usr/include
+# $ANDROID_NDK_HOME/platforms/PLATFORM/ARCHITECTURE/usr/lib
 
 LOCAL_LDLIBS := -landroid -llog -lEGL -lGLESv1_CM
 
+# Compiled libraries, i.e.:
+# $ANDROID_NDK_HOME/sources
+
 LOCAL_STATIC_LIBRARIES := android_native_app_glue png
+
+# Launch the compilation process.
 
 include $(BUILD_SHARED_LIBRARY)
 

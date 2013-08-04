@@ -3,7 +3,7 @@
 #define INTERVAL_30FPS 0.0333333333333f
 #define INTERVAL_60FPS 0.0166666666667f
 
-namespace engine {
+using namespace engine;
 
 EventLoop::EventLoop() :
 	mApplication(0),
@@ -129,6 +129,4 @@ int32_t EventLoop::systemInputCallback(android_app* app, AInputEvent* event)
 	}
 
 	return 0;
-}
-
 }

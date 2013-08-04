@@ -35,11 +35,11 @@ void LoadingScreen::resume() {
 }
 
 void LoadingScreen::pause() {
-	LOG_D("--> LoadingScreen::pause()");
 	GameScreen::pause();
+	LOG_D("--> LoadingScreen::pause()");
 }
 
 void LoadingScreen::dispose() {
-	LOG_D("--> LoadingScreen::dispose()");
 	GameScreen::dispose();
+	LOG_D("--> LoadingScreen::dispose()");
 }

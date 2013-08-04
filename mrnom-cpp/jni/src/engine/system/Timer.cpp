@@ -1,6 +1,6 @@
 #include "Timer.hpp"
 
-namespace engine {
+using namespace engine;
 
 Timer::Timer() :
 	mLastTime(0.0) {
@@ -23,6 +23,4 @@ double Timer::current()
 	timeval timeval;
 	gettimeofday(&timeval, NULL);
 	return timeval.tv_sec + (timeval.tv_usec / 1000000.0);
-}
-
 }

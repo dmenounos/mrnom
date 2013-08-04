@@ -3,8 +3,9 @@
 
 #include "../common.h"
 
-#include "Animation.hpp"
-#include "Vector.hpp"
+#include "core/Animation.hpp"
+#include "core/Region.hpp"
+#include "core/Vector.hpp"
 
 namespace engine {
 
@@ -15,7 +16,17 @@ class Sprite {
 
 public:
 
-	Sprite(Texture* texture, Vertices* vertices);
+	/**
+	 * Set the region width & height to that of the whole texture.
+	 */
+	static const int AUTO_SIZE = -1;
+
+	/**
+	 * Set the animation rangeLength to the region grid cell count.
+	 */
+	static const int AUTO_RANGE = -1;
+
+	Sprite(Texture* texture);
 
 	virtual ~Sprite();
 
@@ -27,17 +38,10 @@ public:
 
 	virtual void render(float deltaTime);
 
-	virtual int32_t getHorFrames() const;
-	virtual void setHorFrames(int32_t horFrames);
-
-	virtual int32_t getVerFrames() const;
-	virtual void setVerFrames(int32_t verFrames);
-
-	virtual int32_t getFrameWidth() const;
-	virtual void setFrameWidth(int32_t frameWidth);
-
-	virtual int32_t getFrameHeight() const;
-	virtual void setFrameHeight(int32_t frameHeight);
+	/**
+	 * A region of the texture to use for rendering.
+	 */
+	virtual Region& getRegion();
 
 	virtual Animation& getAnimation();
 
@@ -45,22 +49,17 @@ public:
 
 private:
 
+	Vector mPosition;
+
+	Region mRegion;
+
+	Animation mAnimation;
+
 	// shared pointer
 	Texture* mTexture;
 
 	// owned pointer
 	Vertices* mVertices;
-
-	Animation mAnimation;
-	Vector mPosition;
-
-	// configuration
-
-	int32_t mHorFrames;
-	int32_t mVerFrames;
-
-	int32_t mFrameWidth;
-	int32_t mFrameHeight;
 };
 
 }

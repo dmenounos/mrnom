@@ -1,6 +1,6 @@
 #include "RenderView.hpp"
 
-namespace engine {
+using namespace engine;
 
 RenderView::RenderView(android_app* application) :
 	mApplication(application),
@@ -121,6 +121,4 @@ void RenderView::render() {
 	if (!eglSwapBuffers(mEglDisplay, mEglSurface)) {
 		LOG_E("Error swapping buffers: %d", eglGetError());
 	}
-}
-
 }

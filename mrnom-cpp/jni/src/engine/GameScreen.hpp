@@ -3,7 +3,7 @@
 
 #include "../common.h"
 
-#include "Accumulator.hpp"
+#include "util/FrameCounter.hpp"
 
 namespace engine {
 
@@ -12,7 +12,7 @@ class GameContext;
 /**
  * Abstract game screen class.
  */
-class GameScreen : public Accumulator {
+class GameScreen {
 
 public:
 
@@ -20,7 +20,6 @@ public:
 
 	virtual ~GameScreen();
 
-	// override
 	virtual void update(float deltaTime);
 
 	virtual void render(float deltaTime);
@@ -33,16 +32,10 @@ public:
 
 protected:
 
-	// override
-	virtual void onTick();
-
-protected:
-
 	// shared pointer
 	GameContext* mContext;
 
-	uint32_t mFpsCounter;
-	uint32_t mFps;
+	FrameCounter mFrameCounter;
 };
 
 }

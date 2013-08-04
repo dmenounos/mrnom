@@ -16,13 +16,13 @@ public:
 	virtual ~MainMenuScreen();
 
 	// override
+	virtual void resume();
+
+	// override
 	virtual void update(float deltaTime);
 
 	// override
 	virtual void render(float deltaTime);
-
-	// override
-	virtual void resume();
 
 	// override
 	virtual void pause();
@@ -32,7 +32,6 @@ public:
 
 private:
 
-	Vertices* mAnimationVertices;
 	Texture*  mAnimationTexture;
 	Sprite*   mAnimationSprite;
 
