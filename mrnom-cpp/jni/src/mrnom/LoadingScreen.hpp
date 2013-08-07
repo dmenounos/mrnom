@@ -14,13 +14,13 @@ public:
 	virtual ~LoadingScreen();
 
 	// override
+	virtual void resume();
+
+	// override
 	virtual void update(float deltaTime);
 
 	// override
 	virtual void render(float deltaTime);
-
-	// override
-	virtual void resume();
 
 	// override
 	virtual void pause();

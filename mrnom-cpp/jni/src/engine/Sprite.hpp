@@ -3,7 +3,7 @@
 
 #include "../common.h"
 
-#include "core/Animation.hpp"
+#include "core/Animator.hpp"
 #include "core/Region.hpp"
 #include "core/Vector.hpp"
 
@@ -22,7 +22,7 @@ public:
 	static const int AUTO_SIZE = -1;
 
 	/**
-	 * Set the animation rangeLength to the region grid cell count.
+	 * Set the animator rangeLength to the region grid cell count.
 	 */
 	static const int AUTO_RANGE = -1;
 
@@ -43,7 +43,7 @@ public:
 	 */
 	virtual Region& getRegion();
 
-	virtual Animation& getAnimation();
+	virtual Animator& getAnimator();
 
 	virtual Vector& getPosition();
 
@@ -53,13 +53,13 @@ private:
 
 	Region mRegion;
 
-	Animation mAnimation;
-
-	// shared pointer
-	Texture* mTexture;
+	Animator mAnimator;
 
 	// owned pointer
 	Vertices* mVertices;
+
+	// shared pointer
+	Texture* mTexture;
 };
 
 }

@@ -6,8 +6,8 @@
 using namespace engine;
 
 Sprite::Sprite(Texture* texture) :
-	mPosition(), mRegion(), mAnimation(),
-	mTexture(texture) {
+	mPosition(), mRegion(), mAnimator(),
+	mVertices(0), mTexture(texture) {
 
 	LOG_D("### Sprite::Sprite()");
 
@@ -18,7 +18,7 @@ Sprite::Sprite(Texture* texture) :
 
 	// Default, use the grid cell count.
 
-	mAnimation.setRangeLength(AUTO_RANGE);
+	mAnimator.setRangeLength(AUTO_RANGE);
 }
 
 Sprite::~Sprite() {
@@ -40,13 +40,10 @@ void Sprite::reload() {
 		LOG_D("--- Sprite::reload() region auto height: %d", mRegion.getHeight());
 	}
 
-	if (AUTO_RANGE == mAnimation.getRangeLength()) {
-		mAnimation.setRangeLength(mRegion.getGridRows() * mRegion.getGridCols());
-		LOG_D("--- Sprite::reload() animations auto rangeLength: %f", mAnimation.getRangeLength());
+	if (AUTO_RANGE == mAnimator.getRangeLength()) {
+		mAnimator.setRangeLength(mRegion.getGridRows() * mRegion.getGridCols());
+		LOG_D("--- Sprite::reload() animator auto rangeLength: %f", mAnimator.getRangeLength());
 	}
-
-	// NOTICE, we map the coordinates to the grid-cell width & height
-	// and not to the full width & height.
 
 	// VERTEX coordinates are non-normalized
 	// and are based on "camera" units, i.e. glOrthof(...).
@@ -56,36 +53,33 @@ void Sprite::reload() {
 
 	// TEXTURE coordinates are normalized.
 
-	float colRatio = 1.0f / mRegion.getGridCols();
-	float rowRatio = 1.0f / mRegion.getGridRows();
+	float horRatio = 1.0f / mTexture->getWidth();
+	float verRatio = 1.0f / mTexture->getHeight();
+
+	float horCell = mRegion.getCellWidth() * horRatio;
+	float verCell = mRegion.getCellHeight() * verRatio;
+
+	float horOffset = mRegion.getX() * horRatio;
+	float verOffset = mRegion.getY() * verRatio;
+
+	float colText = horCell + horOffset;
+	float rowText = verCell + verOffset;
 
 	GLfloat vertices[] = {
-		0.0f,    0.0f,      0.0f,     0.0f,
-		colSize, 0.0f,      colRatio, 0.0f,
-		colSize, rowSize,   colRatio, rowRatio,
-		0.0f,    rowSize,   0.0f,     rowRatio
+		0.0f,    0.0f,     0.0f,    0.0f,     // lower left
+		colSize, 0.0f,     colText, 0.0f,     // lower right
+		colSize, rowSize,  colText, rowText,  // upper right
+		0.0f,    rowSize,  0.0f,    rowText   // upper left
 	};
-
-	size_t verticesBytes = sizeof(vertices);
-	size_t verticesLength = verticesBytes / sizeof(GLfloat);
-
-	GLfloat* verticesHeap = new GLfloat[verticesLength];
-	memcpy(verticesHeap, vertices, verticesBytes);
 
 	GLushort indices[] = {
 		0, 1, 2,
 		2, 3, 0
 	};
 
-	size_t indicesBytes = sizeof(indices);
-	size_t indicesLength = indicesBytes / sizeof(GLfloat);
-
-	GLushort* indicesHeap = new GLushort[indicesLength];
-	memcpy(indicesHeap, indices, indicesBytes);
-
 	mVertices = new Vertices(false, true);
-	mVertices->setVertices(verticesHeap);
-	mVertices->setIndices(indicesHeap);
+	mVertices->copyVertices(vertices, sizeof(vertices));
+	mVertices->copyIndices(indices, sizeof(indices));
 }
 
 void Sprite::unload() {
@@ -97,27 +91,54 @@ void Sprite::unload() {
 }
 
 void Sprite::update(float deltaTime) {
-	mAnimation.update(deltaTime);
+	mAnimator.update(deltaTime);
 }
 
 void Sprite::render(float deltaTime) {
 	mTexture->rebind();
 
-	// TEXTURE coordinates are normalized.
-
-	float colRatio = 1.0f / mRegion.getGridCols();
-	float rowRatio = 1.0f / mRegion.getGridRows();
-
-	int cursor = mAnimation.getCursor();
+	int cursor = mAnimator.getCursor();
 	int cursorCol = cursor % mRegion.getGridCols();
 	int cursorRow = cursor / mRegion.getGridCols();
 
-	LOG_D("--- Sprite::render() col: %d row: %d", cursorCol, cursorRow);
+	// We have to flip the row cursor because in OpenGL
+	// texture coordinates map to top = 1 and bottom = 0.
 
-	mVertices->rebind();
+	cursorRow = mRegion.getGridRows() - 1 - cursorRow;
+
+	// TEXTURE coordinates are normalized.
+
+	float horRatio = 1.0f / mTexture->getWidth();
+	float verRatio = 1.0f / mTexture->getHeight();
+
+	float horCell = mRegion.getCellWidth() * horRatio;
+	float verCell = mRegion.getCellHeight() * verRatio;
+
+	float horOffset = mRegion.getX() * horRatio;
+	float verOffset = mRegion.getY() * verRatio;
+
+	GLfloat* vertices = mVertices->getVertices();
+
+	vertices[02] = (cursorCol + 0) * horCell; // lower left x
+	vertices[03] = (cursorRow + 0) * verCell; // lower left y
+
+	vertices[06] = (cursorCol + 1) * horCell; // lower right x
+	vertices[07] = (cursorRow + 0) * verCell; // lower right y
+
+	vertices[10] = (cursorCol + 1) * horCell; // upper right x
+	vertices[11] = (cursorRow + 1) * verCell; // upper right y
+
+	vertices[14] = (cursorCol + 0) * horCell; // upper left x
+	vertices[15] = (cursorRow + 1) * verCell; // upper left y
+
+//	LOG_D("--- Sprite::render() [ %d, %d ] ( %f, %f : %f, %f )",
+//	      cursorCol, cursorRow, vertices[02], vertices[03], vertices[10], vertices[11]);
+
 	glMatrixMode(GL_TEXTURE);
 	glLoadIdentity();
-	glTranslatef(cursorCol * colRatio, cursorRow * rowRatio, 0);
+	glTranslatef(horOffset, verOffset, 0);
+
+	mVertices->rebind();
 	mVertices->render(0, 6);
 	mVertices->unbind();
 
@@ -128,10 +149,9 @@ Region& Sprite::getRegion() {
 	return mRegion;
 }
 
-Animation& Sprite::getAnimation() {
-	return mAnimation;
+Animator& Sprite::getAnimator() {
+	return mAnimator;
 }
-
 
 Vector& Sprite::getPosition() {
 	return mPosition;

@@ -2,7 +2,7 @@
 #include "World.hpp"
 
 MainMenuScreen::MainMenuScreen(GameContext* context) :
-	GameScreen(context), mWorld(new World()) {
+	GameScreen(context) {
 
 	LOG_D("### MainMenuScreen::MainMenuScreen()");
 
@@ -11,8 +11,8 @@ MainMenuScreen::MainMenuScreen(GameContext* context) :
 	mAnimationSprite = new Sprite(mAnimationTexture);
 	mAnimationSprite->getRegion().setGridCols(6);
 	mAnimationSprite->getRegion().setGridRows(5);
-	mAnimationSprite->getAnimation().setContinuous(true);
-	mAnimationSprite->getAnimation().setTickDuration(10.0f);
+	mAnimationSprite->getAnimator().setContinuous(true);
+	mAnimationSprite->getAnimator().setTickDuration(5.0f);
 }
 
 MainMenuScreen::~MainMenuScreen() {
@@ -20,14 +20,13 @@ MainMenuScreen::~MainMenuScreen() {
 
 	delete mAnimationSprite;
 	delete mAnimationTexture;
-	delete mWorld;
 }
 
 void MainMenuScreen::resume() {
-	GameScreen::resume();
 	LOG_D("--> MainMenuScreen::resume()");
+	GameScreen::resume();
 
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glMatrixMode(GL_PROJECTION);
@@ -41,25 +40,21 @@ void MainMenuScreen::resume() {
 
 void MainMenuScreen::update(float deltaTime) {
 	GameScreen::update(deltaTime);
-
-	mWorld->update(deltaTime);
 	mAnimationSprite->update(deltaTime);
 }
 
 void MainMenuScreen::render(float deltaTime) {
 	GameScreen::render(deltaTime);
-
 	mAnimationSprite->render(deltaTime);
 }
 
 void MainMenuScreen::pause() {
-	mAnimationSprite->unload();
-
-	GameScreen::pause();
 	LOG_D("--> MainMenuScreen::pause()");
+	mAnimationSprite->unload();
+	GameScreen::pause();
 }
 
 void MainMenuScreen::dispose() {
-	GameScreen::dispose();
 	LOG_D("--> MainMenuScreen::dispose()");
+	GameScreen::dispose();
 }

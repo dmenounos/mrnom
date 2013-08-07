@@ -38,13 +38,6 @@ public:
 	virtual float getTickDuration() const;
 	virtual void setTickDuration(float tickDuration);
 
-protected:
-
-	/**
-	 * On tick complete call-back.
-	 */
-	virtual void onTick() {}
-
 	/**
 	 * Is tick complete?
 	 */
@@ -57,6 +50,13 @@ protected:
 	 * In the future it may change to normalized value [0 to 1).
 	 */
 	virtual float getTickProgress() const;
+
+protected:
+
+	/**
+	 * On tick complete call-back.
+	 */
+	virtual void onTick() {}
 
 private:
 

@@ -5,8 +5,6 @@
 
 using namespace engine;
 
-class World;
-
 class MainMenuScreen : public GameScreen {
 
 public:
@@ -34,8 +32,6 @@ private:
 
 	Texture*  mAnimationTexture;
 	Sprite*   mAnimationSprite;
-
-	World*    mWorld;
 };
 
 #endif

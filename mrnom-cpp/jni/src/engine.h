@@ -2,7 +2,7 @@
 #define ENGINE_H
 
 #include "engine/core/Accumulator.hpp"
-#include "engine/core/Animation.hpp"
+#include "engine/core/Animator.hpp"
 #include "engine/core/Bitmap.hpp"
 #include "engine/core/Region.hpp"
 #include "engine/core/Vector.hpp"

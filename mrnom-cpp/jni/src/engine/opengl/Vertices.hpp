@@ -19,26 +19,22 @@ public:
 	/**
 	 * Stores vertices buffer.
 	 */
-	virtual void setVertices(GLfloat* data);
-
-	/**
-	 * Uploads vertices buffer into OpenGL.
-	 *
-	 * @param dataLength The array element count.
-	 */
-	virtual void loadVertices(GLfloat data[], int32_t dataLength);
+	virtual void copyVertices(GLfloat* data, size_t dataBytes);
 
 	/**
 	 * Stores indices buffer.
 	 */
-	virtual void setIndices(GLushort* data);
+	virtual void copyIndices(GLushort* data, size_t dataBytes);
+
+	/**
+	 * Uploads vertices buffer into OpenGL.
+	 */
+	virtual void loadVertices(GLfloat data[], size_t dataBytes);
 
 	/**
 	 * Uploads indices buffer into OpenGL.
-	 *
-	 * @param dataLength The array element count.
 	 */
-	virtual void loadIndices(GLushort data[], int32_t dataLength);
+	virtual void loadIndices(GLushort data[], size_t dataBytes);
 
 	/**
 	 * Deletes the buffers from OpenGL.
@@ -57,6 +53,26 @@ public:
 
 	virtual void render(int32_t offset, int32_t length);
 
+	/**
+	 * The CPU vertices array.
+	 */
+	GLfloat* getVertices() const;
+
+	/**
+	 * The CPU vertices array length.
+	 */
+	int32_t getVerticesLength() const;
+
+	/**
+	 * The CPU indices array.
+	 */
+	GLushort* getIndices() const;
+
+	/**
+	 * The CPU indices array length.
+	 */
+	int32_t getIndicesLength() const;
+
 private:
 
 	bool mHasColor;
@@ -67,15 +83,18 @@ private:
 	 */
 	size_t mVertexBytes;
 
-	// either gpu buffers
+	// CPU buffers.
+
+	GLfloat* mVertices;
+	int32_t mVerticesLength;
+
+	GLushort* mIndices;
+	int32_t mIndicesLength;
+
+	// GPU buffers.
 
 	uint32_t mVerticesId;
 	uint32_t mIndicesId;
-
-	// or cpu buffers
-
-	GLfloat* mVertices;
-	GLushort* mIndices;
 };
 
 }
