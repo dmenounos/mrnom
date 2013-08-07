@@ -6,9 +6,9 @@
 
 using namespace engine;
 
-class MrNomGame : public GameContext
-{
-	public:
+class MrNomGame : public GameContext {
+
+public:
 
 	virtual ~MrNomGame();
 

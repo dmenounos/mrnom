@@ -13,8 +13,8 @@ Sprite::Sprite(Texture* texture) :
 
 	// Default, use the texture whole area.
 
-	mRegion.setWidth(AUTO_SIZE);
-	mRegion.setHeight(AUTO_SIZE);
+	mRegion.setCellWidth(AUTO_SIZE);
+	mRegion.setCellHeight(AUTO_SIZE);
 
 	// Default, use the grid cell count.
 
@@ -30,14 +30,14 @@ void Sprite::reload() {
 
 	mTexture->reload();
 
-	if (AUTO_SIZE == mRegion.getWidth()) {
-		mRegion.setWidth(mTexture->getWidth());
-		LOG_D("--- Sprite::reload() region auto width: %d", mRegion.getWidth());
+	if (AUTO_SIZE == mRegion.getCellWidth()) {
+		mRegion.setCellWidth(mTexture->getWidth() / mRegion.getGridCols());
+		LOG_D("--- Sprite::reload() region auto width: %d", mRegion.getCellWidth());
 	}
 
-	if (AUTO_SIZE == mRegion.getHeight()) {
-		mRegion.setHeight(mTexture->getHeight());
-		LOG_D("--- Sprite::reload() region auto height: %d", mRegion.getHeight());
+	if (AUTO_SIZE == mRegion.getCellHeight()) {
+		mRegion.setCellHeight(mTexture->getHeight() / mRegion.getGridRows());
+		LOG_D("--- Sprite::reload() region auto height: %d", mRegion.getCellHeight());
 	}
 
 	if (AUTO_RANGE == mAnimator.getRangeLength()) {
@@ -59,8 +59,8 @@ void Sprite::reload() {
 	float horCell = mRegion.getCellWidth() * horRatio;
 	float verCell = mRegion.getCellHeight() * verRatio;
 
-	float horOffset = mRegion.getX() * horRatio;
-	float verOffset = mRegion.getY() * verRatio;
+	float horOffset = mRegion.getOffsetX() * horRatio;
+	float verOffset = mRegion.getOffsetY() * verRatio;
 
 	float colText = horCell + horOffset;
 	float rowText = verCell + verOffset;
@@ -104,7 +104,7 @@ void Sprite::render(float deltaTime) {
 	// We have to flip the row cursor because in OpenGL
 	// texture coordinates map to top = 1 and bottom = 0.
 
-	cursorRow = mRegion.getGridRows() - 1 - cursorRow;
+	cursorRow = mRegion.getGridRows() - cursorRow - 1;
 
 	// TEXTURE coordinates are normalized.
 
@@ -114,8 +114,8 @@ void Sprite::render(float deltaTime) {
 	float horCell = mRegion.getCellWidth() * horRatio;
 	float verCell = mRegion.getCellHeight() * verRatio;
 
-	float horOffset = mRegion.getX() * horRatio;
-	float verOffset = mRegion.getY() * verRatio;
+	float horOffset = mRegion.getOffsetX() * horRatio;
+	float verOffset = mRegion.getOffsetY() * verRatio;
 
 	GLfloat* vertices = mVertices->getVertices();
 
@@ -145,14 +145,14 @@ void Sprite::render(float deltaTime) {
 	mTexture->unbind();
 }
 
+Vector& Sprite::getPosition() {
+	return mPosition;
+}
+
 Region& Sprite::getRegion() {
 	return mRegion;
 }
 
 Animator& Sprite::getAnimator() {
 	return mAnimator;
-}
-
-Vector& Sprite::getPosition() {
-	return mPosition;
 }

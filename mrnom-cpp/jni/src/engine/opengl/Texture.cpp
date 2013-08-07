@@ -14,7 +14,6 @@ Texture::Texture(GameContext* gameContext, const char* fileName) :
 
 Texture::~Texture() {
 	LOG_D("### Texture::~Texture(%s)", mFileName);
-	unload();
 }
 
 void Texture::reload() {

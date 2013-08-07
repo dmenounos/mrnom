@@ -37,6 +37,8 @@ void LoadingScreen::render(float deltaTime) {
 void LoadingScreen::pause() {
 	LOG_D("--> LoadingScreen::pause()");
 	GameScreen::pause();
+	backgroundTexture->unload();
+	logoTexture->unload();
 }
 
 void LoadingScreen::dispose() {

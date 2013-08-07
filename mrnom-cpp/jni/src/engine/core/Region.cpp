@@ -3,8 +3,8 @@
 using namespace engine;
 
 Region::Region() :
-	mX(0), mY(0),
-	mWidth(0), mHeight(0),
+	mOffsetX(0), mOffsetY(0),
+	mCellWidth(0), mCellHeight(0),
 	mGridCols(1), mGridRows(1) {
 	// LOG_D("### Region::Region()");
 }
@@ -13,36 +13,36 @@ Region::~Region() {
 	// LOG_D("### Region::~Region()");
 }
 
-int32_t Region::getX() const {
-	return mX;
+int32_t Region::getOffsetX() const {
+	return mOffsetX;
 }
 
-void Region::setX(int32_t x) {
-	mX = x;
+void Region::setOffsetX(int32_t offsetX) {
+	mOffsetX = offsetX;
 }
 
-int32_t Region::getY() const {
-	return mY;
+int32_t Region::getOffsetY() const {
+	return mOffsetY;
 }
 
-void Region::setY(int32_t y) {
-	mY = y;
+void Region::setOffsetY(int32_t offsetY) {
+	mOffsetY = offsetY;
 }
 
-int32_t Region::getWidth() const {
-	return mWidth;
+int32_t Region::getCellWidth() const {
+	return mCellWidth;
 }
 
-void Region::setWidth(int32_t width) {
-	mWidth = width;
+void Region::setCellWidth(int32_t cellWidth) {
+	mCellWidth = cellWidth;
 }
 
-int32_t Region::getHeight() const {
-	return mHeight;
+int32_t Region::getCellHeight() const {
+	return mCellHeight;
 }
 
-void Region::setHeight(int32_t height) {
-	mHeight = height;
+void Region::setCellHeight(int32_t cellHeight) {
+	mCellHeight = cellHeight;
 }
 
 int32_t Region::getGridCols() const {
@@ -61,12 +61,4 @@ int32_t Region::getGridRows() const {
 void Region::setGridRows(int32_t gridRows) {
 	assert(gridRows > 0);
 	mGridRows = gridRows;
-}
-
-int32_t Region::getCellWidth() const {
-	return mWidth / mGridCols;
-}
-
-int32_t Region::getCellHeight() const {
-	return mHeight / mGridRows;
 }

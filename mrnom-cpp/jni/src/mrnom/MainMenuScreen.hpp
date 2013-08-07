@@ -1,11 +1,9 @@
 #ifndef MAINMENUSCREEN_HPP
 #define MAINMENUSCREEN_HPP
 
-#include "../engine.h"
+#include "MrNomScreen.hpp"
 
-using namespace engine;
-
-class MainMenuScreen : public GameScreen {
+class MainMenuScreen : public MrNomScreen {
 
 public:
 
