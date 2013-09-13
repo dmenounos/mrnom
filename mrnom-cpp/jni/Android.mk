@@ -22,11 +22,11 @@ empty :=
 space := $(empty) $(empty)
 comma := ,
 
-# List all ".cpp" files under "$(1)/src".
-# $(shell find $(1)/src -name "*.cpp")
+# 1) List all ".cpp" files under "$(1)/src".
+#    $(shell find $(1)/src -name "*.cpp")
 #
-# Remove the prefix path "$(1)/" in front of "src".
-# $(subst $(1)/, $(empty), ...)
+# 2) Remove the prefix path "$(1)/" in front of "src".
+#    $(subst $(1)/, $(empty), ...)
 
 LS_CPP = $(subst $(1)/, $(empty), $(shell find $(1)/src -name "*.cpp"))
 LOCAL_SRC_FILES := $(call LS_CPP, $(LOCAL_PATH))
