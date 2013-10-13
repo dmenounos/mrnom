@@ -49,17 +49,17 @@ public:
 
 private:
 
-	Vector mPosition;
+	Vector _position;
 
-	Region mRegion;
+	Region _region;
 
-	Animator mAnimator;
+	Animator _animator;
 
 	// owned pointer
-	Vertices* mVertices;
+	Vertices* _vertices;
 
 	// shared pointer
-	Texture* mTexture;
+	Texture* _texture;
 };
 
 }

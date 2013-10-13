@@ -20,7 +20,7 @@ public:
 
 private:
 
-	AAsset* mAsset;
+	AAsset* _asset;
 };
 
 }

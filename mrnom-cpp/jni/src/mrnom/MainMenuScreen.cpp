@@ -6,41 +6,41 @@ MainMenuScreen::MainMenuScreen(GameContext* context) :
 
 	LOG_D("### MainMenuScreen::MainMenuScreen()");
 
-	mAnimationTexture = new Texture(context, "anim.png");
+	_animationTexture = new Texture(context, "anim.png");
 
-	mAnimationSprite = new Sprite(mAnimationTexture);
-	mAnimationSprite->getRegion().setGridCols(6);
-	mAnimationSprite->getRegion().setGridRows(5);
-	mAnimationSprite->getAnimator().setContinuous(true);
-	mAnimationSprite->getAnimator().setTickDuration(5.0f);
+	_animationSprite = new Sprite(_animationTexture);
+	_animationSprite->getRegion().setGridCols(6);
+	_animationSprite->getRegion().setGridRows(5);
+	_animationSprite->getAnimator().setContinuous(true);
+	_animationSprite->getAnimator().setTickDuration(5.0f);
 }
 
 MainMenuScreen::~MainMenuScreen() {
 	LOG_D("### MainMenuScreen::~MainMenuScreen()");
 
-	delete mAnimationSprite;
-	delete mAnimationTexture;
+	delete _animationSprite;
+	delete _animationTexture;
 }
 
 void MainMenuScreen::resume() {
 	LOG_D("--> MainMenuScreen::resume()");
 	MrNomScreen::resume();
-	mAnimationSprite->reload();
+	_animationSprite->reload();
 }
 
 void MainMenuScreen::update(float deltaTime) {
 	MrNomScreen::update(deltaTime);
-	mAnimationSprite->update(deltaTime);
+	_animationSprite->update(deltaTime);
 }
 
 void MainMenuScreen::render(float deltaTime) {
 	MrNomScreen::render(deltaTime);
-	mAnimationSprite->render(deltaTime);
+	_animationSprite->render(deltaTime);
 }
 
 void MainMenuScreen::pause() {
 	LOG_D("--> MainMenuScreen::pause()");
-	mAnimationSprite->unload();
+	_animationSprite->unload();
 	MrNomScreen::pause();
 }
 

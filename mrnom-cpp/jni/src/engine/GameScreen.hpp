@@ -33,9 +33,9 @@ public:
 protected:
 
 	// shared pointer
-	GameContext* mContext;
+	GameContext* _context;
 
-	FrameCounter mFrameCounter;
+	FrameCounter _frameCounter;
 };
 
 }

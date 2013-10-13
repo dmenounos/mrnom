@@ -23,7 +23,7 @@ public:
 private:
 
 	// shared system pointer
-	AAssetManager* mAssetManager;
+	AAssetManager* _assetManager;
 };
 
 }

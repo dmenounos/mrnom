@@ -3,7 +3,7 @@
 using namespace engine;
 
 Animator::Animator() : Accumulator(),
-	mRangeOffset(0), mRangeLength(0), mFactor(0.0f) {
+	_rangeOffset(0), _rangeLength(0), _factor(0.0f) {
 	// LOG_D("### Animator::Animator()");
 }
 
@@ -12,27 +12,27 @@ Animator::~Animator() {
 }
 
 float Animator::getCursor() {
-	return getTickProgress() * mFactor + mRangeOffset;
+	return getTickProgress() * _factor + _rangeOffset;
 }
 
 float Animator::getRangeOffset() const {
-	return mRangeOffset;
+	return _rangeOffset;
 }
 
 void Animator::setRangeOffset(float rangeOffset) {
-	mRangeOffset = rangeOffset;
+	_rangeOffset = rangeOffset;
 }
 
 float Animator::getRangeLength() const {
-	return mRangeLength;
+	return _rangeLength;
 }
 
 void Animator::setRangeLength(float rangeLength) {
-	mRangeLength = rangeLength;
+	_rangeLength = rangeLength;
 
 	if (getTickDuration() > 0.0f) {
-		mFactor = mRangeLength / getTickDuration();
+		_factor = _rangeLength / getTickDuration();
 	} else {
-		mFactor = 0.0f;
+		_factor = 0.0f;
 	}
 }

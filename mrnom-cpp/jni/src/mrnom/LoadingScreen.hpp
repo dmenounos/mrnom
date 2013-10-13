@@ -30,8 +30,8 @@ public:
 
 private:
 
-	Texture* backgroundTexture;
-	Texture* logoTexture;
+	Texture* _backgroundTexture;
+	Texture* _logoTexture;
 };
 
 #endif

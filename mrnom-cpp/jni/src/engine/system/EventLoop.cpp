@@ -6,9 +6,9 @@
 using namespace engine;
 
 EventLoop::EventLoop() :
-	mApplication(0),
-	mActive(false),
-	mQuit(false) {
+	_application(0),
+	_active(false),
+	_quit(false) {
 	LOG_D("### EventLoop::EventLoop()");
 }
 
@@ -17,7 +17,7 @@ EventLoop::~EventLoop() {
 }
 
 android_app* EventLoop::getApplication() const {
-	return mApplication;
+	return _application;
 }
 
 void EventLoop::init(android_app* application)
@@ -25,7 +25,7 @@ void EventLoop::init(android_app* application)
 	int result, events;
 	android_poll_source* source;
 
-	mApplication = application;
+	_application = application;
 
 	// register our system event call-backs
 	application->onAppCmd = systemStateCallback;
@@ -36,29 +36,29 @@ void EventLoop::init(android_app* application)
 
 	LOG_D("--- ENTERING EVENT LOOP");
 
-	while (!mQuit) {
+	while (!_quit) {
 
 		// Consume system events awaiting in the queue.
 		// Timeout type: 0: non-blocking, -1: blocking.
 
-		while ((result = ALooper_pollAll((mActive ? 0 : -1), NULL, &events, (void**) &source)) >= 0) {
+		while ((result = ALooper_pollAll((_active ? 0 : -1), NULL, &events, (void**) &source)) >= 0) {
 			if (source != NULL) source->process(application, source);
 
 			if (application->destroyRequested) {
 				LOG_D("--- EXITING EVENT LOOP");
-				assert(!mActive);
+				assert(!_active);
 				return;
 			}
 		}
 
-		if (mActive) {
+		if (_active) {
 			// get time delta since last cycle
-			float deltaTime = mTimer.elapsed(true);
+			float deltaTime = _timer.elapsed(true);
 
 			onUpdate(deltaTime);
 
 			// get time delta since this cycle
-			float frameTime = mTimer.elapsed(false);
+			float frameTime = _timer.elapsed(false);
 
 			if (frameTime < INTERVAL_30FPS) {
 				// running faster than fps interval
@@ -74,12 +74,12 @@ void EventLoop::init(android_app* application)
 }
 
 void EventLoop::resumeRender() {
-	mActive = true;
-	mTimer.update();
+	_active = true;
+	_timer.update();
 }
 
 void EventLoop::pauseRender() {
-	mActive = false;
+	_active = false;
 }
 
 /*

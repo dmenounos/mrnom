@@ -47,9 +47,9 @@ protected:
 
 private:
 
-	GameScreen* mScreen;
-	RenderView* mRenderView;
-	ResourceFactory* mResourceFactory;
+	GameScreen* _screen;
+	RenderView* _renderView;
+	ResourceFactory* _resourceFactory;
 };
 
 }

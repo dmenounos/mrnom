@@ -28,8 +28,8 @@ public:
 
 private:
 
-	Texture*  mAnimationTexture;
-	Sprite*   mAnimationSprite;
+	Texture*  _animationTexture;
+	Sprite*   _animationSprite;
 };
 
 #endif

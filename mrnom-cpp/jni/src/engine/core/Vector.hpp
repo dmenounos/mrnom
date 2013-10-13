@@ -21,8 +21,8 @@ public:
 
 private:
 
-	float mX;
-	float mY;
+	float _x;
+	float _y;
 };
 
 }

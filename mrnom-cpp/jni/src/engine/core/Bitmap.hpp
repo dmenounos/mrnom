@@ -39,12 +39,12 @@ public:
 
 private:
 
-	int32_t mWidth;
-	int32_t mHeight;
-	int32_t mFormat;
+	int32_t _width;
+	int32_t _height;
+	int32_t _format;
 
 	// owned pointer
-	uint8_t* mPixels;
+	uint8_t* _pixels;
 };
 
 }

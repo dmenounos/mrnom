@@ -13,7 +13,7 @@ using namespace engine;
 void readCallback(png_structp pngStruct, png_bytep pngData, png_size_t pngSize);
 
 ResourceFactory::ResourceFactory(AAssetManager* assetManager) :
-	mAssetManager(assetManager) {
+	_assetManager(assetManager) {
 	LOG_D("### ResourceFactory::ResourceFactory()");
 }
 
@@ -24,7 +24,7 @@ ResourceFactory::~ResourceFactory() {
 Bitmap* ResourceFactory::createBitmap(const char* path) {
 	LOG_D("--> ResourceFactory::createBitmap(%s)", path);
 
-	Resource resource(mAssetManager, path);
+	Resource resource(_assetManager, path);
 
 	png_byte header[8];
 	png_struct* pngPtr = NULL;

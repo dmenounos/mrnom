@@ -28,7 +28,7 @@ public:
 
 private:
 
-	double mLastTime;
+	double _lastTime;
 };
 
 }

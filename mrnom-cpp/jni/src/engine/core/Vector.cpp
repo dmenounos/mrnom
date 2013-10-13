@@ -3,23 +3,23 @@
 using namespace engine;
 
 Vector::Vector() :
-	mX(0), mY(0) {
+	_x(0), _y(0) {
 }
 
 void Vector::setPosition(float x, float y) {
-	mX = x;
-	mY = y;
+	_x = x;
+	_y = y;
 }
 
 void Vector::translate(float x, float y) {
-	mX += x;
-	mY += y;
+	_x += x;
+	_y += y;
 }
 
 float Vector::getX() const {
-	return mX;
+	return _x;
 }
 
 float Vector::getY() const {
-	return mY;
+	return _y;
 }

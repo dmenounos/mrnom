@@ -11,18 +11,18 @@
 
 // Core Input and Output
 // Formatted Input and Output
-// NOTICE: TOOLCHAINS / GCC
 #include <stdio.h>
 
 // Exact width integer types
-// NOTICE: TOOLCHAINS / GCC
 #include <stdint.h>
 
-// bool, char, short, int, long limits
-// NOTICE: TOOLCHAINS / GCC
+// Limits: bool, char, short, int, long
 #include <limits.h>
 
+// Diagnostics
 #include <assert.h>
+
+// Time
 #include <time.h>
 
 // POSIX Process Control

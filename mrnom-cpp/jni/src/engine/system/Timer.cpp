@@ -3,18 +3,18 @@
 using namespace engine;
 
 Timer::Timer() :
-	mLastTime(0.0) {
+	_lastTime(0.0) {
 }
 
 void Timer::update() {
-	mLastTime = current();
+	_lastTime = current();
 }
 
 float Timer::elapsed(bool update)
 {
 	double currentTime = current();
-	float elapsed = currentTime - mLastTime;
-	if (update) mLastTime = currentTime;
+	float elapsed = currentTime - _lastTime;
+	if (update) _lastTime = currentTime;
 	return elapsed;
 }
 

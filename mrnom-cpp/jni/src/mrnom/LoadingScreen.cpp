@@ -6,28 +6,28 @@ LoadingScreen::LoadingScreen(GameContext* context) :
 
 	LOG_D("### LoadingScreen::LoadingScreen()");
 
-	backgroundTexture = new Texture(context, "background.png");
-	logoTexture       = new Texture(context, "logo.png");
+	_backgroundTexture = new Texture(context, "background.png");
+	_logoTexture       = new Texture(context, "logo.png");
 }
 
 LoadingScreen::~LoadingScreen() {
 	LOG_D("### LoadingScreen::~LoadingScreen()");
 
-	delete backgroundTexture;
-	delete logoTexture;
+	delete _backgroundTexture;
+	delete _logoTexture;
 }
 
 void LoadingScreen::resume() {
 	LOG_D("--> LoadingScreen::resume()");
 	GameScreen::resume();
 
-	backgroundTexture->reload();
-	logoTexture->reload();
+	_backgroundTexture->upload();
+	_logoTexture->upload();
 }
 
 void LoadingScreen::update(float deltaTime) {
 	GameScreen::update(deltaTime);
-	mContext->setScreen(new MainMenuScreen(mContext));
+	_context->setScreen(new MainMenuScreen(_context));
 }
 
 void LoadingScreen::render(float deltaTime) {
@@ -37,8 +37,8 @@ void LoadingScreen::render(float deltaTime) {
 void LoadingScreen::pause() {
 	LOG_D("--> LoadingScreen::pause()");
 	GameScreen::pause();
-	backgroundTexture->unload();
-	logoTexture->unload();
+	_backgroundTexture->unload();
+	_logoTexture->unload();
 }
 
 void LoadingScreen::dispose() {

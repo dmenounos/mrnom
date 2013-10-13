@@ -75,11 +75,11 @@ protected:
 private:
 
 	// shared system pointer
-	android_app* mApplication;
+	android_app* _application;
 
-	Timer mTimer;
-	bool mActive;
-	bool mQuit;
+	Timer _timer;
+	bool _active;
+	bool _quit;
 };
 
 }

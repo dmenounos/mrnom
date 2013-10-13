@@ -3,8 +3,8 @@
 using namespace engine;
 
 Accumulator::Accumulator() :
-	mTickDuration(0.0), mContinuous(false),
-	mTickProgress(0.0), mTickComplete(false) {
+	_tickDuration(0.0), _continuous(false),
+	_tickProgress(0.0), _tickComplete(false) {
 	// LOG_D("### Accumulator::Accumulator()");
 }
 
@@ -14,47 +14,47 @@ Accumulator::~Accumulator() {
 
 void Accumulator::update(float deltaTime) {
 	if (!isFinished()) {
-		mTickProgress += deltaTime;
-		mTickComplete = false;
+		_tickProgress += deltaTime;
+		_tickComplete = false;
 	}
 
-	while (mContinuous && isFinished()) {
-		mTickProgress -= mTickDuration;
-		mTickComplete = true;
+	while (isContinuous() && isFinished()) {
+		_tickProgress -= _tickDuration;
+		_tickComplete = true;
 		onTick();
 	}
 
-	if (!mContinuous && isFinished()) {
-		mTickProgress = 0.0f;
-		mTickComplete = true;
+	if (!isContinuous() && isFinished()) {
+		_tickProgress = 0.0f;
+		_tickComplete = true;
 		onTick();
 	}
 }
 
 bool Accumulator::isFinished() const {
-	return mTickProgress >= mTickDuration;
+	return _tickProgress >= _tickDuration;
 }
 
 bool Accumulator::isContinuous() const {
-	return mContinuous;
+	return _continuous;
 }
 
 void Accumulator::setContinuous(bool continuous) {
-	mContinuous = continuous;
+	_continuous = continuous;
 }
 
 float Accumulator::getTickDuration() const {
-	return mTickDuration;
+	return _tickDuration;
 }
 
 void Accumulator::setTickDuration(float tickDuration) {
-	mTickDuration = tickDuration;
+	_tickDuration = tickDuration;
 }
 
 bool Accumulator::isTickComplete() const {
-	return mTickComplete;
+	return _tickComplete;
 }
 
 float Accumulator::getTickProgress() const {
-	return mTickProgress;
+	return _tickProgress;
 }

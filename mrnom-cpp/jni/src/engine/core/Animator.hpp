@@ -35,13 +35,13 @@ public:
 
 private:
 
-	float mRangeOffset;
-	float mRangeLength;
+	float _rangeOffset;
+	float _rangeLength;
 
 	/**
 	 * rangeLength / tickDuration
 	 */
-	float mFactor;
+	float _factor;
 };
 
 }

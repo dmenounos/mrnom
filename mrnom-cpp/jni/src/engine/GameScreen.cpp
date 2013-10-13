@@ -4,7 +4,7 @@
 using namespace engine;
 
 GameScreen::GameScreen(GameContext* context) :
-	mContext(context), mFrameCounter() {
+	_context(context), _frameCounter() {
 	LOG_D("### CREATE SCREEN -------------");
 }
 
@@ -13,7 +13,7 @@ GameScreen::~GameScreen() {
 }
 
 void GameScreen::update(float deltaTime) {
-	mFrameCounter.update(deltaTime);
+	_frameCounter.update(deltaTime);
 }
 
 void GameScreen::render(float deltaTime) {

@@ -19,12 +19,13 @@ public:
 	virtual ~Texture();
 
 	/**
-	 * Uploads pixel buffer into OpenGL.
+	 * Loads the pixel data from storage.
+	 * Uploads the pixel buffer into OpenGL.
 	 */
-	virtual void reload();
+	virtual void upload();
 
 	/**
-	 * Deletes pixel buffer from OpenGL.
+	 * Deletes the pixel buffer from OpenGL.
 	 */
 	virtual void unload();
 
@@ -51,14 +52,14 @@ public:
 private:
 
 	// shared pointer
-	GameContext* mGameContext;
+	GameContext* _gameContext;
 
-	const char* mFileName;
+	const char* _fileName;
 
-	uint32_t mTextureId;
+	uint32_t _textureId;
 
-	int32_t mWidth;
-	int32_t mHeight;
+	int32_t _width;
+	int32_t _height;
 };
 
 }

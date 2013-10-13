@@ -3,10 +3,10 @@
 using namespace engine;
 
 Vertices::Vertices(bool hasColor, bool hasTexture) :
-	mHasColor(hasColor), mHasTexture(hasTexture),
-	mVertices(0), mVerticesLength(0),
-	mIndices(0), mIndicesLength(0),
-	mVerticesId(0), mIndicesId(0) {
+	_hasColor(hasColor), _hasTexture(hasTexture),
+	_vertices(0), _verticesLength(0),
+	_indices(0), _indicesLength(0),
+	_verticesId(0), _indicesId(0) {
 
 	int mVertexComponents = 2;
 
@@ -18,10 +18,10 @@ Vertices::Vertices(bool hasColor, bool hasTexture) :
 		mVertexComponents += 2;
 	}
 
-	mVertexBytes = mVertexComponents * sizeof(GLfloat);
+	_vertexBytes = mVertexComponents * sizeof(GLfloat);
 
 	LOG_D("### Vertices::Vertices(mVertexComponents: %d, mVertexBytes: %zu)",
-	      mVertexComponents, mVertexBytes);
+	      mVertexComponents, _vertexBytes);
 }
 
 Vertices::~Vertices() {
@@ -31,23 +31,23 @@ Vertices::~Vertices() {
 
 void Vertices::copyVertices(GLfloat* data, size_t dataBytes) {
 	LOG_D("--> Vertices::copyVertices(dataBytes: %zu)", dataBytes);
-	mVerticesLength = dataBytes / sizeof(GLfloat);
-	mVertices = new GLfloat[mVerticesLength];
-	memcpy(mVertices, data, dataBytes);
+	_verticesLength = dataBytes / sizeof(GLfloat);
+	_vertices = new GLfloat[_verticesLength];
+	memcpy(_vertices, data, dataBytes);
 }
 
 void Vertices::copyIndices(GLushort* data, size_t dataBytes) {
 	LOG_D("--> Vertices::copyIndices(dataBytes: %zu)", dataBytes);
-	mIndicesLength = dataBytes / sizeof(GLushort);
-	mIndices = new GLushort[mIndicesLength];
-	memcpy(mIndices, data, dataBytes);
+	_indicesLength = dataBytes / sizeof(GLushort);
+	_indices = new GLushort[_indicesLength];
+	memcpy(_indices, data, dataBytes);
 }
 
-void Vertices::loadVertices(GLfloat data[], size_t dataBytes) {
-	LOG_D("--> Vertices::loadVertices(dataBytes: %zu)", dataBytes);
+void Vertices::uploadVertices(GLfloat data[], size_t dataBytes) {
+	LOG_D("--> Vertices::uploadVertices(dataBytes: %zu)", dataBytes);
 
-	glGenBuffers(1, &mVerticesId);
-	glBindBuffer(GL_ARRAY_BUFFER, mVerticesId);
+	glGenBuffers(1, &_verticesId);
+	glBindBuffer(GL_ARRAY_BUFFER, _verticesId);
 
 	// Upload happens in terms of bytes.
 	// Notice that OpenGL does not know the data type yet.
@@ -61,11 +61,11 @@ void Vertices::loadVertices(GLfloat data[], size_t dataBytes) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Vertices::loadIndices(GLushort data[], size_t dataBytes) {
-	LOG_D("--> Vertices::loadIndices(dataBytes: %zu)", dataBytes);
+void Vertices::uploadIndices(GLushort data[], size_t dataBytes) {
+	LOG_D("--> Vertices::uploadIndices(dataBytes: %zu)", dataBytes);
 
-	glGenBuffers(1, &mIndicesId);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndicesId);
+	glGenBuffers(1, &_indicesId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesId);
 
 	// Upload happens in terms of bytes.
 	// Notice that OpenGL does not know the data type yet.
@@ -82,99 +82,99 @@ void Vertices::loadIndices(GLushort data[], size_t dataBytes) {
 void Vertices::unload() {
 	LOG_D("--> Vertices::unload()");
 
-	if (mVerticesId) {
-		glDeleteBuffers(1, &mVerticesId);
+	if (_verticesId) {
+		glDeleteBuffers(1, &_verticesId);
 	}
 
-	if (mIndicesId) {
-		glDeleteBuffers(1, &mIndicesId);
+	if (_indicesId) {
+		glDeleteBuffers(1, &_indicesId);
 	}
 }
 
 void Vertices::rebind() {
-	if (mVerticesId) {
-		LOG_D("--- Vertices::rebind() mVerticesId: %d", mVerticesId);
-		glBindBuffer(GL_ARRAY_BUFFER, mVerticesId);
+	if (_verticesId) {
+		LOG_D("--- Vertices::rebind() mVerticesId: %d", _verticesId);
+		glBindBuffer(GL_ARRAY_BUFFER, _verticesId);
 	}
 
-	if (mIndicesId) {
-		LOG_D("--- Vertices::rebind() mIndicesId: %d", mIndicesId);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndicesId);
+	if (_indicesId) {
+		LOG_D("--- Vertices::rebind() mIndicesId: %d", _indicesId);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesId);
 	}
 
 	// If vertex buffer is bound, "offset" will be used as plain offset,
 	// -- in which case "mVertices" should be equal to zero --
 	// otherwise, "offset" will be used as a pointer + offset.
 
-	GLfloat* offsetPtr = mVertices;
+	GLfloat* offsetPtr = _vertices;
 
 	// Now OpenGL knows the vertices data type (but still not the indices).
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(2, GL_FLOAT, mVertexBytes, offsetPtr);
+	glVertexPointer(2, GL_FLOAT, _vertexBytes, offsetPtr);
 	offsetPtr += 2;
 
-	if (mHasColor) {
+	if (_hasColor) {
 		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(4, GL_FLOAT, mVertexBytes, offsetPtr);
+		glColorPointer(4, GL_FLOAT, _vertexBytes, offsetPtr);
 		offsetPtr += 4;
 	}
 
-	if (mHasTexture) {
+	if (_hasTexture) {
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glTexCoordPointer(2, GL_FLOAT, mVertexBytes, offsetPtr);
+		glTexCoordPointer(2, GL_FLOAT, _vertexBytes, offsetPtr);
 	}
 }
 
 void Vertices::unbind() {
-	if (mHasTexture) {
+	if (_hasTexture) {
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
 
-	if (mHasColor) {
+	if (_hasColor) {
 		glDisableClientState(GL_COLOR_ARRAY);
 	}
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 
-	if (mVerticesId) {
-		LOG_D("--- Vertices::unbind() mVerticesId: %d", mVerticesId);
+	if (_verticesId) {
+		LOG_D("--- Vertices::unbind() mVerticesId: %d", _verticesId);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	if (mIndicesId) {
-		LOG_D("--- Vertices::unbind() mIndicesId: %d", mIndicesId);
+	if (_indicesId) {
+		LOG_D("--- Vertices::unbind() mIndicesId: %d", _indicesId);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 }
 
 void Vertices::render(int32_t offset, int32_t length) {
-	if (mIndicesId || mIndices) {
+	if (_indicesId || _indices) {
 
 		// If indices buffer is bound, "offset" will be used as plain offset,
 		// -- in which case "mIndices" should be equal to zero --
 		// otherwise, "offset" will be used as a pointer + offset.
 
-		GLushort* offsetPtr = mIndices + offset;
+		GLushort* offsetPtr = _indices + offset;
 		glDrawElements(GL_TRIANGLES, length, GL_UNSIGNED_SHORT, offsetPtr);
 	}
-	else if (mVerticesId || mVertices) {
+	else if (_verticesId || _vertices) {
 		glDrawArrays(GL_TRIANGLES, offset, length);
 	}
 }
 
 GLfloat* Vertices::getVertices() const {
-	return mVertices;
+	return _vertices;
 }
 
 int32_t Vertices::getVerticesLength() const {
-	return mVerticesLength;
+	return _verticesLength;
 }
 
 GLushort* Vertices::getIndices() const {
-	return mIndices;
+	return _indices;
 }
 
 int32_t Vertices::getIndicesLength() const {
-	return mIndicesLength;
+	return _indicesLength;
 }

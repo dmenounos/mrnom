@@ -7,31 +7,31 @@
 using namespace engine;
 
 Texture::Texture(GameContext* gameContext, const char* fileName) :
-	mGameContext(gameContext), mFileName(fileName),
-	mTextureId(0), mWidth(0), mHeight(0) {
-	LOG_D("### Texture::Texture(%s)", mFileName);
+	_gameContext(gameContext), _fileName(fileName),
+	_textureId(0), _width(0), _height(0) {
+	LOG_D("### Texture::Texture(%s)", _fileName);
 }
 
 Texture::~Texture() {
-	LOG_D("### Texture::~Texture(%s)", mFileName);
+	LOG_D("### Texture::~Texture(%s)", _fileName);
 }
 
-void Texture::reload() {
-	LOG_D("--> Texture::reload()");
+void Texture::upload() {
+	LOG_D("--> Texture::upload()");
 
-	if (mTextureId) {
+	if (_textureId) {
 		return;
 	}
 
-	ResourceFactory* resourceFactory = mGameContext->getResourceFactory();
-	Bitmap* bitmap = resourceFactory->createBitmap(mFileName);
+	ResourceFactory* resourceFactory = _gameContext->getResourceFactory();
+	Bitmap* bitmap = resourceFactory->createBitmap(_fileName);
 
 	// Generate new texture id
-	glGenTextures(1, &mTextureId);
+	glGenTextures(1, &_textureId);
 
-	LOG_D("--- Texture::reload() mTextureId: %d", mTextureId);
+	LOG_D("--- Texture::reload() mTextureId: %d", _textureId);
 
-	glBindTexture(GL_TEXTURE_2D, mTextureId);
+	glBindTexture(GL_TEXTURE_2D, _textureId);
 
 	// Setup texture properties
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -72,8 +72,8 @@ void Texture::reload() {
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	mWidth  = bitmap->getWidth();
-	mHeight = bitmap->getHeight();
+	_width  = bitmap->getWidth();
+	_height = bitmap->getHeight();
 
 	delete bitmap;
 }
@@ -81,16 +81,16 @@ void Texture::reload() {
 void Texture::unload() {
 	LOG_D("--> Texture::unload()");
 
-	if (!mTextureId) {
+	if (!_textureId) {
 		return;
 	}
 
-	glDeleteTextures(1, &mTextureId);
+	glDeleteTextures(1, &_textureId);
 }
 
 void Texture::rebind() {
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, mTextureId);
+	glBindTexture(GL_TEXTURE_2D, _textureId);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -104,9 +104,9 @@ void Texture::unbind() {
 }
 
 int32_t Texture::getWidth() const {
-	return mWidth;
+	return _width;
 }
 
 int32_t Texture::getHeight() const {
-	return mHeight;
+	return _height;
 }

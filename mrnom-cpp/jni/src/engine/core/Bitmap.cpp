@@ -3,30 +3,30 @@
 using namespace engine;
 
 Bitmap::Bitmap(int32_t  width, int32_t  height, int32_t  format, uint8_t* pixels) :
-	mWidth(width), mHeight(height), mFormat(format), mPixels(pixels) {
+	_width(width), _height(height), _format(format), _pixels(pixels) {
 	// LOG_D("### Bitmap::Bitmap(%d, %d, %d, ...)", mWidth, mHeight, mFormat);
 }
 
 Bitmap::~Bitmap() {
 	// LOG_D("### Bitmap::~Bitmap()");
 
-	if (mPixels != NULL) {
-		delete [] mPixels;
+	if (_pixels != NULL) {
+		delete [] _pixels;
 	}
 }
 
 int32_t Bitmap::getWidth() const {
-	return mWidth;
+	return _width;
 }
 
 int32_t Bitmap::getHeight() const {
-	return mHeight;
+	return _height;
 }
 
 int32_t Bitmap::getFormat() const {
-	return mFormat;
+	return _format;
 }
 
 uint8_t* Bitmap::getPixels() const {
-	return mPixels;
+	return _pixels;
 }

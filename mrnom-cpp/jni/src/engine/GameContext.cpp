@@ -17,52 +17,52 @@ GameContext::~GameContext() {
 void GameContext::onUpdate(float deltaTime) {
 	getScreen()->update(deltaTime);
 	getScreen()->render(deltaTime);
-	mRenderView->render();
+	_renderView->render();
 }
 
 void GameContext::onStart() {
-	mResourceFactory = new ResourceFactory(getApplication()->activity->assetManager);
-	mRenderView = new RenderView(getApplication());
-	mScreen = getStartScreen();
+	_resourceFactory = new ResourceFactory(getApplication()->activity->assetManager);
+	_renderView = new RenderView(getApplication());
+	_screen = getStartScreen();
 }
 
 void GameContext::onResume() {
-	mRenderView->setUp();
-	mScreen->resume();
+	_renderView->setUp();
+	_screen->resume();
 	resumeRender();
 }
 
 void GameContext::onPause() {
 	pauseRender();
-	mScreen->pause();
-	mRenderView->tearDown();
+	_screen->pause();
+	_renderView->tearDown();
 }
 
 void GameContext::onStop() {
-	mScreen->dispose();
-	delete mScreen;
-	delete mRenderView;
-	delete mResourceFactory;
+	_screen->dispose();
+	delete _screen;
+	delete _renderView;
+	delete _resourceFactory;
 }
 
 GameScreen* GameContext::getScreen() const {
-	return mScreen;
+	return _screen;
 }
 
 void GameContext::setScreen(GameScreen* screen){
 	assert(screen);
 
-	if (mScreen) {
-		mScreen->pause();
-		mScreen->dispose();
-		delete mScreen;
+	if (_screen) {
+		_screen->pause();
+		_screen->dispose();
+		delete _screen;
 	}
 
 	screen->resume();
 	screen->update(0);
-	mScreen = screen;
+	_screen = screen;
 }
 
 ResourceFactory* GameContext::getResourceFactory() const {
-	return mResourceFactory;
+	return _resourceFactory;
 }

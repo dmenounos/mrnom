@@ -25,14 +25,14 @@ public:
 private:
 
 	// shared system pointer
-	android_app* mApplication;
+	android_app* _application;
 
-	int32_t mWidth;
-	int32_t mHeight;
+	int32_t _width;
+	int32_t _height;
 
-	EGLDisplay mEglDisplay;
-	EGLSurface mEglSurface;
-	EGLContext mEglContext;
+	EGLDisplay _eglDisplay;
+	EGLSurface _eglSurface;
+	EGLContext _eglContext;
 };
 
 }

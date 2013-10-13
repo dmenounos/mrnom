@@ -54,14 +54,14 @@ public:
 
 private:
 
-	int32_t mOffsetX;
-	int32_t mOffsetY;
+	int32_t _offsetX;
+	int32_t _offsetY;
 
-	int32_t mCellWidth;
-	int32_t mCellHeight;
+	int32_t _cellWidth;
+	int32_t _cellHeight;
 
-	int32_t mGridCols;
-	int32_t mGridRows;
+	int32_t _gridCols;
+	int32_t _gridRows;
 };
 
 }

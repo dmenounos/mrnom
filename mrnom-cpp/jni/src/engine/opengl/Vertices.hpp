@@ -17,24 +17,24 @@ public:
 	virtual ~Vertices();
 
 	/**
-	 * Stores vertices buffer.
+	 * Stores the vertices buffer.
 	 */
 	virtual void copyVertices(GLfloat* data, size_t dataBytes);
 
 	/**
-	 * Stores indices buffer.
+	 * Stores the indices buffer.
 	 */
 	virtual void copyIndices(GLushort* data, size_t dataBytes);
 
 	/**
-	 * Uploads vertices buffer into OpenGL.
+	 * Uploads the vertices buffer into OpenGL.
 	 */
-	virtual void loadVertices(GLfloat data[], size_t dataBytes);
+	virtual void uploadVertices(GLfloat data[], size_t dataBytes);
 
 	/**
-	 * Uploads indices buffer into OpenGL.
+	 * Uploads the indices buffer into OpenGL.
 	 */
-	virtual void loadIndices(GLushort data[], size_t dataBytes);
+	virtual void uploadIndices(GLushort data[], size_t dataBytes);
 
 	/**
 	 * Deletes the buffers from OpenGL.
@@ -75,26 +75,26 @@ public:
 
 private:
 
-	bool mHasColor;
-	bool mHasTexture;
+	bool _hasColor;
+	bool _hasTexture;
 
 	/**
 	 * Bytes / Vertex.
 	 */
-	size_t mVertexBytes;
+	size_t _vertexBytes;
 
 	// CPU buffers.
 
-	GLfloat* mVertices;
-	int32_t mVerticesLength;
+	GLfloat* _vertices;
+	int32_t _verticesLength;
 
-	GLushort* mIndices;
-	int32_t mIndicesLength;
+	GLushort* _indices;
+	int32_t _indicesLength;
 
 	// GPU buffers.
 
-	uint32_t mVerticesId;
-	uint32_t mIndicesId;
+	uint32_t _verticesId;
+	uint32_t _indicesId;
 };
 
 }

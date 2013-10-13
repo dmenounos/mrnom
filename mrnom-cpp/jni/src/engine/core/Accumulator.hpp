@@ -62,13 +62,13 @@ private:
 
 	// configuration
 
-	bool mContinuous;
-	float mTickDuration;
+	bool _continuous;
+	float _tickDuration;
 
 	// computed
 
-	bool mTickComplete;
-	float mTickProgress;
+	bool _tickComplete;
+	float _tickProgress;
 };
 
 }

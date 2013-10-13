@@ -3,11 +3,11 @@
 using namespace engine;
 
 RenderView::RenderView(android_app* application) :
-	mApplication(application),
-	mWidth(0), mHeight(0),
-	mEglDisplay(EGL_NO_DISPLAY),
-	mEglSurface(EGL_NO_SURFACE),
-	mEglContext(EGL_NO_CONTEXT) {
+	_application(application),
+	_width(0), _height(0),
+	_eglDisplay(EGL_NO_DISPLAY),
+	_eglSurface(EGL_NO_SURFACE),
+	_eglContext(EGL_NO_CONTEXT) {
 	LOG_D("### RenderView::RenderView()");
 }
 
@@ -33,16 +33,16 @@ void RenderView::setUp() {
 		EGL_NONE
 	};
 
-	ANativeWindow* nativeWindow = mApplication->window;
+	ANativeWindow* nativeWindow = _application->window;
 
 	if (nativeWindow == NULL) {
 		goto ERROR;
 	}
 
-	mEglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-	if (mEglDisplay == EGL_NO_DISPLAY) goto ERROR;
+	_eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+	if (_eglDisplay == EGL_NO_DISPLAY) goto ERROR;
 
-	if (!eglInitialize(mEglDisplay, NULL, NULL)) {
+	if (!eglInitialize(_eglDisplay, NULL, NULL)) {
 		goto ERROR;
 	}
 
@@ -50,7 +50,7 @@ void RenderView::setUp() {
 	// we have a very simplified selection process, where we pick
 	// the first EGLConfig that matches our criteria.
 
-	if (!eglChooseConfig(mEglDisplay, attributes, &config, 1, &numConfigs)) {
+	if (!eglChooseConfig(_eglDisplay, attributes, &config, 1, &numConfigs)) {
 		goto ERROR;
 	}
 
@@ -59,7 +59,7 @@ void RenderView::setUp() {
 	// As soon as we picked a EGLConfig, we can safely reconfigure the
 	// ANativeWindow buffers to match, using EGL_NATIVE_VISUAL_ID.
 
-	if (!eglGetConfigAttrib(mEglDisplay, config, EGL_NATIVE_VISUAL_ID, &format)) {
+	if (!eglGetConfigAttrib(_eglDisplay, config, EGL_NATIVE_VISUAL_ID, &format)) {
 		goto ERROR;
 	}
 
@@ -69,26 +69,26 @@ void RenderView::setUp() {
 	// selected configuration. A context contains all data related to OpenGL
 	// state (settings, matrix stack and so on).
 
-	mEglSurface = eglCreateWindowSurface(mEglDisplay, config, nativeWindow, NULL);
-	if (mEglSurface == EGL_NO_SURFACE) goto ERROR;
+	_eglSurface = eglCreateWindowSurface(_eglDisplay, config, nativeWindow, NULL);
+	if (_eglSurface == EGL_NO_SURFACE) goto ERROR;
 
-	mEglContext = eglCreateContext(mEglDisplay, config, EGL_NO_CONTEXT, NULL);
-	if (mEglContext == EGL_NO_CONTEXT) goto ERROR;
+	_eglContext = eglCreateContext(_eglDisplay, config, EGL_NO_CONTEXT, NULL);
+	if (_eglContext == EGL_NO_CONTEXT) goto ERROR;
 
-	if (!eglMakeCurrent(mEglDisplay, mEglSurface, mEglSurface, mEglContext)) {
+	if (!eglMakeCurrent(_eglDisplay, _eglSurface, _eglSurface, _eglContext)) {
 		goto ERROR;
 	}
 
-	if (!eglQuerySurface(mEglDisplay, mEglSurface, EGL_WIDTH, &mWidth) || mWidth <= 0) {
+	if (!eglQuerySurface(_eglDisplay, _eglSurface, EGL_WIDTH, &_width) || _width <= 0) {
 		goto ERROR;
 	}
 
-	if (!eglQuerySurface(mEglDisplay, mEglSurface, EGL_HEIGHT, &mHeight) || mHeight <= 0) {
+	if (!eglQuerySurface(_eglDisplay, _eglSurface, EGL_HEIGHT, &_height) || _height <= 0) {
 		goto ERROR;
 	}
 
-	LOG_D("--- glViewport(0, 0, %d, %d)", mWidth, mHeight);
-	glViewport(0, 0, mWidth, mHeight);
+	LOG_D("--- glViewport(0, 0, %d, %d)", _width, _height);
+	glViewport(0, 0, _width, _height);
 
 	return;
 
@@ -99,26 +99,26 @@ void RenderView::setUp() {
 void RenderView::tearDown() {
 	LOG_D("--> RenderView::tearDown()");
 
-	if (mEglDisplay != EGL_NO_DISPLAY) {
-		eglMakeCurrent(mEglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+	if (_eglDisplay != EGL_NO_DISPLAY) {
+		eglMakeCurrent(_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 
-		if (mEglContext != EGL_NO_CONTEXT) {
-			eglDestroyContext(mEglDisplay, mEglContext);
-			mEglContext = EGL_NO_CONTEXT;
+		if (_eglContext != EGL_NO_CONTEXT) {
+			eglDestroyContext(_eglDisplay, _eglContext);
+			_eglContext = EGL_NO_CONTEXT;
 		}
 
-		if (mEglSurface != EGL_NO_SURFACE) {
-			eglDestroySurface(mEglDisplay, mEglSurface);
-			mEglSurface = EGL_NO_SURFACE;
+		if (_eglSurface != EGL_NO_SURFACE) {
+			eglDestroySurface(_eglDisplay, _eglSurface);
+			_eglSurface = EGL_NO_SURFACE;
 		}
 
-		eglTerminate(mEglDisplay);
-		mEglDisplay = EGL_NO_DISPLAY;
+		eglTerminate(_eglDisplay);
+		_eglDisplay = EGL_NO_DISPLAY;
 	}
 }
 
 void RenderView::render() {
-	if (!eglSwapBuffers(mEglDisplay, mEglSurface)) {
+	if (!eglSwapBuffers(_eglDisplay, _eglSurface)) {
 		LOG_E("Error swapping buffers: %d", eglGetError());
 	}
 }
