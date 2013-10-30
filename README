@@ -1,0 +1,5 @@
+# android list
+# Lists existing targets or virtual devices.
+
+# android update project --target android-10 --path . --subprojects
+# Updates an Android project (must already have an AndroidManifest.xml).
