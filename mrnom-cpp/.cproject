@@ -1,35 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
-		<cconfiguration id="com.android.toolchain.gcc.1426004547">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.android.toolchain.gcc.1426004547" moduleId="org.eclipse.cdt.core.settings" name="Default">
+		<cconfiguration id="0.775371005">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.775371005" moduleId="org.eclipse.cdt.core.settings" name="Default">
 				<externalSettings/>
 				<extensions>
-					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.VCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
-					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildProperties="" description="" id="com.android.toolchain.gcc.1426004547" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
-					<folderInfo id="com.android.toolchain.gcc.1426004547.19032158" name="/" resourcePath="">
-						<toolChain id="com.android.toolchain.gcc.1419414287" name="com.android.toolchain.gcc" superClass="com.android.toolchain.gcc">
-							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="com.android.targetPlatform.1258255120" isAbstract="false" superClass="com.android.targetPlatform"/>
-							<builder id="com.android.builder.1664373580" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Android Builder" superClass="com.android.builder"/>
-							<tool id="com.android.gcc.compiler.2077058561" name="Android GCC Compiler" superClass="com.android.gcc.compiler">
-								<option id="com.android.gcc.option.includePath.1566442794" superClass="com.android.gcc.option.includePath" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/dmen/workspace-adt/android-ndk/platforms/android-9/arch-arm/usr/include"/>
-									<listOptionValue builtIn="false" value="/home/dmen/workspace-adt/android-ndk/sources/cxx-stl/gnu-libstdc++/4.6/include"/>
-									<listOptionValue builtIn="false" value="/home/dmen/workspace-adt/android-ndk/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi/include"/>
-									<listOptionValue builtIn="false" value="/home/dmen/workspace-adt/android-ndk/sources/android/native_app_glue"/>
-									<listOptionValue builtIn="false" value="/home/dmen/workspace-adt/android-ndk/sources/libpng/jni"/>
+				<configuration artifactName="${ProjName}" buildProperties="" description="" id="0.775371005" name="Default" parent="org.eclipse.cdt.build.core.prefbase.cfg">
+					<folderInfo id="0.775371005." name="/" resourcePath="">
+						<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.78730608" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
+							<targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.78730608.1325831769" name=""/>
+							<builder command="ndk-build" id="org.eclipse.cdt.build.core.settings.default.builder.1827473340" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.libs.1831693643" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.1456173122" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1855383251" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/platforms/android-9/arch-arm/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/android/native_app_glue&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/libpng/src&quot;"/>
 								</option>
-								<inputType id="com.android.gcc.inputType.1800088784" superClass="com.android.gcc.inputType"/>
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1791927682" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+							</tool>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.2048310372" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.181965649" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/platforms/android-9/arch-arm/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/android/native_app_glue&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/libpng/src&quot;"/>
+								</option>
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.221055913" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+							</tool>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.63054246" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1986700794" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/platforms/android-9/arch-arm/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/android/native_app_glue&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/libpng/src&quot;"/>
+								</option>
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1517282776" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
@@ -39,15 +58,19 @@
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="mrnom-cpp.null.1110024577" name="mrnom-cpp"/>
-	</storageModule>
-	<storageModule moduleId="refreshScope" versionNumber="1">
-		<resource resourceType="PROJECT" workspacePath="/mrnom-cpp"/>
+		<project id="mrnom-cpp.null.1920450150" name="mrnom-cpp"/>
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1426004547;com.android.toolchain.gcc.1426004547.19032158;com.android.gcc.compiler.2077058561;com.android.gcc.inputType.1800088784">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.android.AndroidPerProjectProfile"/>
+		<scannerConfigBuildInfo instanceId="0.775371005">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Default">
+			<resource resourceType="PROJECT" workspacePath="/mrnom-cpp"/>
+		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>

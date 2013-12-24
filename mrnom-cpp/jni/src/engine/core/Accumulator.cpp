@@ -18,14 +18,14 @@ void Accumulator::update(float deltaTime) {
 		_tickComplete = false;
 	}
 
-	while (isContinuous() && isFinished()) {
-		_tickProgress -= _tickDuration;
+	if (!isContinuous() && isFinished()) {
+		_tickProgress = 0.0f;
 		_tickComplete = true;
 		onTick();
 	}
 
-	if (!isContinuous() && isFinished()) {
-		_tickProgress = 0.0f;
+	while (isContinuous() && isFinished()) {
+		_tickProgress -= _tickDuration;
 		_tickComplete = true;
 		onTick();
 	}
