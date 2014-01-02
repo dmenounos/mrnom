@@ -7,8 +7,7 @@ using namespace engine;
 
 EventLoop::EventLoop() :
 	_application(0),
-	_active(false),
-	_quit(false) {
+	_active(false) {
 	LOG_D("### EventLoop::EventLoop()");
 }
 
@@ -36,7 +35,7 @@ void EventLoop::init(android_app* application)
 
 	LOG_D("--- ENTERING EVENT LOOP");
 
-	while (!_quit) {
+	while (true) {
 
 		// Consume system events awaiting in the queue.
 		// Timeout type: 0: non-blocking, -1: blocking.
@@ -61,16 +60,14 @@ void EventLoop::init(android_app* application)
 			float frameTime = _timer.elapsed(false);
 
 			if (frameTime < INTERVAL_30FPS) {
-				// running faster than fps interval
+				// running faster than fps limit
 				// put thread to sleep to save energy
 				float sleepTime = INTERVAL_30FPS - frameTime;
 				// LOG_D("frameTime: %f sleepTime: %f", frameTime, sleepTime);
-				usleep(sleepTime * 1000000.0); // microseconds
+				usleep(sleepTime * 1000000.0); // seconds to microseconds
 			}
 		}
 	}
-
-	LOG_D("--- EXITED EVENT LOOP");
 }
 
 void EventLoop::resumeRender() {

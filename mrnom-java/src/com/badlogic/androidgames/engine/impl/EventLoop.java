@@ -64,13 +64,13 @@ public abstract class EventLoop extends Activity {
 				float frameTime = mTimer.elapsed(false);
 
 				if (frameTime < INTERVAL_30FPS) {
-					// running faster than fps interval
+					// running faster than fps limit
 					// put thread to sleep to save energy
 					float sleepTime = INTERVAL_30FPS - frameTime;
 					// Log.d("MrNom", "frameTime: " + frameTime + " sleepTime: " + sleepTime);
 
 					try {
-						sleep((long) (sleepTime * 1000.0)); // milliseconds
+						sleep((long) (sleepTime * 1000.0)); // seconds to milliseconds
 					}
 					catch (InterruptedException e) {
 					}

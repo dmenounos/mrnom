@@ -41,6 +41,12 @@
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 
+/* OpenSL APIs */
+
+#include <SLES/OpenSLES.h>
+#include <SLES/OpenSLES_Android.h>
+#include <SLES/OpenSLES_AndroidConfiguration.h>
+
 /* ANDROID APIs */
 
 #include <android/log.h>

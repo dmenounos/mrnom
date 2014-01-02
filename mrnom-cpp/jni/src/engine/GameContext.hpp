@@ -7,6 +7,7 @@ namespace engine {
 
 class GameScreen;
 class RenderView;
+class SoundService;
 class ResourceFactory;
 
 /**
@@ -49,6 +50,7 @@ private:
 
 	GameScreen* _screen;
 	RenderView* _renderView;
+	SoundService* _soundService;
 	ResourceFactory* _resourceFactory;
 };
 

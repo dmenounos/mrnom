@@ -25,8 +25,13 @@
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/platforms/android-9/arch-arm/usr/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.6/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/android/native_app_glue&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/libpng/src&quot;"/>
+								</option>
+								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.1388129691" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="__ANDROID__"/>
+									<listOptionValue builtIn="false" value="__GNUC__"/>
 								</option>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1791927682" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
@@ -35,8 +40,13 @@
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/platforms/android-9/arch-arm/usr/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.6/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/android/native_app_glue&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/libpng/src&quot;"/>
+								</option>
+								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.1313414697" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="__ANDROID__"/>
+									<listOptionValue builtIn="false" value="__GNUC__"/>
 								</option>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.221055913" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
@@ -45,8 +55,13 @@
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/platforms/android-9/arch-arm/usr/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.6/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/android/native_app_glue&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ANDROID_NDK_HOME}/sources/libpng/src&quot;"/>
+								</option>
+								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.551948562" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="__ANDROID__"/>
+									<listOptionValue builtIn="false" value="__GNUC__"/>
 								</option>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1517282776" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>

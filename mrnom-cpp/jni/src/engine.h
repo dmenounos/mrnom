@@ -14,6 +14,7 @@
 #include "engine/system/RenderView.hpp"
 #include "engine/system/Resource.hpp"
 #include "engine/system/ResourceFactory.hpp"
+#include "engine/system/SoundService.hpp"
 #include "engine/system/Timer.hpp"
 
 #include "engine/util/FrameCounter.hpp"

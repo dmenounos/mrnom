@@ -4,10 +4,10 @@ using namespace engine;
 
 RenderView::RenderView(android_app* application) :
 	_application(application),
-	_width(0), _height(0),
 	_eglDisplay(EGL_NO_DISPLAY),
 	_eglSurface(EGL_NO_SURFACE),
-	_eglContext(EGL_NO_CONTEXT) {
+	_eglContext(EGL_NO_CONTEXT),
+	_width(0), _height(0) {
 	LOG_D("### RenderView::RenderView()");
 }
 

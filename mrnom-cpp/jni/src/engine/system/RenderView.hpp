@@ -6,7 +6,7 @@
 namespace engine {
 
 /**
- * Encapsulates OpenGL context management.
+ * Encapsulates EGL / OpenGL context management.
  */
 class RenderView {
 
@@ -27,12 +27,12 @@ private:
 	// shared system pointer
 	android_app* _application;
 
-	int32_t _width;
-	int32_t _height;
-
 	EGLDisplay _eglDisplay;
 	EGLSurface _eglSurface;
 	EGLContext _eglContext;
+
+	int32_t _width;
+	int32_t _height;
 };
 
 }

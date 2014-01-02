@@ -5,10 +5,16 @@
 # android update project --target android-10 --path . --subprojects
 # Updates an Android project (must already have an AndroidManifest.xml).
 
-C/C++ General / Paths and Symbols
----------------------------------
+C/C++ General / Paths and Symbols / Includes
+--------------------------------------------
 ${ANDROID_NDK_HOME}/platforms/android-9/arch-arm/usr/include
 ${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/include
 ${ANDROID_NDK_HOME}/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi/include
+${ANDROID_NDK_HOME}/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.6/include
 ${ANDROID_NDK_HOME}/sources/android/native_app_glue
 ${ANDROID_NDK_HOME}/sources/libpng/src
+
+C/C++ General / Paths and Symbols / Symbols
+--------------------------------------------
+__ANDROID__
+__GNUC__

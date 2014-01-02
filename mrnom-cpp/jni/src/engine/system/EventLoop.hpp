@@ -23,6 +23,9 @@ public:
 	 */
 	virtual void init(android_app* application);
 
+	/**
+	 * Returns the NDK application structure.
+	 */
 	virtual android_app* getApplication() const;
 
 protected:
@@ -62,13 +65,13 @@ protected:
 
 	/**
 	 * System state change call-back (non object oriented).
-	 * Delegates to a framework state call-back.
+	 * Delegates to our state call-backs.
 	 */
 	static void systemStateCallback(android_app* app, int32_t cmd);
 
 	/**
 	 * System input event call-back (non object oriented).
-	 * Delegates to a framework input call-back.
+	 * Delegates to our input call-back (not implemented yet).
 	 */
 	static int32_t systemInputCallback(android_app* app, AInputEvent* event);
 
@@ -79,7 +82,6 @@ private:
 
 	Timer _timer;
 	bool _active;
-	bool _quit;
 };
 
 }

@@ -3,10 +3,16 @@
 
 #include "system/RenderView.hpp"
 #include "system/ResourceFactory.hpp"
+#include "system/SoundService.hpp"
 
 using namespace engine;
 
-GameContext::GameContext() : EventLoop() {
+GameContext::GameContext() :
+	EventLoop(),
+	_screen(0),
+	_renderView(0),
+	_soundService(0),
+	_resourceFactory(0) {
 	LOG_D("### GameContext::GameContext()");
 }
 
@@ -22,11 +28,13 @@ void GameContext::onUpdate(float deltaTime) {
 
 void GameContext::onStart() {
 	_resourceFactory = new ResourceFactory(getApplication()->activity->assetManager);
+	_soundService = new SoundService(getApplication());
 	_renderView = new RenderView(getApplication());
 	_screen = getStartScreen();
 }
 
 void GameContext::onResume() {
+	_soundService->setUp();
 	_renderView->setUp();
 	_screen->resume();
 	resumeRender();
@@ -36,6 +44,7 @@ void GameContext::onPause() {
 	pauseRender();
 	_screen->pause();
 	_renderView->tearDown();
+	_soundService->tearDown();
 }
 
 void GameContext::onStop() {
