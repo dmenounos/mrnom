@@ -1,14 +1,14 @@
 #ifndef VERTICES_HPP
 #define VERTICES_HPP
 
-#include "../../common.h"
+#include "Handle.hpp"
 
 namespace engine {
 
 /**
  * GPU Vertex buffer handle.
  */
-class Vertices {
+class Vertices : public Handle {
 
 public:
 
@@ -42,12 +42,12 @@ public:
 	virtual void unload();
 
 	/**
-	 * Binds the buffers for use with OpenGL.
+	 * Rebinds the buffers into OpenGL.
 	 */
 	virtual void rebind();
 
 	/**
-	 * Unbinds the texture for use with OpenGL.
+	 * Unbinds the buffers from OpenGL.
 	 */
 	virtual void unbind();
 

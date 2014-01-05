@@ -17,7 +17,7 @@ GameContext::GameContext() :
 }
 
 GameContext::~GameContext() {
-	LOG_D("### GameContext::~GameContext()");
+	LOG_D("$$$ GameContext::~GameContext()");
 }
 
 void GameContext::onUpdate(float deltaTime) {
@@ -62,9 +62,11 @@ void GameContext::setScreen(GameScreen* screen){
 	assert(screen);
 
 	if (_screen) {
+		LOG_D("--- DELETE SCREEN -------------->");
 		_screen->pause();
 		_screen->dispose();
 		delete _screen;
+		LOG_D("--- DELETE SCREEN <--------------");
 	}
 
 	screen->resume();

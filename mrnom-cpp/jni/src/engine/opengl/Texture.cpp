@@ -13,7 +13,7 @@ Texture::Texture(GameContext* gameContext, const char* fileName) :
 }
 
 Texture::~Texture() {
-	LOG_D("### Texture::~Texture(%s)", _fileName);
+	LOG_D("$$$ Texture::~Texture(%s)", _fileName);
 }
 
 void Texture::upload() {
@@ -29,7 +29,7 @@ void Texture::upload() {
 	// Generate new texture id
 	glGenTextures(1, &_textureId);
 
-	LOG_D("--- Texture::reload() mTextureId: %d", _textureId);
+	LOG_D("--- Texture::upload() _textureId: %d", _textureId);
 
 	glBindTexture(GL_TEXTURE_2D, _textureId);
 
@@ -81,11 +81,9 @@ void Texture::upload() {
 void Texture::unload() {
 	LOG_D("--> Texture::unload()");
 
-	if (!_textureId) {
-		return;
+	if (_textureId) {
+		glDeleteTextures(1, &_textureId);
 	}
-
-	glDeleteTextures(1, &_textureId);
 }
 
 void Texture::rebind() {

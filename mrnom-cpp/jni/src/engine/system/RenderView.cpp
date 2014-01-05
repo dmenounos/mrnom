@@ -12,7 +12,7 @@ RenderView::RenderView(android_app* application) :
 }
 
 RenderView::~RenderView() {
-	LOG_D("### RenderView::~RenderView()");
+	LOG_D("$$$ RenderView::~RenderView()");
 }
 
 void RenderView::setUp() {

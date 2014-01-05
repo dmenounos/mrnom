@@ -27,8 +27,8 @@ protected:
 
 private:
 
-	uint32_t mFpsCounter;
-	uint32_t mFps;
+	uint32_t _fpsCounter;
+	uint32_t _fps;
 };
 
 }

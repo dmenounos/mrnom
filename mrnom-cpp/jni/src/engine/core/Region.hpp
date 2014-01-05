@@ -6,7 +6,9 @@
 namespace engine {
 
 /**
- * Region structure.
+ * Used to describe a region over some area.
+ * Supports inner grid arrangement (cellWidth, cellHeight, gridCols, gridRows)
+ * as well as outer positioning (offsetX, offsetY).
  */
 class Region {
 
@@ -17,37 +19,37 @@ public:
 	virtual ~Region();
 
 	/**
-	 * Horizontal offset.
+	 * Outer horizontal offset.
 	 */
 	int32_t getOffsetX() const;
 	void setOffsetX(int32_t offsetX);
 
 	/**
-	 * Vertical offset.
+	 * Outer vertical offset.
 	 */
 	int32_t getOffsetY() const;
 	void setOffsetY(int32_t offsetY);
 
 	/**
-	 * Grid column width.
+	 * Inner grid column width ( pixels / column ).
 	 */
 	int32_t getCellWidth() const;
 	void setCellWidth(int32_t cellWidth);
 
 	/**
-	 * Grid row height.
+	 * Inner grid row height ( pixels / row ).
 	 */
 	int32_t getCellHeight() const;
 	void setCellHeight(int32_t cellHeight);
 
 	/**
-	 * Grid column count.
+	 * Inner grid column count.
 	 */
 	int32_t getGridCols() const;
 	void setGridCols(int32_t gridCols);
 
 	/**
-	 * Grid row count.
+	 * Inner grid row count.
 	 */
 	int32_t getGridRows() const;
 	void setGridRows(int32_t gridRows);

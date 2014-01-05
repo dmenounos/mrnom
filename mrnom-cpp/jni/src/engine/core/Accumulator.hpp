@@ -6,7 +6,7 @@
 namespace engine {
 
 /**
- * Base class for time intervals.
+ * Accumulates time intervals.
  */
 class Accumulator {
 
@@ -62,12 +62,12 @@ private:
 
 	// configuration
 
-	bool _continuous;
+	bool  _continuous;
 	float _tickDuration;
 
 	// computed
 
-	bool _tickComplete;
+	bool  _tickComplete;
 	float _tickProgress;
 };
 

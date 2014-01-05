@@ -8,7 +8,7 @@ Resource::Resource(AAssetManager* assetManager, const char* path) {
 }
 
 Resource::~Resource() {
-	// LOG_D("### Resource::~Resource()");
+	// LOG_D("$$$ Resource::~Resource()");
 	AAsset_close(_asset);
 }
 

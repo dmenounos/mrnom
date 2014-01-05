@@ -12,7 +12,7 @@ EventLoop::EventLoop() :
 }
 
 EventLoop::~EventLoop() {
-	LOG_D("### EventLoop::~EventLoop()");
+	LOG_D("$$$ EventLoop::~EventLoop()");
 }
 
 android_app* EventLoop::getApplication() const {

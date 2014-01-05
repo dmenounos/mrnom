@@ -7,5 +7,5 @@ World::World() : Accumulator() {
 }
 
 World::~World() {
-	// LOG_D("### World::~World()");
+	// LOG_D("$$$ World::~World()");
 }

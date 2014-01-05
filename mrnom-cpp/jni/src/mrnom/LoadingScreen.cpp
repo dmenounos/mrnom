@@ -11,7 +11,7 @@ LoadingScreen::LoadingScreen(GameContext* context) :
 }
 
 LoadingScreen::~LoadingScreen() {
-	LOG_D("### LoadingScreen::~LoadingScreen()");
+	LOG_D("$$$ LoadingScreen::~LoadingScreen()");
 
 	delete _backgroundTexture;
 	delete _logoTexture;

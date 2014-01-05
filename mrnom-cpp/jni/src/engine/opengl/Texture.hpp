@@ -1,16 +1,16 @@
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
 
-#include "../../common.h"
+#include "Handle.hpp"
 
 namespace engine {
 
 class GameContext;
 
 /**
- * GPU Picture buffer handle.
+ * GPU Texture buffer handle.
  */
-class Texture {
+class Texture : public Handle {
 
 public:
 
@@ -30,12 +30,12 @@ public:
 	virtual void unload();
 
 	/**
-	 * Binds the texture for use with OpenGL.
+	 * Rebinds the texture into OpenGL.
 	 */
 	virtual void rebind();
 
 	/**
-	 * Unbinds the texture for use with OpenGL.
+	 * Unbinds the texture from OpenGL.
 	 */
 	virtual void unbind();
 

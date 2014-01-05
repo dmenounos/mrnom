@@ -7,6 +7,9 @@
 
 namespace engine {
 
+/**
+ * Maps the accumulated time to a range of values.
+ */
 class Animator : public Accumulator {
 
 public:

@@ -11,7 +11,7 @@ SoundService::SoundService(android_app* application) :
 }
 
 SoundService::~SoundService() {
-	LOG_D("### SoundService::~SoundService()");
+	LOG_D("$$$ SoundService::~SoundService()");
 }
 
 void SoundService::setUp() {

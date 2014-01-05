@@ -18,7 +18,7 @@ ResourceFactory::ResourceFactory(AAssetManager* assetManager) :
 }
 
 ResourceFactory::~ResourceFactory() {
-	LOG_D("### ResourceFactory::~ResourceFactory()");
+	LOG_D("$$$ ResourceFactory::~ResourceFactory()");
 }
 
 Bitmap* ResourceFactory::createBitmap(const char* path) {
@@ -37,37 +37,34 @@ Bitmap* ResourceFactory::createBitmap(const char* path) {
 	resource.read(header, sizeof(header));
 	if (png_sig_cmp(header, 0, 8) != 0) goto ERROR;
 
-	/*
-	 * Create all structures necessary to read o PNG image.
-	 */
+	// Create all structures necessary to read o PNG image.
+
 	pngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!pngPtr) goto ERROR;
 
 	infoPtr = png_create_info_struct(pngPtr);
 	if (!infoPtr) goto ERROR;
 
-	/*
-	 * Prepare reading operations by giving our callback_read().
-	 *
-	 * Setup error management with setjmp(). This allows jumping like a goto
-	 * but through the call stack. If an error occurs, control flow comes back
-	 * at the point where setjmp() has been called first, but enters the if
-	 * block instead (here goto ERROR).
-	 */
+	// Prepare reading operations by giving our callback_read().
+	//
+	// Setup error management with setjmp(). This allows jumping like a goto
+	// but through the call stack. If an error occurs, control flow comes back
+	// at the point where setjmp() has been called first, but enters the if
+	// block instead (here goto ERROR).
+
 	png_set_read_fn(pngPtr, &resource, readCallback);
 	if (setjmp(png_jmpbuf(pngPtr))) goto ERROR;
 
-	/*
-	 * Start reading PNG file header, ignoring the first 8 bytes.
-	 *
-	 * PNG files can be encoded in several formats: RGB, RGBA, 256 colors with
-	 * a palette, grayscale... R, G, B color channels can be encoded on up to
-	 * 16 bits. Hopefully, libpng provides transformation functions to decode
-	 * unusual formats to more classical RGB and luminance formats with 8 bits
-	 * per channel with or without an alpha channel.
-	 *
-	 * Transformations are validated with png_read_update_info().
-	 */
+	// Start reading PNG file header, ignoring the first 8 bytes.
+	//
+	// PNG files can be encoded in several formats: RGB, RGBA, 256 colors with
+	// a palette, grayscale... R, G, B color channels can be encoded on up to
+	// 16 bits. Hopefully, libpng provides transformation functions to decode
+	// unusual formats to more classical RGB and luminance formats with 8 bits
+	// per channel with or without an alpha channel.
+	//
+	// Transformations are validated with png_read_update_info().
+
 	png_set_sig_bytes(pngPtr, 8);
 	png_read_info(pngPtr, infoPtr);
 	png_int_32 format;
@@ -77,6 +74,7 @@ Bitmap* ResourceFactory::createBitmap(const char* path) {
 
 	// Creates a full alpha channel if transparency is encoded as
 	// an array of palette entries or a single transparent color.
+
 	transparency = false;
 
 	if (png_get_valid(pngPtr, infoPtr, PNG_INFO_tRNS)) {
@@ -93,6 +91,7 @@ Bitmap* ResourceFactory::createBitmap(const char* path) {
 	}
 
 	// Indicates that image needs conversion to RGBA if needed.
+
 	switch (colorType) {
 	case PNG_COLOR_TYPE_PALETTE:
 		png_set_palette_to_rgb(pngPtr);
@@ -116,10 +115,9 @@ Bitmap* ResourceFactory::createBitmap(const char* path) {
 
 	png_read_update_info(pngPtr, infoPtr);
 
-	/*
-	 * Allocate the necessary temporary buffer to hold image data and
-	 * a second one with the address of each output image row for libpng.
-	 */
+	// Allocate the necessary temporary buffer to hold image data and
+	// a second one with the address of each output image row for libpng.
+
 	rowSize = png_get_rowbytes(pngPtr, infoPtr);
 	if (rowSize <= 0) goto ERROR;
 
@@ -129,23 +127,20 @@ Bitmap* ResourceFactory::createBitmap(const char* path) {
 	rowPtrs = new png_byte*[height];
 	if (!rowPtrs) goto ERROR;
 
-	/*
-	 * Note, row order is inverted because OpenGL uses a different coordinate
-	 * system (first pixel at bottom-left) then PNG (first pixel at top-left).
-	 */
+	// Note, row order is inverted because OpenGL uses a different coordinate
+	// system (first pixel at bottom-left) then PNG (first pixel at top-left).
+
 	for (int32_t i = 0; i < height; ++i) {
 		rowPtrs[height - i - 1] = imageBuffer + i * rowSize;
 	}
 
-	/*
-	 * Start reading image content.
-	 */
+	// Start reading image content.
+
 	png_read_image(pngPtr, rowPtrs);
 
-	/*
-	 * Finally, release resources (whether an error occurs on not) and return
-	 * loaded data.
-	 */
+	// Finally, release resources (whether an error occurs on not) and return
+	// loaded data.
+
 	delete[] rowPtrs;
 	png_destroy_read_struct(&pngPtr, &infoPtr, NULL);
 

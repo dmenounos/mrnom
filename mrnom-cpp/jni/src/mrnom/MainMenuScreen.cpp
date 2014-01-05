@@ -9,14 +9,14 @@ MainMenuScreen::MainMenuScreen(GameContext* context) :
 	_animationTexture = new Texture(context, "anim.png");
 
 	_animationSprite = new Sprite(_animationTexture);
-	_animationSprite->getRegion().setGridCols(6);
-	_animationSprite->getRegion().setGridRows(5);
-	_animationSprite->getAnimator().setContinuous(true);
-	_animationSprite->getAnimator().setTickDuration(5.0f);
+	_animationSprite->getTextureRegion().setGridCols(6);
+	_animationSprite->getTextureRegion().setGridRows(5);
+	_animationSprite->getTextureRegionAnimator().setContinuous(true);
+	_animationSprite->getTextureRegionAnimator().setTickDuration(5.0f);
 }
 
 MainMenuScreen::~MainMenuScreen() {
-	LOG_D("### MainMenuScreen::~MainMenuScreen()");
+	LOG_D("$$$ MainMenuScreen::~MainMenuScreen()");
 
 	delete _animationSprite;
 	delete _animationTexture;
@@ -25,7 +25,7 @@ MainMenuScreen::~MainMenuScreen() {
 void MainMenuScreen::resume() {
 	LOG_D("--> MainMenuScreen::resume()");
 	MrNomScreen::resume();
-	_animationSprite->reload();
+	_animationSprite->upload();
 }
 
 void MainMenuScreen::update(float deltaTime) {

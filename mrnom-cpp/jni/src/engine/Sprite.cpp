@@ -6,153 +6,144 @@
 using namespace engine;
 
 Sprite::Sprite(Texture* texture) :
-	_position(), _region(), _animator(),
-	_vertices(0), _texture(texture) {
+	Image(texture),
+	_position(),
+	_textureRegion(),
+	_textureRegionAnimator() {
 
 	LOG_D("### Sprite::Sprite()");
 
-	// Default, use the texture whole area.
+	// Default, use the whole texture area.
 
-	_region.setCellWidth(AUTO_SIZE);
-	_region.setCellHeight(AUTO_SIZE);
+	_textureRegion.setCellWidth(GRID_CELL_SIZE_AUTO);
+	_textureRegion.setCellHeight(GRID_CELL_SIZE_AUTO);
 
 	// Default, use the grid cell count.
 
-	_animator.setRangeLength(AUTO_RANGE);
+	_textureRegionAnimator.setRangeLength(ANIM_RANGE_FULL_GRID);
 }
 
 Sprite::~Sprite() {
-	LOG_D("### Sprite::~Sprite()");
+	LOG_D("$$$ Sprite::~Sprite()");
 }
 
-void Sprite::reload() {
-	LOG_D("--> Sprite::reload()");
+void Sprite::upload() {
+	Image::upload();
+	LOG_D("--> Sprite::upload()");
 
-	_texture->upload();
-
-	if (AUTO_SIZE == _region.getCellWidth()) {
-		_region.setCellWidth(_texture->getWidth() / _region.getGridCols());
-		LOG_D("--- Sprite::reload() region auto width: %d", _region.getCellWidth());
+	if (GRID_CELL_SIZE_AUTO == _textureRegion.getCellWidth()) {
+		_textureRegion.setCellWidth(_texture->getWidth() / _textureRegion.getGridCols());
+		LOG_D("--- Sprite::upload() region auto cellWidth: %d", _textureRegion.getCellWidth());
 	}
 
-	if (AUTO_SIZE == _region.getCellHeight()) {
-		_region.setCellHeight(_texture->getHeight() / _region.getGridRows());
-		LOG_D("--- Sprite::reload() region auto height: %d", _region.getCellHeight());
+	if (GRID_CELL_SIZE_AUTO == _textureRegion.getCellHeight()) {
+		_textureRegion.setCellHeight(_texture->getHeight() / _textureRegion.getGridRows());
+		LOG_D("--- Sprite::upload() region auto cellHeight: %d", _textureRegion.getCellHeight());
 	}
 
-	if (AUTO_RANGE == _animator.getRangeLength()) {
-		_animator.setRangeLength(_region.getGridRows() * _region.getGridCols());
-		LOG_D("--- Sprite::reload() animator auto rangeLength: %f", _animator.getRangeLength());
+	if (ANIM_RANGE_FULL_GRID == _textureRegionAnimator.getRangeLength()) {
+		_textureRegionAnimator.setRangeLength(_textureRegion.getGridRows() * _textureRegion.getGridCols());
+		LOG_D("--- Sprite::upload() animator auto rangeLength: %f", _textureRegionAnimator.getRangeLength());
 	}
 
-	// VERTEX coordinates are non-normalized
-	// and are based on "camera" units, i.e. glOrthof(...).
-
-	float colSize = _region.getCellWidth();
-	float rowSize = _region.getCellHeight();
-
-	// TEXTURE coordinates are normalized.
-
-	float horRatio = 1.0f / _texture->getWidth();
-	float verRatio = 1.0f / _texture->getHeight();
-
-	float horCell = _region.getCellWidth() * horRatio;
-	float verCell = _region.getCellHeight() * verRatio;
-
-	float horOffset = _region.getOffsetX() * horRatio;
-	float verOffset = _region.getOffsetY() * verRatio;
-
-	float colText = horCell + horOffset;
-	float rowText = verCell + verOffset;
-
-	GLfloat vertices[] = {
-		0.0f,    0.0f,     0.0f,    0.0f,     // lower left
-		colSize, 0.0f,     colText, 0.0f,     // lower right
-		colSize, rowSize,  colText, rowText,  // upper right
-		0.0f,    rowSize,  0.0f,    rowText   // upper left
-	};
-
-	GLushort indices[] = {
-		0, 1, 2,
-		2, 3, 0
-	};
-
-	_vertices = new Vertices(false, true);
-	_vertices->copyVertices(vertices, sizeof(vertices));
-	_vertices->copyIndices(indices, sizeof(indices));
+	init(_textureRegion.getOffsetX(), _textureRegion.getOffsetY(),
+	     _textureRegion.getCellWidth(), _textureRegion.getCellHeight());
 }
 
 void Sprite::unload() {
+	Image::unload();
 	LOG_D("--> Sprite::unload()");
-
-	_texture->unload();
-
-	delete _vertices;
 }
 
 void Sprite::update(float deltaTime) {
-	_animator.update(deltaTime);
+	_textureRegionAnimator.update(deltaTime);
 }
 
 void Sprite::render(float deltaTime) {
-	_texture->rebind();
+	int cursor = _textureRegionAnimator.getCursor();
+	int cursorRow = cursor / _textureRegion.getGridCols();
+	int cursorCol = cursor % _textureRegion.getGridCols();
 
-	int cursor = _animator.getCursor();
-	int cursorCol = cursor % _region.getGridCols();
-	int cursorRow = cursor / _region.getGridCols();
+	// OpenGL renders image data according to the mapped texture coordinates.
 
-	// We have to flip the row cursor because in OpenGL
-	// texture coordinates map to top = 1 and bottom = 0.
+	// If the image data were left at the original order, the image top row would
+	// render at the bottom row (from 0,0 to 1,0). The image would end up side down.
 
-	cursorRow = _region.getGridRows() - cursorRow - 1;
+	// texture     0,1   1,1
+	// +-+-+-+      +-+-+-+
+	// |0|1|2|      |6|7|8|
+	// +-+-+-+      +-+-+-+
+	// |3|4|5|  ->  |3|4|5|
+	// +-+-+-+      +-+-+-+
+	// |6|7|8|      |0|1|2|
+	// +-+-+-+      +-+-+-+
+	//             0,0   1,0
+
+	// For that, when the image data are loaded, we also invert the row order so as
+	// to compensate for the OpenGL inversion.
+
+	//  image       texture     0,1   1,1
+	// +-+-+-+      +-+-+-+      +-+-+-+
+	// |0|1|2|      |6|7|8|      |0|1|2|
+	// +-+-+-+      +-+-+-+      +-+-+-+
+	// |3|4|5|  ->  |3|4|5|  ->  |3|4|5|
+	// +-+-+-+      +-+-+-+      +-+-+-+
+	// |6|7|8|      |0|1|2|      |6|7|8|
+	// +-+-+-+      +-+-+-+      +-+-+-+
+	//                          0,0   1,0
+
+	// However the region grid is arranged according to the original image order.
+	// So we have to also invert the cursorRow order to match the inverted texture.
+
+	cursorRow = _textureRegion.getGridRows() - cursorRow - 1;
 
 	// TEXTURE coordinates are normalized.
 
-	float horRatio = 1.0f / _texture->getWidth();
-	float verRatio = 1.0f / _texture->getHeight();
+	float horRatio = 1.0f / _texture->getWidth();  // coords / pixel
+	float verRatio = 1.0f / _texture->getHeight(); // coords / pixel
 
-	float horCell = _region.getCellWidth() * horRatio;
-	float verCell = _region.getCellHeight() * verRatio;
+	float horOffset = _textureRegion.getOffsetX() * horRatio; // coords
+	float verOffset = _textureRegion.getOffsetY() * verRatio; // coords
 
-	float horOffset = _region.getOffsetX() * horRatio;
-	float verOffset = _region.getOffsetY() * verRatio;
+	float horCell = _textureRegion.getCellWidth() * horRatio;  // coords / col
+	float verCell = _textureRegion.getCellHeight() * verRatio; // coords / row
 
 	GLfloat* vertices = _vertices->getVertices();
 
-	vertices[02] = (cursorCol + 0) * horCell; // lower left x
-	vertices[03] = (cursorRow + 0) * verCell; // lower left y
+	// texture coordinates; lower left
+	vertices[02] = (cursorCol + 0) * horCell; // x
+	vertices[03] = (cursorRow + 0) * verCell; // y
 
-	vertices[06] = (cursorCol + 1) * horCell; // lower right x
-	vertices[07] = (cursorRow + 0) * verCell; // lower right y
+	// texture coordinates; lower right
+	vertices[06] = (cursorCol + 1) * horCell; // x
+	vertices[07] = (cursorRow + 0) * verCell; // y
 
-	vertices[10] = (cursorCol + 1) * horCell; // upper right x
-	vertices[11] = (cursorRow + 1) * verCell; // upper right y
+	// texture coordinates; upper right
+	vertices[10] = (cursorCol + 1) * horCell; // x
+	vertices[11] = (cursorRow + 1) * verCell; // y
 
-	vertices[14] = (cursorCol + 0) * horCell; // upper left x
-	vertices[15] = (cursorRow + 1) * verCell; // upper left y
+	// texture coordinates; upper left
+	vertices[14] = (cursorCol + 0) * horCell; // x
+	vertices[15] = (cursorRow + 1) * verCell; // y
 
-//	LOG_D("--- Sprite::render() [ %d, %d ] ( %f, %f : %f, %f )",
-//	      cursorCol, cursorRow, vertices[02], vertices[03], vertices[10], vertices[11]);
+	//	LOG_D("--- Sprite::render() [ %d, %d ] ( %f, %f : %f, %f )",
+	//	      cursorCol, cursorRow, vertices[02], vertices[03], vertices[10], vertices[11]);
 
 	glMatrixMode(GL_TEXTURE);
 	glLoadIdentity();
 	glTranslatef(horOffset, verOffset, 0);
 
-	_vertices->rebind();
-	_vertices->render(0, 6);
-	_vertices->unbind();
-
-	_texture->unbind();
+	Image::render(deltaTime);
 }
 
 Vector& Sprite::getPosition() {
 	return _position;
 }
 
-Region& Sprite::getRegion() {
-	return _region;
+Region& Sprite::getTextureRegion() {
+	return _textureRegion;
 }
 
-Animator& Sprite::getAnimator() {
-	return _animator;
+Animator& Sprite::getTextureRegionAnimator() {
+	return _textureRegionAnimator;
 }

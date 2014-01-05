@@ -25,12 +25,24 @@ Vertices::Vertices(bool hasColor, bool hasTexture) :
 }
 
 Vertices::~Vertices() {
-	LOG_D("### Vertices::~Vertices()");
-	unload();
+	LOG_D("$$$ Vertices::~Vertices()");
+
+	if (_vertices) {
+		delete _vertices;
+	}
+
+	if (_indices) {
+		delete _indices;
+	}
 }
 
 void Vertices::copyVertices(GLfloat* data, size_t dataBytes) {
 	LOG_D("--> Vertices::copyVertices(dataBytes: %zu)", dataBytes);
+
+	if (_vertices) {
+		delete _vertices;
+	}
+
 	_verticesLength = dataBytes / sizeof(GLfloat);
 	_vertices = new GLfloat[_verticesLength];
 	memcpy(_vertices, data, dataBytes);
@@ -38,6 +50,11 @@ void Vertices::copyVertices(GLfloat* data, size_t dataBytes) {
 
 void Vertices::copyIndices(GLushort* data, size_t dataBytes) {
 	LOG_D("--> Vertices::copyIndices(dataBytes: %zu)", dataBytes);
+
+	if (_indices) {
+		delete _indices;
+	}
+
 	_indicesLength = dataBytes / sizeof(GLushort);
 	_indices = new GLushort[_indicesLength];
 	memcpy(_indices, data, dataBytes);
@@ -45,6 +62,10 @@ void Vertices::copyIndices(GLushort* data, size_t dataBytes) {
 
 void Vertices::uploadVertices(GLfloat data[], size_t dataBytes) {
 	LOG_D("--> Vertices::uploadVertices(dataBytes: %zu)", dataBytes);
+
+	if (_verticesId) {
+		return;
+	}
 
 	glGenBuffers(1, &_verticesId);
 	glBindBuffer(GL_ARRAY_BUFFER, _verticesId);
@@ -63,6 +84,10 @@ void Vertices::uploadVertices(GLfloat data[], size_t dataBytes) {
 
 void Vertices::uploadIndices(GLushort data[], size_t dataBytes) {
 	LOG_D("--> Vertices::uploadIndices(dataBytes: %zu)", dataBytes);
+
+	if (_indicesId) {
+		return;
+	}
 
 	glGenBuffers(1, &_indicesId);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesId);
@@ -103,7 +128,7 @@ void Vertices::rebind() {
 	}
 
 	// If vertex buffer is bound, "offset" will be used as plain offset,
-	// -- in which case "mVertices" should be equal to zero --
+	// -- in which case "_vertices" should be equal to zero --
 	// otherwise, "offset" will be used as a pointer + offset.
 
 	GLfloat* offsetPtr = _vertices;
@@ -152,7 +177,7 @@ void Vertices::render(int32_t offset, int32_t length) {
 	if (_indicesId || _indices) {
 
 		// If indices buffer is bound, "offset" will be used as plain offset,
-		// -- in which case "mIndices" should be equal to zero --
+		// -- in which case "_indices" should be equal to zero --
 		// otherwise, "offset" will be used as a pointer + offset.
 
 		GLushort* offsetPtr = _indices + offset;

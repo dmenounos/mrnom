@@ -5,11 +5,11 @@ using namespace engine;
 
 GameScreen::GameScreen(GameContext* context) :
 	_context(context), _frameCounter() {
-	LOG_D("### CREATE SCREEN -------------");
+	LOG_D("### GameScreen::GameScreen()");
 }
 
 GameScreen::~GameScreen() {
-	LOG_D("### DELETE SCREEN --------------");
+	LOG_D("$$$ GameScreen::~GameScreen()");
 }
 
 void GameScreen::update(float deltaTime) {
