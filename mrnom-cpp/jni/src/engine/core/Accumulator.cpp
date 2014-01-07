@@ -4,7 +4,8 @@ using namespace engine;
 
 Accumulator::Accumulator() :
 	_tickDuration(0.0), _continuous(false),
-	_tickProgress(0.0), _tickComplete(false) {
+	_tickProgress(0.0), _tickComplete(false),
+	_callback(this) {
 	// LOG_D("### Accumulator::Accumulator()");
 }
 
@@ -21,13 +22,13 @@ void Accumulator::update(float deltaTime) {
 	if (!isContinuous() && isFinished()) {
 		_tickProgress = 0.0f;
 		_tickComplete = true;
-		onTick();
+		_callback->execute();
 	}
 
 	while (isContinuous() && isFinished()) {
 		_tickProgress -= _tickDuration;
 		_tickComplete = true;
-		onTick();
+		_callback->execute();
 	}
 }
 
@@ -57,4 +58,16 @@ bool Accumulator::isTickComplete() const {
 
 float Accumulator::getTickProgress() const {
 	return _tickProgress;
+}
+
+Callback* Accumulator::getCallback() const {
+	return _callback;
+}
+
+void Accumulator::setCallback(Callback* callback) {
+	assert(callback);
+	this->_callback = callback;
+}
+
+void Accumulator::execute() {
 }

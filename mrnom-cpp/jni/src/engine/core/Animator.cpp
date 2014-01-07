@@ -11,7 +11,7 @@ Animator::~Animator() {
 	// LOG_D("### Animator::~Animator()");
 }
 
-float Animator::getCursor() {
+float Animator::getRangeCursor() const {
 	return getTickProgress() * _factor + _rangeOffset;
 }
 

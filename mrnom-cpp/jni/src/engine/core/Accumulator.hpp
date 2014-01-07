@@ -1,14 +1,14 @@
 #ifndef ACCUMULATOR_HPP
 #define ACCUMULATOR_HPP
 
-#include "../../common.h"
+#include "Callback.hpp"
 
 namespace engine {
 
 /**
  * Accumulates time intervals.
  */
-class Accumulator {
+class Accumulator : public Callback {
 
 public:
 
@@ -51,12 +51,15 @@ public:
 	 */
 	virtual float getTickProgress() const;
 
-protected:
-
 	/**
 	 * On tick complete call-back.
+	 * By default, is set to this.
 	 */
-	virtual void onTick() {}
+	virtual Callback* getCallback() const;
+	void setCallback(Callback* callback);
+
+	// override
+	virtual void execute();
 
 private:
 
@@ -69,6 +72,9 @@ private:
 
 	bool  _tickComplete;
 	float _tickProgress;
+
+	// shared pointer
+	Callback* _callback;
 };
 
 }

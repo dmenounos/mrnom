@@ -3,29 +3,36 @@
 
 /* C APIs */
 
+// C89
 // Process Control
 // Memory Allocation
 // Random Number Generation
 // String to Number Conversion
 #include <stdlib.h>
 
+// C89
 // Core Input and Output
 // Formatted Input and Output
 #include <stdio.h>
 
+// C99
 // Exact width integer types
 #include <stdint.h>
 
+// C89
 // Limits: bool, char, short, int, long
 #include <limits.h>
 
+// C89
 // Diagnostics
 #include <assert.h>
 
+// C89
 // Time
 #include <time.h>
 
-// POSIX Process Control
+// POSIX
+// Process Control
 #include <unistd.h>
 
 /* C++ APIs */

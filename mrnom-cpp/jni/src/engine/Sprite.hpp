@@ -12,16 +12,6 @@ class Sprite : public Image {
 
 public:
 
-	/**
-	 * Set the region cell width & height to that of the whole texture.
-	 */
-	static const int GRID_CELL_SIZE_AUTO = -1;
-
-	/**
-	 * Set the animator range length to the region grid cell count.
-	 */
-	static const int ANIM_RANGE_FULL_GRID = -1;
-
 	Sprite(Texture* texture);
 
 	virtual ~Sprite();
@@ -39,6 +29,8 @@ public:
 	virtual void update(float deltaTime);
 
 	virtual void render(float deltaTime);
+
+public:
 
 	virtual Vector& getPosition();
 

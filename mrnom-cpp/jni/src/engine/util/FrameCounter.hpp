@@ -1,13 +1,11 @@
 #ifndef FRAMECOUNTER_HPP
 #define FRAMECOUNTER_HPP
 
-#include "../../common.h"
-
 #include "../core/Accumulator.hpp"
 
 namespace engine {
 
-class FrameCounter : public Accumulator {
+class FrameCounter : public Accumulator  {
 
 public:
 
@@ -16,14 +14,12 @@ public:
 	virtual ~FrameCounter();
 
 	// override
+	virtual void execute();
+
+	// override
 	virtual void update(float deltaTime);
 
 	uint32_t getFps() const;
-
-protected:
-
-	// override
-	virtual void onTick();
 
 private:
 

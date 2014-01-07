@@ -6,9 +6,7 @@
 namespace engine {
 
 /**
- * Used to describe a region over some area.
- * Supports inner grid arrangement (cellWidth, cellHeight, gridCols, gridRows)
- * as well as outer positioning (offsetX, offsetY).
+ * Used to describe a grid arrangement over some area.
  */
 class Region {
 

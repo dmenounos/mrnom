@@ -34,6 +34,7 @@ int32_t Region::getCellWidth() const {
 }
 
 void Region::setCellWidth(int32_t cellWidth) {
+	// assert(cellWidth >= 0);
 	_cellWidth = cellWidth;
 }
 
@@ -42,6 +43,7 @@ int32_t Region::getCellHeight() const {
 }
 
 void Region::setCellHeight(int32_t cellHeight) {
+	// assert(cellHeight >= 0);
 	_cellHeight = cellHeight;
 }
 
@@ -50,7 +52,7 @@ int32_t Region::getGridCols() const {
 }
 
 void Region::setGridCols(int32_t gridCols) {
-	assert(gridCols > 0);
+	assert(gridCols >= 1);
 	_gridCols = gridCols;
 }
 
@@ -59,6 +61,6 @@ int32_t Region::getGridRows() const {
 }
 
 void Region::setGridRows(int32_t gridRows) {
-	assert(gridRows > 0);
+	assert(gridRows >= 1);
 	_gridRows = gridRows;
 }

@@ -12,9 +12,7 @@ class Handle {
 
 public:
 
-	Handle();
-
-	virtual ~Handle();
+	virtual ~Handle() {}
 
 	/**
 	 * Rebinds the resource into OpenGL.

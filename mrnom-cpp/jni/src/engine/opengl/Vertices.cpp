@@ -28,11 +28,11 @@ Vertices::~Vertices() {
 	LOG_D("$$$ Vertices::~Vertices()");
 
 	if (_vertices) {
-		delete _vertices;
+		delete [] _vertices;
 	}
 
 	if (_indices) {
-		delete _indices;
+		delete [] _indices;
 	}
 }
 
@@ -40,7 +40,7 @@ void Vertices::copyVertices(GLfloat* data, size_t dataBytes) {
 	LOG_D("--> Vertices::copyVertices(dataBytes: %zu)", dataBytes);
 
 	if (_vertices) {
-		delete _vertices;
+		delete [] _vertices;
 	}
 
 	_verticesLength = dataBytes / sizeof(GLfloat);
@@ -52,7 +52,7 @@ void Vertices::copyIndices(GLushort* data, size_t dataBytes) {
 	LOG_D("--> Vertices::copyIndices(dataBytes: %zu)", dataBytes);
 
 	if (_indices) {
-		delete _indices;
+		delete [] _indices;
 	}
 
 	_indicesLength = dataBytes / sizeof(GLushort);

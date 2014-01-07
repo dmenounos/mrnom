@@ -13,15 +13,18 @@ FrameCounter::~FrameCounter() {
 	// LOG_D("$$$ FrameCounter::~FrameCounter()");
 }
 
+void FrameCounter::execute() {
+	_fps = _fpsCounter;
+	_fpsCounter = 0;
+}
+
 void FrameCounter::update(float deltaTime) {
 	Accumulator::update(deltaTime);
 
 	++_fpsCounter;
 
 	if (isTickComplete()) {
-		// onTick() will have been called first.
-		// This block could have been implemented there as
-		// well however it is here to test more the Accumulator.
+		// execute() will have been called first.
 
 		// Computed, instance frame rate.
 		// Remember, deltaTime is ratio: seconds / frame.
@@ -31,13 +34,6 @@ void FrameCounter::update(float deltaTime) {
 		// Actual FPS, Calculated FPS, Last Frame Interval
 		LOG_D("--- FPS: %d, fps: %f, delta: %f", _fps, fps, deltaTime);
 	}
-}
-
-void FrameCounter::onTick() {
-	Accumulator::onTick();
-
-	_fps = _fpsCounter;
-	_fpsCounter = 0;
 }
 
 uint32_t FrameCounter::getFps() const {

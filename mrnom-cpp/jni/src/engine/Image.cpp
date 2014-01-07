@@ -6,8 +6,8 @@
 using namespace engine;
 
 Image::Image(Texture* texture) :
-	_texture(texture), _vertices(0) {
-	init(0, 0, _texture->getWidth(), _texture->getHeight());
+	_texture(texture), _vertices(0),
+	_horTextureRatio(0), _verTextureRatio(0) {
 }
 
 Image::~Image() {
@@ -26,13 +26,10 @@ void Image::init(int32_t x, int32_t y, int32_t w, int32_t h) {
 
 	// TEXTURE coordinates are normalized.
 
-	float horTextureRatio = 1.0f / _texture->getWidth();  // coords / pixel
-	float verTextureRatio = 1.0f / _texture->getHeight(); // coords / pixel
-
-	float frameXCoords = x * horTextureRatio; // default: 0
-	float frameYCoords = y * verTextureRatio; // default: 0
-	float frameWCoords = w * horTextureRatio; // default: 1
-	float frameHCoords = h * verTextureRatio; // default: 1
+	float frameXCoords = x * _horTextureRatio; // default: 0
+	float frameYCoords = y * _verTextureRatio; // default: 0
+	float frameWCoords = w * _horTextureRatio; // default: 1
+	float frameHCoords = h * _verTextureRatio; // default: 1
 
 	frameWCoords += frameXCoords; // default: 1
 	frameHCoords += frameYCoords; // default: 1
@@ -62,6 +59,13 @@ void Image::upload() {
 	LOG_D("--> Image::upload()");
 	_texture->upload();
 
+	// coords / pixel
+	_horTextureRatio = 1.0f / _texture->getWidth();
+	_verTextureRatio = 1.0f / _texture->getHeight();
+
+	// Initialize the vertices from the whole texture area.
+	init(0, 0, _texture->getWidth(), _texture->getHeight());
+
 	// vertices reside on cpu ram
 	// so no need to upload
 }
@@ -88,7 +92,14 @@ Texture* Image::getTexture() const {
 	return _texture;
 }
 
-
 Vertices* Image::getVertices() const {
 	return _vertices;
+}
+
+float Image::getHorTextureRatio() const {
+	return _horTextureRatio;
+}
+
+float Image::getVerTextureRatio() const {
+	return _verTextureRatio;
 }

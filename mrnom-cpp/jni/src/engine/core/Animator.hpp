@@ -1,8 +1,6 @@
 #ifndef ANIMATOR_HPP
 #define ANIMATOR_HPP
 
-#include "../../common.h"
-
 #include "Accumulator.hpp"
 
 namespace engine {
@@ -22,7 +20,7 @@ public:
 	 * The current cursor, a value in between
 	 * the offset (included) and the length (excluded).
 	 */
-	virtual float getCursor();
+	virtual float getRangeCursor() const;
 
 	/**
 	 * The range offset.

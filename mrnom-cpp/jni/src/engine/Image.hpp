@@ -9,7 +9,7 @@ class Texture;
 class Vertices;
 
 /**
- * Combines Texture and Vertices into an image rectangle.
+ * Combines texture and vertices into an image rectangle.
  */
 class Image {
 
@@ -36,17 +36,26 @@ public:
 
 	virtual void render(float deltaTime);
 
+public:
+
 	Texture* getTexture() const;
 
 	Vertices* getVertices() const;
 
-protected:
+	float getHorTextureRatio() const;
+
+	float getVerTextureRatio() const;
+
+private:
 
 	// shared pointer
 	Texture*  _texture;
 
 	// owned pointer
 	Vertices* _vertices;
+
+	float _horTextureRatio;
+	float _verTextureRatio;
 };
 
 }
