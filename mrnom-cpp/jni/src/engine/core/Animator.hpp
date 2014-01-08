@@ -17,8 +17,7 @@ public:
 	virtual ~Animator();
 
 	/**
-	 * The current cursor, a value in between
-	 * the offset (included) and the length (excluded).
+	 * The current cursor.
 	 */
 	virtual float getRangeCursor() const;
 

@@ -11,8 +11,7 @@ MainMenuScreen::MainMenuScreen(GameContext* context) :
 	_animationSprite = new Sprite(_animationTexture);
 	_animationSprite->getTextureRegion().setGridCols(6);
 	_animationSprite->getTextureRegion().setGridRows(5);
-	_animationSprite->getTextureRegionAnimator().setContinuous(true);
-	_animationSprite->getTextureRegionAnimator().setTickDuration(5.0f);
+	_animationSprite->getTextureRegionAnimator().setDuration(5.0f);
 }
 
 MainMenuScreen::~MainMenuScreen() {

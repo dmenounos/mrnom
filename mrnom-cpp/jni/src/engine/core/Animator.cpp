@@ -12,7 +12,7 @@ Animator::~Animator() {
 }
 
 float Animator::getRangeCursor() const {
-	return getTickProgress() * _factor + _rangeOffset;
+	return getProgress() * _factor + _rangeOffset;
 }
 
 float Animator::getRangeOffset() const {
@@ -30,8 +30,8 @@ float Animator::getRangeLength() const {
 void Animator::setRangeLength(float rangeLength) {
 	_rangeLength = rangeLength;
 
-	if (getTickDuration() > 0.0f) {
-		_factor = _rangeLength / getTickDuration();
+	if (getDuration() > 0.0f) {
+		_factor = _rangeLength / getDuration();
 	} else {
 		_factor = 0.0f;
 	}

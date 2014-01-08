@@ -12,6 +12,13 @@ class Accumulator : public Callback {
 
 public:
 
+	/**
+	 * Repeat indefinitely.
+	 */
+	static const int32_t INFINITE = -1;
+
+public:
+
 	Accumulator();
 
 	virtual ~Accumulator();
@@ -22,56 +29,42 @@ public:
 	virtual void update(float deltaTime);
 
 	/**
-	 * Are we finished?
+	 * Are we past the interval?
 	 */
 	virtual bool isFinished() const;
 
 	/**
-	 * Are we looping?
+	 * Returns the interval progress, in seconds.
 	 */
-	virtual bool isContinuous() const;
-	virtual void setContinuous(bool continuous);
+	virtual float getProgress() const;
 
 	/**
-	 * Tick time duration, in seconds.
+	 * Defines the interval duration, in seconds.
 	 */
-	virtual float getTickDuration() const;
-	virtual void setTickDuration(float tickDuration);
+	virtual float getDuration() const;
+	virtual void setDuration(float duration);
 
 	/**
-	 * Is tick complete?
+	 * Defines how many times the animation should repeat.
 	 */
-	virtual bool isTickComplete() const;
-
-	/**
-	 * Tick time progress, in seconds.
-	 *
-	 * Notice the value is in seconds [zero to tickDuration).
-	 * In the future it may change to normalized value [0 to 1).
-	 */
-	virtual float getTickProgress() const;
+	virtual int32_t getRepeatCount() const;
+	virtual void setRepeatCount(int32_t repeatCount);
 
 	/**
 	 * On tick complete call-back.
 	 * By default, is set to this.
 	 */
 	virtual Callback* getCallback() const;
-	void setCallback(Callback* callback);
+	virtual void setCallback(Callback* callback);
 
 	// override
 	virtual void execute();
 
 private:
 
-	// configuration
-
-	bool  _continuous;
-	float _tickDuration;
-
-	// computed
-
-	bool  _tickComplete;
-	float _tickProgress;
+	float _progress;
+	float _duration;
+	int32_t _repeatCount;
 
 	// shared pointer
 	Callback* _callback;

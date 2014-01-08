@@ -5,7 +5,7 @@
 
 namespace engine {
 
-class FrameCounter : public Accumulator  {
+class FrameCounter : public Accumulator {
 
 public:
 
@@ -23,6 +23,7 @@ public:
 
 private:
 
+	float _deltaTime;
 	uint32_t _fpsCounter;
 	uint32_t _fps;
 };

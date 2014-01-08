@@ -2,8 +2,7 @@
 
 World::World() : Accumulator() {
 	// LOG_D("### World::World()");
-	setTickDuration(TICK_INITIAL);
-	setContinuous(true);
+	setDuration(TICK_INITIAL);
 }
 
 World::~World() {

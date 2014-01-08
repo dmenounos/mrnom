@@ -3,9 +3,8 @@
 using namespace engine;
 
 Accumulator::Accumulator() :
-	_tickDuration(0.0), _continuous(false),
-	_tickProgress(0.0), _tickComplete(false),
-	_callback(this) {
+	_progress(0.0), _duration(0.0),
+	_repeatCount(INFINITE), _callback(this) {
 	// LOG_D("### Accumulator::Accumulator()");
 }
 
@@ -14,50 +13,64 @@ Accumulator::~Accumulator() {
 }
 
 void Accumulator::update(float deltaTime) {
-	if (!isFinished()) {
-		_tickProgress += deltaTime;
-		_tickComplete = false;
+	if (isFinished()) {
+		return;
 	}
 
-	if (!isContinuous() && isFinished()) {
-		_tickProgress = 0.0f;
-		_tickComplete = true;
-		_callback->execute();
-	}
+	_progress += deltaTime;
 
-	while (isContinuous() && isFinished()) {
-		_tickProgress -= _tickDuration;
-		_tickComplete = true;
+	while (!isFinished() && _progress >= _duration) {
+
+		// The current repeat count is not exhausted (or is infinite).
+		// A time period has been completed.
+
+		if (_repeatCount > 0) {
+			_repeatCount -= 1;
+		}
+
+		if (!isFinished()) {
+
+			// The next repeat count is not exhausted (or is infinite).
+			// We subtract a time period and let the flow go on.
+
+			_progress -= _duration;
+		}
+		else {
+
+			// The repeatCount has been exhausted.
+			// We cap the progress amount to the duration limit.
+
+			_progress = _duration;
+		}
+
+		// Invoke the callback.
+
 		_callback->execute();
 	}
 }
 
 bool Accumulator::isFinished() const {
-	return _tickProgress >= _tickDuration;
+	return _repeatCount == 0;
 }
 
-bool Accumulator::isContinuous() const {
-	return _continuous;
+float Accumulator::getProgress() const {
+	return _progress;
 }
 
-void Accumulator::setContinuous(bool continuous) {
-	_continuous = continuous;
+float Accumulator::getDuration() const {
+	return _duration;
 }
 
-float Accumulator::getTickDuration() const {
-	return _tickDuration;
+void Accumulator::setDuration(float tickDuration) {
+	_duration = tickDuration;
 }
 
-void Accumulator::setTickDuration(float tickDuration) {
-	_tickDuration = tickDuration;
+int32_t Accumulator::getRepeatCount() const {
+	return _repeatCount;
 }
 
-bool Accumulator::isTickComplete() const {
-	return _tickComplete;
-}
-
-float Accumulator::getTickProgress() const {
-	return _tickProgress;
+void Accumulator::setRepeatCount(int32_t repeatCount) {
+	_repeatCount = repeatCount;
 }
 
 Callback* Accumulator::getCallback() const {
