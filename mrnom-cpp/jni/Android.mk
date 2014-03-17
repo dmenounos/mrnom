@@ -35,7 +35,7 @@ LOCAL_LDLIBS := -landroid -llog -lEGL -lGLESv1_CM -lOpenSLES
 # $ANDROID_NDK_HOME/sources
 
 LOCAL_STATIC_LIBRARIES := android_native_app_glue png
-# LOCAL_SHARED_LIBRARIES := png xmp
+# LOCAL_SHARED_LIBRARIES := xmp
 
 # Launch the build process.
 
@@ -43,3 +43,4 @@ include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,android/native_app_glue)
 $(call import-module,libpng)
+# $(call import-module,libxmp)
