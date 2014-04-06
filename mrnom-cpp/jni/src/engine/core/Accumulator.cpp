@@ -19,9 +19,8 @@ void Accumulator::update(float deltaTime) {
 
 	_progress += deltaTime;
 
-	while (!isFinished() && _progress >= _duration) {
+	while (_progress >= _duration) {
 
-		// The current repeat count is not exhausted (or is infinite).
 		// A time period has been completed.
 
 		if (_repeatCount > 0) {
@@ -30,7 +29,7 @@ void Accumulator::update(float deltaTime) {
 
 		if (!isFinished()) {
 
-			// The next repeat count is not exhausted (or is infinite).
+			// The repeat count is not exhausted (or is infinite).
 			// We subtract a time period and let the flow go on.
 
 			_progress -= _duration;
@@ -43,7 +42,7 @@ void Accumulator::update(float deltaTime) {
 			_progress = _duration;
 		}
 
-		// Invoke the callback.
+		// Invoke the tick complete call-back.
 
 		_callback->execute();
 	}

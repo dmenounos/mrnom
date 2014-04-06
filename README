@@ -1,5 +1,5 @@
-# android list
-# Lists existing targets or virtual devices.
+# android list targets
+# Lists existing targets.
 
 # android update project --path .
 # android update project --target android-10 --path . --subprojects
